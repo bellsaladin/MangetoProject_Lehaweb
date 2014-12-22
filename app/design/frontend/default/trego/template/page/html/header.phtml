@@ -3,7 +3,9 @@
         <div class="header-bground">
             <div class="header-sidebar">
                 <?php if ($this->getIsHomePage()):?>
-                <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('',  array('_secure' =>  Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+                <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('',  array('_secure' =>  Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+                    <p style="font-size: 8px; font-style: italic;">Personnalisable | Sur mésure | Jeunes créatifs</p>
+                </h1>
                 <?php else:?>
                 <a href="<?php echo $this->getUrl('',  array('_secure' =>  Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
                 <?php endif?>
@@ -12,7 +14,7 @@
                     <?php echo $this->getChildHtml('topSearch'); ?>
                     <div class="clear"></div>
                     <?php // echo $this->getChildHtml('topSpecialMenu'); ?>
-                    <div style="text-align: right; margin: 20px 10px; line-height: 34px;">
+                    <div style="text-align: right; margin: 40px 10px; line-height: 32px; font-size:11px">
                         <a href="#">QUI SOMMES-NOUS ?</a><br/>
                         <a href="#">COMMENT CA MARCHE ?</a><br/>
                         <a href="#">CONSEILS MORPHOLOGIQUES</a><br/>
@@ -20,9 +22,9 @@
                     <div class="clear"></div>
                 </div>
                 <?php echo $this->getChildHtml('socialIcons'); ?>
-                <div style="position: absolute; left: 15px; bottom:10px">
+                <div style="position: absolute; bottom:10px; padding: 0;margin: 0;width: 220px;">
                 <?php echo $this->getChildHtml('store_language') ?>
-                <?php echo $this->getChildHtml('custom_currency_selector') ?>
+                <div style="float:right"><?php echo $this->getChildHtml('custom_currency_selector') ?></div>
                 </div>
                 <?php // echo $this->getChildHtml('copyrights'); ?>
             </div>

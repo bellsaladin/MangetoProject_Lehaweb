@@ -50,6 +50,13 @@ function showChildrenCategories($_category, $level, $level_limit, $custom_html='
             }
         }
 
+        # -------------- END :   DEBUG ONLY ---------------
+        if($level == 2){
+            $html .= '</ul>';
+            return $html;
+        }
+        # -------------- BEGIN : DEBUG ONLY ---------------
+
         usort($categoryChildren, 'cmpCatPosition');
 
         foreach ($categoryChildren as $_child){

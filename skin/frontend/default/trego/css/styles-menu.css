@@ -124,9 +124,9 @@
         height: 100%;
         padding: 0;
         padding-top: 245px;
-        border: none;
-        background: url(../images/top-menu-bg-2-2.png) repeat-y;
-        width: 285px;
+        border-left: 8px solid #000;
+        background: rgba(0,0,0,0.5);
+        width: 185px;
         display: block !important;
     }
     #nav.menutype2 li .shown-sub li div {

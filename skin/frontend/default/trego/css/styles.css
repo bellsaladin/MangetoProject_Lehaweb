@@ -286,7 +286,7 @@
 }
 
 * { margin:0; padding:0; }
-html { background: #f1f1f1; min-height: 100%; }
+html { background: #fff; min-height: 100%; }
 body          { font:12px/1.55 Verdana, Arial, Helvetica, sans-serif; color:#595959; text-align:center; min-height: 100%; }
 
 img           { border:0; vertical-align:top; max-width: 100%; }
@@ -382,7 +382,7 @@ input[type="text"]         { -webkit-appearance: none; border-radius: 0; }
 
 /* Layout ================================================================================ */
 .wrapper { min-height: 100%; }
-.page { background: #f1f1f1; min-height: 100%; }
+.page { background: #fff; min-height: 100%; }
 .page-print { background:#fff; padding:25px 30px; text-align:left; }
 .page-empty { padding:20px; text-align:left; }
 .page-popup { padding:25px 30px; text-align:left; }
@@ -945,10 +945,10 @@ tr.summary-details-excluded { font-style:italic; }
     display: block;
 }
 .header { margin-left: 220px; padding: 0 10px; }
-.header .logo { text-decoration:none !important; margin: 40px 0; display: block; }
+.header .logo { text-decoration:none !important; margin: 10px 0; display: block; }
 .header .logo img { height: 130px; }
 .header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
-.header h1.logo { margin: 40px 0 30px 0; }
+.header h1.logo { margin: 40px 0 22px 0; }
 .header .header-topbar {
     margin: 0 auto;
     display: block;
@@ -1026,9 +1026,9 @@ tr.summary-details-excluded { font-style:italic; }
 
 /* All Levels */ /* Style consistent throughout all nav levels */
 #nav li { position:relative; text-align:left; border-bottom: 1px solid #dddddd; }
-#nav li.over { z-index:998; }
-#nav a,
-#nav a:hover { display:block; line-height:42px; text-decoration:none; }
+#nav li.over { z-index:998; background: #000; color:#fff;}
+#nav li.over a { color:#fff !important;}
+#nav a, #nav a:hover { display:block; line-height:32px; text-decoration:none; }
 #nav span { display:block; cursor:pointer; white-space:nowrap; padding: 0 10px; }
 #nav li ul span {white-space:normal; }
 #nav ul li.parent a { background:url(../images/bkg_nav2.gif) 100% 100% no-repeat; }
