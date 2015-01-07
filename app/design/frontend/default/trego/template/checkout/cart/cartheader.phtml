@@ -36,9 +36,9 @@
                 <?php $_subtotal = Mage::app()->getStore()->formatPrice($_subtotal_inc_tax);?>
             <?php endif; ?>
             <?php if ($_cartQty > 0): ?>
-                <?php $_myCart = $this->__('%s item(s)', $_cartQty).$this->__('<span class="for-desktop">&nbsp;- %s</span>', $_subtotal) ?>
+                <?php $_myCart = $this->__('%s ', $_cartQty); /* .$this->__('<span class="for-desktop">&nbsp;- %s</span>', $_subtotal)*/ ?>
             <?php else: ?>
-                <?php $_myCart = $this->__('0 item(s)').$this->__('<span class="for-desktop">&nbsp;- %s</span>', $_subtotal) ?>
+                <?php $_myCart = $this->__('0');/*.$this->__('<span class="for-desktop">&nbsp;- %s</span>', $_subtotal) */?>
             <?php endif ?>
             
             <?php if ($this->getIsLinkMode() || !$this->getIsNeedToDisplaySideBar()):?>
@@ -49,7 +49,9 @@
                 </div>
             <?php else:?>
                 <div class="block-title<?php if(!$_cartQty) { echo (' no-items'); } ?>">
-                    <span id="cartHeader"><?php echo $_myCart ?></span>
+                    <div id="cartHeaderContainer">
+                    <span id="cartHeader"></span><p style="background-color: rgb(0, 158, 255); border-radius: 50px; font-size: 6px; padding: 1px 3px; height: 9px; width: 4px; color: #fff; position: absolute; left: 16px;top: 3px;"><?php echo $_myCart ?></p>
+                    </div>
                 </div>
                 <div id="topCartContent" class="block-content">
                     <div class="inner-wrapper"><?php /*extra div to smooth slideUp and slideDown*/ ?>

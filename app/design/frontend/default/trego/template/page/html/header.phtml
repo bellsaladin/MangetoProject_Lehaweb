@@ -2,13 +2,29 @@
     <div class="header">
         <div class="header-bground">
             <div class="header-sidebar">
-                <?php if ($this->getIsHomePage()):?>
+                <div id="toggleMenu" style="float: right;background-color: #000;width: 18px;height: 21px;margin-right: -20px;color: #fff;margin-top: 50px;padding: 0;">
+                    <a style="color:#fff;font-size: 9px;font-weight: bold;" href="javascript::void">&gt;</a>
+                </div>
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                        var shown = true;
+                        jQuery('#toggleMenu').click(function(){
+                            //alert('tet');
+                            if(shown){
+                                jQuery(".header-sidebar").animate({left: '-=220'},200);
+                                shown = false;
+                            }else{   
+                                jQuery(".header-sidebar").animate({left: '+=220'},200);
+                                shown = true;
+                            }
+                        });
+                    });
+                </script>
+                
                 <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('',  array('_secure' =>  Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
                     <p style="font-size: 8px; font-style: italic;">Personnalisable | Sur mésure | Jeunes créatifs</p>
                 </h1>
-                <?php else:?>
-                <a href="<?php echo $this->getUrl('',  array('_secure' =>  Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
-                <?php endif?>
+                
                 <div class="box-scroll">
                     <?php echo $this->getChildHtml('topMenu'); ?>
                     <?php echo $this->getChildHtml('topSearch'); ?>
@@ -30,7 +46,8 @@
             </div>
             <a href="javascript:void(0)" class="filterproducts-link">&nbsp;</a>
         </div>
-        <div style="float:right; margin:10px 15px">
+        <div style="float:right;border-bottom: 2px solid #000;">
+            <div id="myspace"><a href="#">MON ESPACE</a></div>
             <?php echo $this->getChildHtml('cart_cartheader') ?>
         </div>
         <div class="header-topbar">            

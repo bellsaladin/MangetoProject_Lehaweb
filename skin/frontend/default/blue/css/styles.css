@@ -97,7 +97,7 @@ ul,ol         { list-style:none; }
 .page-print { height:auto; background:#fff; padding:25px 30px; text-align:left; }
 .page-empty { height:auto; background:#fff; padding:20px; text-align:left; }
 .page-popup { height:auto; background:#fff; padding:25px 30px; text-align:left; }
-.main-container { width:950px; padding:0 10px; background:url(../images/bkg_shadow.png) 50% 0 repeat-y; }
+.main-container { width:100%; padding:0 10px; background:url(../images/bkg_shadow.png) 50% 0 repeat-y; }
 .main { width:900px; margin:0 auto; min-height:400px; padding:25px 25px 80px; background:#fffffe url(../images/bkg_main2.gif) 0 0 no-repeat; text-align:left; }
 
 /* Base Columns */

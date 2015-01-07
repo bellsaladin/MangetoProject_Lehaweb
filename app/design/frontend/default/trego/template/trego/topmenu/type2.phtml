@@ -31,7 +31,7 @@ function cmpCatPosition($a, $b) {
         return 0;
     return ($a->position > $b->position) ? 1 : -1;
 }
-function showChildrenCategories($_category, $level, $level_limit, $custom_html=''){
+function showCategories($_category, $custom_html=''){
     $storeId = Mage::app()->getStore()->getId();
     $html = '';
     if($level < 3){
@@ -50,40 +50,18 @@ function showChildrenCategories($_category, $level, $level_limit, $custom_html='
             }
         }
 
-        # -------------- END :   DEBUG ONLY ---------------
-        if($level == 2){
-            $html .= '</ul>';
-            return $html;
-        }
-        # -------------- BEGIN : DEBUG ONLY ---------------
-
         usort($categoryChildren, 'cmpCatPosition');
 
         foreach ($categoryChildren as $_child){
             if($_child->getIncludeInMenu()){
                 $html .= '<li class="level'.$level.'">';
                 $url = $_child->getUrl();
-				if(Mage::app()->getFrontController()->getRequest()->isSecure())
-					$url = str_replace('http://', 'https://', $url ); 
-				$html .= '<a href ="'.$url.'"><span>';
+                if(Mage::app()->getFrontController()->getRequest()->isSecure())
+                    $url = str_replace('http://', 'https://', $url ); 
+                $html .= '<a href ="'.$url.'"><span>';
                 $html .= $_child->getName();
                 $html .= '</span>';
-                
-                if($level==2)
-                    $html .= '<div class="desc">';
-                /*
-                if( $level == 2 && $_child->getDescription() ){
-                    $desc = '';
-                    if(strlen($_child->getDescription())>45){
-                        $desc = substr($_child->getDescription(),0,45).'...';
-                    }else{
-                        $desc = $_child->getDescription();
-                    }
-                    $html .= $desc;
-                }
-                */
-                if($level==2)
-                    $html .= '</div>';
+
                 if( $level == 2 ){
                     if( $_child->getThumbnail() ){
                         $html .= '<img src="'.Mage::getBaseUrl('media').'catalog/category/'.$_child->getThumbnail().'"/>';
@@ -92,12 +70,13 @@ function showChildrenCategories($_category, $level, $level_limit, $custom_html='
                     }
                 }
                 $html .= '<em class="clear"></em></a>';
-                if( hasMenuChildren($_child) && $level < $level_limit ){
+                /*if( hasMenuChildren($_child) && $level < $level_limit ){
                     if($level == 0 || $level == 1){
                         $html .= '<span class="plus"></span>';
                     }
-                    $html .= showChildrenCategories($_child, $level+1, $level_limit);
-                }
+                    
+                }*/
+                $html .= showProducts($_child);
                 $html .= '</li>';
             }
         }
@@ -108,8 +87,43 @@ function showChildrenCategories($_category, $level, $level_limit, $custom_html='
     }
     return $html;
 }
+
+function showProducts($_category, $custom_html=''){
+    $collection = $_category->getProductCollection()->addAttributeToSort('position');
+    Mage::getModel('catalog/layer')->prepareProductCollection($collection);
+    $html .= '<ul class="level productsBar">';
+    foreach ($collection as $product) {
+        //var_dump( $product );        
+        $html .= '<li class="level">';
+        $url = $product->getProductUrl();
+        if(Mage::app()->getFrontController()->getRequest()->isSecure())
+            $url = str_replace('http://', 'https://', $url ); 
+        $html .= '<a href ="'.$url.'"><div style="border:0;">';
+        $html .= '<div style="width:190px; height:200px; background-position:center; background-size:cover; background-image:url(\''. Mage::helper('catalog/image')->init($product, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(350) .'\')"></div>';
+        $html .= '<div style="padding:5px; width: 180px; margin-top: 3px;background-color: #fff;">';
+        $html .= '<table><tr>';
+        $html .= '<td style="max-width: 120px;"><div class="name">'. $product->getName() .'</div></td>';
+        $html .= '<td style="vertical-align: middle;"><div style="text-align:right; width: 50px; vertical-align:middle;" class="price">'. showProductPrice($product) .'</div></td>';
+        $html .= '</tr></table>';
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '</li>';
+    }
+    $html .= '</ul>';
+
+    return $html;
+}
+
+function showProductPrice($product){
+ 
+  $html = Mage::helper('core')->currency($product->getFinalPrice(),true,false);
+
+ 
+  return $html;
+}
+
 if (Mage::getStoreConfig("slidermenu/menu/show_custom_menu", $code) == 1) {
-    $custom_html = $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::getStoreConfig("slidermenu/menu/custom_block_id", $code))->toHtml();
+    $custom_html = Mage::getLayout()->createBlock('cms/block')->setBlockId(Mage::getStoreConfig("slidermenu/menu/custom_block_id", $code))->toHtml();
     if(substr($custom_html, 0,4)=="<ul>"){
         $custom_html = substr($custom_html, 4);
     }
@@ -117,7 +131,7 @@ if (Mage::getStoreConfig("slidermenu/menu/show_custom_menu", $code) == 1) {
         $custom_html = substr($custom_html, 0, -5);
     }
 }
-echo showChildrenCategories($_cat, 0, $show_levels, $custom_html);
+echo showCategories($_cat, $custom_html);
 ?>
 </div><?php //content ?>
 <script type="text/javascript">

@@ -123,10 +123,11 @@
         top: 0;
         height: 100%;
         padding: 0;
-        padding-top: 245px;
+        /*padding-top: 245px;*/
         border-left: 8px solid #000;
-        background: rgba(0,0,0,0.5);
-        width: 185px;
+        background: rgba(0,0,0,0.6);
+        width: 226px;
+        max-width: 226px;
         display: block !important;
     }
     #nav.menutype2 li .shown-sub li div {
@@ -195,8 +196,34 @@
         height: 55px;
     }
     
-    
-    
+    #nav.menutype2 .productsBar{
+        overflow-x:hidden;
+        overflow-y:scroll;
+    }
+    #nav.menutype2 .productsBar li{
+        min-height:225px;        
+        margin:10px 18px;
+        color:#000;
+    }
+    #nav.menutype2 .productsBar div{
+        border:0;
+    }
+    #nav.menutype2 .productsBar li .name{
+        font-size:9px;
+        width: 120px;
+        color: #777;     
+    }
+    #nav.menutype2 .productsBar li .price{
+        width: 45px;
+        text-align:right;
+        font-size:12px;
+        color: #bbb;
+    } 
+
+    #nav.menutype2 .productsBar li a{
+        color: #000 !important;
+        font-size: 10px;
+    }
     
     #nav.megamenu {
         padding: 0 0 0 30px;
