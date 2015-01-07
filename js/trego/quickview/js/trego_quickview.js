@@ -38,7 +38,7 @@ jQuery(function($) {
         var mypath = 'quickview/index/view';
         var baseUrl = Trego.Quickview.BASE_URL + mypath;
 
-        var _quickviewHref = "<a id=\"trego_quickview_handler\" href=\"#\" style=\"position:absolute;top:0;left:-999em; font-size: 16px; padding: 5px;\">"+Trego.Quickview.QV_TITLE+"</a>";
+        var _quickviewHref = "<a id=\"trego_quickview_handler\" href=\"#\" style=\"position:absolute;top:0;left:-999em; font-size: 16px; padding: 5px 28px;\">"+Trego.Quickview.QV_TITLE+"</a>";
         $(document.body).append(_quickviewHref);
         var quickviewHandlerImg = $('#trego_quickview_handler img');
         $.each(listprod, function(index, value) {
@@ -62,9 +62,10 @@ jQuery(function($) {
                 if (this.className == 'i_new') return;
                 $('#trego_quickview_handler').appendTo($(this));
                 $('#trego_quickview_handler img').show();
-                $('#trego_quickview_handler').css('top','50%');
+                $('#trego_quickview_handler').css('top','90%');
                 $('#trego_quickview_handler').css('left','50%');
-                var margin_left = "-17px";
+                $('#trego_quickview_handler').css('font-size','12px');
+                var margin_left = "-55px";
                 var margin_top = "-17px";
                 if($('#trego_quickview_handler').find("img").height()>0)
                     margin_top = '-'+$('#trego_quickview_handler').height()/2+'px';

@@ -386,8 +386,8 @@ input[type="text"]         { -webkit-appearance: none; border-radius: 0; }
 .page-print { background:#fff; padding:25px 30px; text-align:left; }
 .page-empty { padding:20px; text-align:left; }
 .page-popup { padding:25px 30px; text-align:left; }
-.main-container { margin-left: 220px; padding: 79px 10px 0 10px; }
-.main { width:860px; margin:0 auto; min-height:400px; padding: 10px 0; text-align:left; }
+.main-container { margin-left: 220px; padding: 40px 10px 0 10px; }
+.main { /*width:860px;*/ margin:0 40px; min-height:400px; padding: 10px 0; text-align:left; }
 
 /* Base Columns */
 .col-left { float:left; width:195px; padding:0 0 1px; }
@@ -1338,8 +1338,30 @@ tr.summary-details-excluded { font-style:italic; }
 .category-title { border:0; margin:0; }
 .category-image { width:100%; overflow:hidden; margin:0 0 10px; text-align:center; }
 .category-image img { width: 100%; }
-.category-description { margin:0 0 10px; }
-.category-products {}
+.category-description-container {     
+    position: fixed;
+    right: 0px;
+    background: #f1f1f1;
+    width: 250px;
+    height: 100%;
+    padding: 0;
+    margin:0 0 10px; 
+}
+
+.category-description-content { 
+    padding: 20px;
+    color:#000;
+}
+
+.category-description-content .name { 
+    text-transform: uppercase;
+}
+
+.category-products{ }
+.category-products-container{ 
+    margin-right: 260px;
+    margin-left: 35px;
+}
 .toolbar .price {
     float: left;
     margin: 0 40px 5px 0;
@@ -1422,6 +1444,16 @@ ol.products-list li.item div.links-set { border-top: 1px solid #d5d5d5; padding-
     float: left;
     margin-right: 25px;
 }
+
+button.btn-quickview {
+    color:#fff;
+    width:100px;
+}
+
+button.btn-quickview:hover {    
+    color:#000;
+}
+
 .products-list .add-to-links { 
     float: left;
     margin: 7px 0 0 0;
@@ -1843,8 +1875,7 @@ ol.products-list li.item div.links-set { border-top: 1px solid #d5d5d5; padding-
 /* Content Styles ================================================================= */
 .product-name { margin:0; font-size:1em; font-weight:normal; }
 .product-name a { 
-    font: 14px 'PTSans_Caption';
-    text-transform: uppercase;
+    font: 13px 'PTSans_Caption';
     color: #595959;
 }
 ol.products-list .product-name a {
@@ -2817,7 +2848,7 @@ td.for-desktop {
 /* Footer ================================================================================ */
 .footer-container { 
     margin-left: 220px;
-    padding: 90px 10px 24px;
+    padding: 15px 10px 12px;
 }
 .footer { 
     width: 860px;
@@ -2955,7 +2986,7 @@ div.mini-cart-layer {
     text-indent: -9999px;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 40px;
 }
 .top-cart .top-btn-remove:hover {
     background: url("../images/close_2.png") no-repeat 3px 2px #ccc;
@@ -3047,8 +3078,8 @@ div.mini-cart-layer-down{background-position: 0 bottom;}
     position: relative;
     padding: 10px;
     margin: 5px 10px;
-    background: #f1f1f1;
-    border: 1px solid #d5d5d5;
+    /*background: #f1f1f1;
+    border: 1px solid #d5d5d5;*/
 }
 .top-cart .block-content .last {
     
@@ -3097,7 +3128,7 @@ div.mini-cart-layer-down{background-position: 0 bottom;}
     font-family: 'Lato_Regular';
 }
 .top-cart .actions {
-    background-color: #f8f8f8;
+    /*background-color: #f8f8f8;*/
     color: #6d6c67;
     padding: 10px;
     text-align: right;
@@ -3287,8 +3318,8 @@ a.googleplus-icon {
 }
 /* Category View ===============================*/
 .col1-layout .products-grid li.item {
-    width: 31.3%;
-    margin-right: 3%;
+    width: 28%;
+    margin-right: 7%;
 }
 .col2-left-layout .products-grid li.item,
 .col2-right-layout .products-grid li.item,
@@ -3467,6 +3498,9 @@ a.googleplus-icon {
 .category-products .ratings .rating-links {
     display: none;
 }
+.category-products .price{
+    color:#000 !important;
+}
 .new-product-icon {
     background: #2f3538;
     color: #fff;
@@ -3507,6 +3541,7 @@ a.googleplus-icon {
     left: 0;
     top: 10px;
 }
+
 
 /* Button Set */
 ul.cart-button-set{
@@ -4728,7 +4763,7 @@ text-shadow:1px 1px #1a1a1a;padding:0 22px;text-transform:uppercase;cursor:point
 filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";-moz-opacity: 0.3;-khtml-opacity: 0.3;}
 
 #trego_quickview_handler { background-color: #535451; color: #fff; }
-#trego_quickview_handler:hover { background-color: #fff; color: #535451; }
+#trego_quickview_handler:hover { background-color: #000; color: #fff; }
 
 /*===*/
 /* 1024px < width */

@@ -10,8 +10,13 @@
 <?php if($_imgUrl): ?>
     <?php // echo $_imgHtml ?>
 <?php endif; ?>
-<?php if($_description=$this->getCurrentCategory()->getDescription()): ?>
-    <div class="category-description std">
-        <?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?>
-    </div>
-    <?php endif; ?>
+<?php 
+    $_name=$this->getCurrentCategory()->getName();
+    $_description=$this->getCurrentCategory()->getDescription();
+?>
+<div class="category-description-container">
+    <div class="category-description-content">
+    <h2 class="name"><?php echo $_helper->categoryAttribute($_category, $_name, 'name') ?></h2>
+    <p><?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?></p>
+</div>
+</div>

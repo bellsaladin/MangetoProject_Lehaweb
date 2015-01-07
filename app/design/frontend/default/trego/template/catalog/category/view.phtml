@@ -20,6 +20,7 @@
     <?php endif; ?>
     <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
 </div>
+<div class="category-products-container">
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
@@ -33,3 +34,5 @@
 <?php else: ?>
     <?php echo $this->getProductListHtml() ?>
 <?php endif; ?>
+
+</div>

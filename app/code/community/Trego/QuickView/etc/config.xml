@@ -71,7 +71,7 @@
             <viewsetting>
                 <enableview>1</enableview>
                 <dialog_width>890</dialog_width>
-                <title><![CDATA[<i class='icon-eye'></i>]]></title>
+                <title><![CDATA[VOIR >>]]></title>
             </viewsetting>
         </quickview>
     </default>
