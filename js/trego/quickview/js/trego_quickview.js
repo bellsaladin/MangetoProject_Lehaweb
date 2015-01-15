@@ -46,7 +46,7 @@ jQuery(function($) {
             //get reload url
             myhref = $(value).find(selectorObj.aClass);
             if (myhref.length == 0) return;
-            var prodHref = readHref(myhref.attr('href'))[0];
+            var prodHref = readHref(myhref.attr('data-href'))[0];
             prodHref[0] == "\/" ? prodHref = prodHref.substring(1,prodHref.length) : prodHref;
             prodHref=strTrim(prodHref);
 
@@ -91,7 +91,7 @@ jQuery(function($) {
                 $(this).hide();
             });
         //insert quickview popup
-        $('#trego_quickview_handler').fancybox({
+        $('#trego_quickview_handler, .ajaxQuickview').fancybox({
             'type'              : 'ajax',
             'scrolling'         : 'auto',
             'padding'           : 0,
@@ -103,6 +103,7 @@ jQuery(function($) {
                 $('#fancybox-content').height('auto');
             }
         });
+
     }
 
     //end base function

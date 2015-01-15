@@ -147,6 +147,8 @@ class Mage_Catalog_Model_Product_Url extends Varien_Object
         return $this->getUrl($product, $params);
     }
 
+    
+
     /**
      * Format Key for URL
      *

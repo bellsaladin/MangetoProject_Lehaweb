@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+     <modules>
+        <bse_Catalog>
+            <active>true</active>
+            <codePool>local</codePool>
+            <!--depends>
+                <Mage_Core/>
+            </depends-->
+        </bse_Catalog>
+     </modules>
+</config>

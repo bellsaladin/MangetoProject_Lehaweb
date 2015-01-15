@@ -1416,6 +1416,22 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         return $this->getUrlModel()->getProductUrl($this, $useSid);
     }
 
+
+    public function getProductQuickViewUrl( $useSid = null)
+    {        
+        $url = $this->getProductUrl($useSid);
+        if($this->getCategory()){
+            $seachStr = strtolower($this->getCategory()->getName());
+            $replaceStr= 'quickview/index/view/path';
+            return str_replace($seachStr,$replaceStr,$url);
+        }else{
+            $seachStr = 'index.php/';
+            $replaceStr= 'index.php/quickview/index/view/path/';
+            return str_replace($seachStr,$replaceStr,$url);
+        }
+        
+    }
+
     /**
      * Retrieve URL in current store
      *

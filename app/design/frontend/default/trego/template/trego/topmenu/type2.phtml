@@ -95,12 +95,12 @@ function showProducts($_category, $custom_html=''){
     foreach ($collection as $product) {
         //var_dump( $product );        
         $html .= '<li class="level">';
-        $url = $product->getProductUrl();
+        $url = $product->getProductQuickViewUrl();
         if(Mage::app()->getFrontController()->getRequest()->isSecure())
             $url = str_replace('http://', 'https://', $url ); 
-        $html .= '<a href ="'.$url.'"><div style="border:0;">';
+        $html .= '<a class="ajaxQuickview" href ="'.$url.'"><div style="border:0;">';
         $html .= '<div style="width:190px; height:200px; background-position:center; background-size:cover; background-image:url(\''. Mage::helper('catalog/image')->init($product, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(350) .'\')"></div>';
-        $html .= '<div style="padding:5px; width: 180px; margin-top: 3px;background-color: #fff;">';
+        $html .= '<div style="padding:5px; width: 180px; margin-top: 4px;background-color: #fff;">';
         $html .= '<table><tr>';
         $html .= '<td style="max-width: 120px;"><div class="name">'. $product->getName() .'</div></td>';
         $html .= '<td style="vertical-align: middle;"><div style="text-align:right; width: 50px; vertical-align:middle;" class="price">'. showProductPrice($product) .'</div></td>';

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+       <bse_Catalog>
+            <version>1.0.1</version>
+       </bse_Catalog>
+   </modules>
+   <global>
+      <blocks>
+       <configurable>
+                <class>Bse_Configurable_Block</class>
+       </configurable>
+       <catalog>
+           <rewrite>
+                <product_view_type_configurable>bse_Catalog_Block_Product_View_Type_Configurable</product_view_type_configurable>
+           </rewrite>
+        </catalog>
+      </blocks>
+   </global>
+</config>
+
