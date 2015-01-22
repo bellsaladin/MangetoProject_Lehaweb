@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header-bground">
             <div class="header-sidebar">
-                <div id="toggleMenu" style="float: right;background-color: #000;width: 18px;height: 21px;margin-right: -20px;color: #fff;margin-top: 50px;padding: 0;">
+                <div id="toggleMenu" style="float: right;background-color: #000;width: 18px;height: 21px;margin-right: -20px;color: #fff;margin-top: 90px;padding: 0;">
                     <a style="color:#fff;font-size: 9px;font-weight: bold;" href="javascript::void">&gt;</a>
                 </div>
                 <script type="text/javascript">
@@ -22,7 +22,6 @@
                             if(jQuery(".fullscreen-container").length > 0){
                                 jQuery(".fullscreen-container").animate({marginLeft: '-=220'},{ duration: 200, queue: false });
                             }
-                            shown = false;
                         }
 
                         function showLeftSideBar(){
@@ -31,7 +30,6 @@
                             if(jQuery(".fullscreen-container").length > 0){
                                 jQuery(".fullscreen-container").animate({marginLeft: '+=220'},{ duration: 200, queue: false });
                             }
-                            shown = true;
                         }
                     });
                 </script>
