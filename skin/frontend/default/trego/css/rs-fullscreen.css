@@ -40,11 +40,18 @@ html {
 
 	.fullscreen-container {
 		width:100% !important;
+		margin-left:220px;
 		position:fixed;
-        left: 0;
+        left: 0px;
         top: 0;
 		padding:0;
 		height:100%;
+	}
+
+	@media only screen and (min-width: 0px) and (max-width: 1025px){
+		.fullscreen-container {
+			margin-left: 0px !important;
+		}
 	}
 
 

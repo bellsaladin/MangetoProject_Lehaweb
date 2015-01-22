@@ -558,6 +558,8 @@ website:   	http://www.themepunch.com
 
 
 .tp-bullets								{	z-index:1000; position:absolute;
+												left: auto !important;
+												right: 400px !important;
 												-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 												-moz-opacity: 1;
 												-khtml-opacity: 1;

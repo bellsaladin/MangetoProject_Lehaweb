@@ -23,7 +23,7 @@ button.button:active span { background: #2f3538; color: #ffffff; }
         }
 .block .block-title strong {
         }
-.page, .header, .header .header-topbar, .header h1.page-title { background-color: #fff; }
+.page, .header, .header .header-topbar, .header h1.page-title { /*background-color: #fff;*/ }
 .header .header-bground { background-color: #f1f1f1; }
 .header .form-search input.input-text { color: #74736a; border-color: #EDEDED; }
 .header .form-search input.input-text:hover { color: #74736a; border-color: #c5c5c5; }

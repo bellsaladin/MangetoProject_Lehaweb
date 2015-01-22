@@ -7,17 +7,32 @@
                 </div>
                 <script type="text/javascript">
                     jQuery(document).ready(function(){
-                        var shown = true;
                         jQuery('#toggleMenu').click(function(){
-                            //alert('tet');
+                            var shown = (jQuery(".header-sidebar").css('left') == '-220px' )? false: true;
                             if(shown){
-                                jQuery(".header-sidebar").animate({left: '-=220'},200);
-                                shown = false;
-                            }else{   
-                                jQuery(".header-sidebar").animate({left: '+=220'},200);
-                                shown = true;
+                                hideLeftSideBar();
+                            }else{
+                                showLeftSideBar();
                             }
                         });
+
+                        function hideLeftSideBar(){
+                            jQuery(".header-sidebar").animate({left: '-=220'}, { duration: 200, queue: false });
+                            jQuery(".main-container").animate({marginLeft: '-=220'},{ duration: 200, queue: false });
+                            if(jQuery(".fullscreen-container").length > 0){
+                                jQuery(".fullscreen-container").animate({marginLeft: '-=220'},{ duration: 200, queue: false });
+                            }
+                            shown = false;
+                        }
+
+                        function showLeftSideBar(){
+                            jQuery(".header-sidebar").animate({left: '+=220'}, { duration: 200, queue: false });
+                            jQuery(".main-container").animate({marginLeft: '+=220'}, { duration: 200, queue: false });
+                            if(jQuery(".fullscreen-container").length > 0){
+                                jQuery(".fullscreen-container").animate({marginLeft: '+=220'},{ duration: 200, queue: false });
+                            }
+                            shown = true;
+                        }
                     });
                 </script>
                 
@@ -46,7 +61,7 @@
             </div>
             <a href="javascript:void(0)" class="filterproducts-link">&nbsp;</a>
         </div>
-        <div style="float:right;border-bottom: 2px solid #000;">
+        <div style="float:right;border-bottom: 2px solid #000; background:#f1f1f1;">
             <div id="myspace"><a href="#">MON ESPACE</a></div>
             <?php echo $this->getChildHtml('cart_cartheader') ?>
         </div>
