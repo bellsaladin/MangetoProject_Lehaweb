@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Bse_BodyMeasurementsPage>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bse_BodyMeasurementsPage>
+    </modules>    
+</config>

@@ -1656,7 +1656,7 @@ button.btn-quickview:hover {
 .product-collateral .box-collateral {  }
 
 /* Product Images */
-.product-view .product-img-box { float:left; width:40%; position: relative; margin-bottom: 50px; }
+.product-view .product-img-box { float:left; width:45%; position: relative; margin-bottom: 50px; }
 .col3-layout .product-view .product-img-box { float:none; margin:0 auto; }
 .product-view .product-img-box .product-image { margin:0 0 5px; }
 .product-view .product-img-box .product-image-zoom { position:relative; width:265px; height:265px; overflow:hidden; z-index:9; }
@@ -1688,7 +1688,7 @@ button.btn-quickview:hover {
 
 /* Product Shop */
 .product-view .product-shop { float:right; width:330px; }
-.col1-layout .product-view .product-shop { float:right; width:55%; }
+.col1-layout .product-view .product-shop { float:right; width:50%; }
 .col3-layout .product-view .product-shop { float:none; width:auto; }
 .product-view .product-shop .product-name { margin:0 0 5px; }
 .product-view .product-shop .product-name h1 {
@@ -5857,4 +5857,137 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
     .box-scroll { position: static; }
     .header div.social-icons { position: static; margin-left: 30px; }
     .header div.copyrights { position: static; margin-left: 30px; margin-top: 85px; }
+}
+
+.attributeOption{
+    cursor: pointer; background-color:#fff; width:90px; height:55px; font-size:14px; text-align:center; float: left; margin: 0px 5px;
+    border: 1px solid #eee;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    color:#000;
+    font-size:11px;
+    padding-top: 20px;
+}
+
+.attributeOption_selected{
+    border-top: 2px solid #000;
+}
+
+.tissuPreview{
+    width:180px;
+    height:140px;
+    background-size: cover;
+    float:left;
+}
+
+.chooseTissu{
+    padding:60px;
+}
+
+.tissuDescription{
+    margin: 35px 0 0 190px;
+}
+
+.getSample{
+    padding: 4px 8px;
+    margin: 10px;
+    font-size: 11px;
+}
+
+#body_measurments .input-text{
+    display: inline-block;
+    width:200px;
+}
+#body_measurments .title{
+    color:#000;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#body_measurments label, .label-forInput{
+    display: inline-block;    
+    margin-top: 8px;
+    font-weight: normal;
+    color:#000;
+    text-transform: uppercase;
+}
+
+#body_measurments .label-forInput{
+    width:90px;
+}
+
+#body_measurments .secondLevel .label-forInput{
+    width:200px;
+    text-align: right;
+    margin-right: 8px;
+}
+#body_measurments .input-text{ padding: 10px 5px;}
+#body_measurments .secondLevel .input-text{
+    width:80px;
+}
+
+#body_measurments .text-gray{
+    color:#999;
+}
+
+.containerDiv { 
+  width:auto;
+}
+.rowDiv {
+  
+  background-color: #fff;
+  width:auto;
+  margin-top: 18px;
+}
+
+.cellDiv {
+  border: 1px solid #000;
+  border-right: none;
+  display: table-cell;
+  width:50px;
+  height:44px;
+  padding-right: 4px;
+  text-align: center;  
+  background: center no-repeat;
+}
+.noBorder {
+  border: none;
+}
+
+.lastCell {
+  border-right: 1px solid #000;
+}
+
+.cyanBorder {
+  border: 2px solid #56dee7;
+}
+
+.tissu-types{
+    margin-right: 15px;
+}
+.tissu-types .option{
+    cursor:pointer;
+    background: #eee;
+    height:130px;
+    width:75px;
+    border-bottom : 2px solid #000;
+    text-align: center;
+    font-size: 14px;
+    color:#000;
+}
+
+.tissu-types .selected{
+    
+    background: url('../images/icon_selected.png') no-repeat #FBFBFB;
+         background-position: center 80%; 
+}
+
+.tissu-types .option p{    
+    padding-top: 40px;
+}
+
+.tissu-types .last{
+    border-bottom : none;
 }

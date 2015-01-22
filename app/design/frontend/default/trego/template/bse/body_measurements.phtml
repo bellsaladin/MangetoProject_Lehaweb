@@ -1,0 +1,118 @@
+<div class="box simple_contact">
+ 
+<form id="simple_contact_form" name="simple_contact_form" action="<?php echo $this->getUrl('inchoo-simplecontact/') ?>index/sendemail" method="post">
+ 
+    <fieldset class="group-select" id="body_measurments">
+        <h4 class="title">Informations générales</h4>
+        <ul class="form-list">
+            <li>
+                <label for="poids" class="required label-forInput" style="display: inline-block !important;">Poids</label>
+                
+                <input name="measurements[poids]" value="" class="input-text required-entry" type="text">
+                
+            </li>
+            <li>
+                <label for="taille" class="required label-forInput" style="display: inline-block !important;">TAILLE</label>
+                
+                <input name="measurements[taille]" value="" class="input-text required-entry" type="text">
+                
+            </li>
+            <li>
+                
+                <ul class="secondLevel">
+                    <li>                        
+                        <label for="poids" class="required label-forInput label-forInput" style="display: inline-block !important;"> <span style="float:left;">Taille habituelle</span> HAUT</label>
+                        
+                        <input name="measurements[poids]" value="" class="input-text required-entry" type="text">
+                        
+                    </li>  
+                    <li>
+                        <label for="bas" class="required label-forInput label-forInput" style="display: inline-block !important;">BAS</label>
+                        
+                        <input name="measurements[bas]" value="" class="input-text required-entry" type="text">
+                    </li>   
+                    <li>
+                        <label for="soutientGorge" class="required label-forInput label-forInput-secondLevel" style="display: inline-block !important;">SOUTIENT GORGE</label>
+                        
+                        <input name="measurements[soutientGorge]" value="" class="input-text required-entry" type="text">
+                        
+                    </li>           
+                </ul>
+            </li>
+        </ul>
+        <h4 class="title">Morphologie</h4>
+        <table>
+            <tr>
+                <td>
+                    <div class="containerDiv">
+                      <div class="rowDiv">
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon1.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon1.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon1.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon1.png');?>)"></div>
+                        <div class="cellDiv lastCell" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon1.png');?>)"></div>
+                        <div class="cellDiv noBorder"></div>
+                        <div class="cellDiv cyanBorder" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon1.png');?>)"></div>            
+                      </div>
+                      <div class="rowDiv">
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon2.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon2.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon2.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon2.png');?>)"></div>
+                        <div class="cellDiv lastCell" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon2.png');?>)"></div>
+                        <div class="cellDiv noBorder" style="background-image:url(<?php echo $this->getSkinUrl('images/arrow.png');?>)"></div>
+                        <div class="cellDiv cyanBorder" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon2.png');?>)"></div>            
+                      </div>
+                      <div class="rowDiv">
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon3.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon3.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon3.png');?>)"></div>
+                        <div class="cellDiv" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon3.png');?>)"></div>
+                        <div class="cellDiv lastCell" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon3.png');?>)"></div>
+                        <div class="cellDiv noBorder"></div>
+                        <div class="cellDiv cyanBorder" style="background-image:url(<?php echo $this->getSkinUrl('images/measurements/icon3.png');?>)"></div>            
+                      </div>
+                    </div>
+                </td>
+                <td>
+                    <div style="margin:20px 0 0 90px">
+                        <div style="margin-left:20px;border:1px #ccc solid; width:120px; height:120px;"></div><br/>
+                        <input type="button" style="background-color:#eee; padding:10px; border:0; text-transform:uppercase" value="uploader une  photo">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <p class="info">Conseils: <span class="text-gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit proin in aliquet. <br/>Vestibulum rutrum lacus placerat magna congue hendrerit.</span></p><br/>
+        <h4 class="title">Mensurations</h4>
+        <table>
+            <tr>
+                <td>
+                    <ul class="form-list" style="float:left;">
+                        <li>
+                            <label for="cou" class="required label-forInput" style="display: inline-block !important;">Cou</label>                            
+                            <input name="measurements[cou]" value="" class="input-text required-entry" type="text">
+                        </li>
+                        <li>
+                            <label for="poitrine" class="required label-forInput" style="display: inline-block !important;">Poitrine</label>
+                            <input name="measurements[poitrine]" value="" class="input-text required-entry" type="text">                            
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <div style="margin:-15px 0 0 60px">
+                        <h5 class="title">REGARDEZ NOTRE VIDEO EXPLICATIVE</h5><br/>
+                        <iframe src="//www.youtube.com/embed/qn0fz9a0UXU?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </td>
+
+            </tr>
+        </table>        
+    </fieldset>
+    <!--<div class="button-set">
+        <p class="required">* Required Fields</p>
+        <button class="form-button" type="submit"><span>Submit</span></button>
+ 
+    </div>-->
+</form>
+ 
+</div>

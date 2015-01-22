@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Bse_BodyMeasurementsPage>
+            <version>1.0.0</version>
+        </Bse_BodyMeasurementsPage>
+    </modules>   
+ 
+    <frontend>
+        <routers>
+            <JustSomeFreeRouterNameHereNo1>
+                <use>standard</use>
+                <args>
+                    <module>Bse_BodyMeasurementsPage</module>
+                    <frontName>body_measurments</frontName>
+                </args>
+            </JustSomeFreeRouterNameHereNo1>
+        </routers>
+    </frontend>    
+</config>

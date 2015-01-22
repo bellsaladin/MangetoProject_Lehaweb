@@ -13,6 +13,7 @@
 /* Etalage container (large thumb + small thumbs): */
 #etalage{
 	display: none;
+	margin-top: 40px;
 }
 
 /* Large thumbnail: */

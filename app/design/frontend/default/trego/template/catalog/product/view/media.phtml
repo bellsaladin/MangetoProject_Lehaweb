@@ -35,10 +35,10 @@
     </li>
 </ul>
 <?php endif; ?>
-<div class="etalage-control">
+<!--<div class="etalage-control">
     <a href="javascript:void(0)" class="etalage-prev">Previous</a>
     <a href="javascript:void(0)" class="etalage-next">Next</a>
-</div>
+</div>-->
 <script type="text/javascript">
     jQuery(document).ready(function(){
         reloadEtalage();
@@ -47,18 +47,18 @@
         jQuery(window).resize(function(e){
             reloadEtalage();
         });
-        jQuery('.etalage-prev').on('click', function(){
+        /*jQuery('.etalage-prev').on('click', function(){
             etalage_previous();
         });
 
         jQuery('.etalage-next').on('click', function(){
             etalage_next();
-        });
+        }); */
         jQuery("a.fancy-images_<?php echo $rnd_str; ?>").fancybox();
         function reloadEtalage(){
-            var width = jQuery('.product-view .product-img-box').width();
-            var src_img_width = 1000;
-            var src_img_height = 1000;
+            var width = jQuery('.product-view .product-img-box').width() - 100;
+            var src_img_width = 600;
+            var src_img_height = 400;
             var ratio_width = <?php echo $ratio_width; ?>;
             var ratio_height = <?php echo $ratio_height; ?>;
             
@@ -75,7 +75,7 @@
                 zoom_area_height: height,
                 zoom_enable: zoom_enabled,
                 smallthumb_hide_single: false,
-                smallthumbs_position: 'bottom',
+                smallthumbs_position: 'left',
                 show_icon: false,
                 autoplay: false
             });

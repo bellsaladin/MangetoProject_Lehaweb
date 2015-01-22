@@ -1,85 +1,114 @@
 <?php $_helper = $this->helper('catalog/output'); ?>
-<?php $_product = $this->getProduct(); ?>
+<?php 
+$_product = $this->getProduct(); 
+
+$categoryIds = $_product->getCategoryIds();
+$category = null;
+foreach($categoryIds as $categoryId) {
+    $category = Mage::getModel('catalog/category')->load($categoryId);
+}
+?>
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view">
     <div class="product-essential">
-
-        <div class="product-img-box">
+        
+        <div class="product-img-box">            
+            <div>
+                <a style="color: #fff;background: #000;padding: 8px 22px; width:85px;" href="<?php echo $category->getUrl(); ?>">RETOUR &gt;&gt;</a>
+                <br/><br/>
+                <a style="color: #fff;background: #000;padding: 8px 22px; width:120px; float:left" href="#">ENREGISTRER LA SELECTION &gt;&gt;</a>
+                <a style="color: #fff;background: #000;padding: 8px 22px; width:195px; float:right" href="#"> PARTAGER SUR FACEBOOK &gt;&gt;</a>
+            </div>
             <?php echo $this->getChildHtml('media') ?>
         </div>
 
         <div class="product-shop">
             <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-			<div class="no-display">
-				<input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
-				<input type="hidden" name="related_product" id="related-products-field" value="" />
-			</div>
-            <div class="product-name">
-                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-            </div>
-            
-            <?php echo $this->getChildHtml('alert_urls') ?>
-            <?php echo $this->getChildHtml('product_type_data') ?>
-            <?php if ($this->canEmailToFriend()): ?>
-                <p class="email-friend"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>
-            <?php endif; ?>
-            <?php echo $this->getTierPriceHtml() ?>
-            <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
-            <?php if ($_product->isAvailable()): ?>
-                <p class="availability in-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In Stock') ?></span></p>
-            <?php else: ?>
-                <p class="availability out-of-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of Stock') ?></span></p>
-            <?php endif; ?>
-            <p class="product-sku"><?php echo $this->__('Product Code:') ?> <span><?php echo $_product->getSku() ?></span></p>
-            
-            <?php echo $this->getChildHtml('extrahint') ?>
-            <?php echo $this->getChildHtml('other');?>
-
-            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-            <?php endif;?>
-
-            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-            <?php endif;?>
-
-            <?php if (!$_product->isSaleable()): ?>
-                <div class="add-to-box">
-                    <?php echo $this->getChildHtml('addto') ?>
+            <table>
+             <tr>  
+              <td style="width: 50px">
+                <div class="tissu-types">
+                    <div class="option"><p>Popeline Coton</p></div>
+                    <div class="option selected"><p>Velour</p></div>
+                    <div class="option last"><p>Crêpe de soie</p></div>
                 </div>
-            <?php else://if (!$this->hasOptions()):?>
-                <div class="add-to-box">
-                    <?php if($_product->isSaleable()): ?>
-                        <?php echo $this->getChildHtml('addtocart') ?>
+                <script type="text/javascript">
+                    jQuery( document ).ready(function() {
+                        jQuery('.tissu-types .option').click(function(){
+                            jQuery('.tissu-types .option').removeClass('selected');
+                            jQuery( this ).addClass('selected');
+                        });
+                    });
+                </script>
+              </td>
+              <td>
+    			<div class="no-display">
+    				<input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+    				<input type="hidden" name="related_product" id="related-products-field" value="" />
+    			</div>
+                <div class="product-name">
+                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    <?php //echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                    <?php if ($_product->isAvailable()): ?>
+                    <p class="availability in-stock"><span><?php echo $this->__('In Stock') ?></span></p>
+                    <?php else: ?>
+                    <p class="availability out-of-stock"><span><?php echo $this->__('Out of Stock') ?></span></p>
                     <?php endif; ?>
-                    <?php echo $this->getChildHtml('addto') ?>
                 </div>
-                <?php echo $this->getChildHtml('extra_buttons') ?>
-            <?php endif; ?>
+                
+                <div class="product-description">
+                    <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
+                </div>
+                <center><hr style="width:40%; margin: 25px 0"/></center>
+                <?php echo $this->getTierPriceHtml() ?>
+                <?php //echo $this->getChildHtml('alert_urls') ?>            
+                <?php if ($this->canEmailToFriend()): ?>
+                    <!--<p class="email-friend"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>-->
+                <?php endif; ?>                        
+                <!--<p class="product-sku"><?php echo $this->__('Product Code:') ?> <span><?php echo $_product->getSku() ?></span></p>-->
+                
+                <?php echo $this->getChildHtml('extrahint') ?>
+                <?php echo $this->getChildHtml('other');?>
+
+                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif;?>
+
+                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                <?php endif;?>
+
+                <div>
+                        <div style="float:left;margin-top:10px; font-size:14px"> Modèle + options + livraison en france :  </div>
+                        <div style="float:right"><?php echo $this->getChildHtml('product_type_data') ?></div>
+                </div>
+                <br/><br/>
+                <?php if (!$_product->isSaleable()): ?>
+                    <div class="add-to-box">
+                        <?php echo $this->getChildHtml('addto') ?>
+                    </div>
+                <?php else://if (!$this->hasOptions()):?>
+                    <div class="add-to-box">
+                        <?php if($_product->isSaleable()): ?>
+                            <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php endif; ?>
+                        <?php echo $this->getChildHtml('addto') ?>
+                    </div>
+                    <?php echo $this->getChildHtml('extra_buttons') ?>
+                <?php endif; ?>
+              </td>
+             </tr>
+            </table> 
             </form>
 
+            
+
             <div class="product-collateral akordeon">
-        <?php if ($_product->getShortDescription()):?>
-                <div class="short-description akordeon-item">
-                    <div class="akordeon-item-head">
-                        <div class="akordeon-item-head-container">
-                            <div class="akordeon-heading">
-                                <?php echo $this->__('Description') ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="akordeon-item-body">
-                        <div class="akordeon-item-content">
-                            <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
-                        </div>
-                    </div>
-                </div>
-        <?php endif;?>
         <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
-                <div class="box-collateral <?php echo "box-{$alias}"?> akordeon-item">
+                <!--<div class="box-collateral <?php echo "box-{$alias}"?> akordeon-item">
                     <?php if ($title = $this->getChildData($alias, 'title')):?>
                     <div class="akordeon-item-head">
                         <div class="akordeon-item-head-container">
@@ -90,11 +119,11 @@
                     </div>
                     <?php endif;?>
                     <?php echo $html; ?>
-                </div>
+                </div>-->
         <?php endforeach;?>
-                <?php echo $this->getChildHtml('reviews') ?>
-                <?php echo $this->getChildHtml('product_additional_data') ?>
-                <?php echo $this->getChildHtml('upsell_products') ?>
+                <?php //echo $this->getChildHtml('reviews') ?>
+                <?php //echo $this->getChildHtml('product_additional_data') ?>
+                <?php //echo $this->getChildHtml('upsell_products') ?>                
             </div>
     </div>
 

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bse_CategoryCustomAttributes>
+            <version>0.0.1</version>
+        </Bse_CategoryCustomAttributes>
+    </modules>
+    <global>
+        <resources>
+            <categorycustomattributes_setup>
+                <setup>
+                    <module>Bse_CategoryCustomAttributes</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>default_setup</use>
+                </connection>
+            </categorycustomattributes_setup>
+        </resources>
+    </global>
+</config>
