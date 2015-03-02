@@ -24,15 +24,21 @@
                 <twitter_visible>1</twitter_visible>
                 <twitter_url>http://www.twitter.com</twitter_url>
                 <twitter_sortorder>2</twitter_sortorder>
-                <linkedin_visible>1</linkedin_visible>
-                <linkedin_url>http://www.linkedin.com</linkedin_url>
-                <linkedin_sortorder>3</linkedin_sortorder>
+                <youtube_visible>1</youtube_visible>
+                <youtube_url>http://www.youtube.com</youtube_url>
+                <youtube_sortorder>3</youtube_sortorder>
+                <pinterest_visible>1</pinterest_visible>
+                <pinterest_url>http://www.pinterest.com</pinterest_url>
+                <pinterest_sortorder>4</pinterest_sortorder>
+                <instagram_visible>1</instagram_visible>
+                <instagram_url>http://www.instagram.com</instagram_url>
+                <instagram_sortorder>5</instagram_sortorder>
                 <flickr_visible>1</flickr_visible>
                 <flickr_url>http://www.flickr.com</flickr_url>
-                <flickr_sortorder>4</flickr_sortorder>
+                <flickr_sortorder>6</flickr_sortorder>
                 <googleplus_visible>1</googleplus_visible>
                 <googleplus_url>http://plus.google.com</googleplus_url>
-                <googleplus_sortorder>5</googleplus_sortorder>
+                <googleplus_sortorder>7</googleplus_sortorder>
             </options>
         </socialicons>
     </default>

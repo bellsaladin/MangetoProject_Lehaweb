@@ -40,17 +40,18 @@ html {
 
 	.fullscreen-container {
 		width:100% !important;
-		margin-left:220px;
 		position:fixed;
-        left: 0px;
+        left: 0;
         top: 0;
 		padding:0;
 		height:100%;
+		margin-left:220px;
 	}
 
 	@media only screen and (min-width: 0px) and (max-width: 1025px){
 		.fullscreen-container {
 			margin-left: 0px !important;
+			margin-top: 185px !important;
 		}
 	}
 
@@ -67,6 +68,20 @@ html {
 .bottomtexts-example p,
 #topheader-to-offset p	{ font-size:13px; line-height:18px; color:#fff; font-family:Arial; font-weight:300;}
 
-.std, .footer-container {
-    display: none;
+.footer-container {
+	background: transparent !important;
+}
+
+.tp-caption{
+	font-family: Bitter_Regular !important;
+	font-size:10px !important;
+}
+
+.tp-caption .title {
+	font-family: Bitter_Regular !important;
+	font-size:11px !important;
+}
+.tp-caption .link{
+	float:right;
+	color:#000;
 }

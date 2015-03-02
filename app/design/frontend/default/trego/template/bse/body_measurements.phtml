@@ -1,43 +1,79 @@
-<div class="box simple_contact">
+<br/>
+<div style="margin-right: 260px;">
  
-<form id="simple_contact_form" name="simple_contact_form" action="<?php echo $this->getUrl('inchoo-simplecontact/') ?>index/sendemail" method="post">
+<form name="form_measurements" action="#" method="post">
  
     <fieldset class="group-select" id="body_measurments">
+        <div style="border: 1px solid red; padding: 10px;">
+            <h4 class="title">Informations obligatoires</h4>
+            <div style="border: 1px solid red; padding: 10px; margin: 10px;">
+                <p class="info">Conseils: <span class="text-gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit proin in aliquet. <br/>Vestibulum rutrum lacus placerat magna congue hendrerit.</span></p><br/>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <label for="poids" class="required label-forInput" style="display: inline-block !important;">Poids</label>
+                    </td>
+                    <td style="padding-top: 10px; padding-right: 10px">
+                        <select name="measurements[poids]" value="" class="input-text required-entry" style="width: 100px; height:30px" required>
+                            <option value="">...</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label for="taille" class="required label-forInput" style="display: inline-block !important;">TAILLE</label>
+                    </td>
+                    <td style="padding-top: 10px; padding-right: 10px">
+                        <select name="measurements[taille]" value="" class="input-text required-entry" style="width: 100px; height:30px" required>
+                            <option value="">...</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+
+                    </td>
+                    <td>
+                        <label for="soutientGorge" class="required label-forInput label-forInput-secondLevel" style="display: inline-block !important;">SOUTIENT GORGE</label>
+                    </td>
+                    <td style="padding-top: 10px; padding-right: 10px">
+                        <select name="measurements[soutientGorge]" value="" class="input-text required-entry" style="width: 100px; height:30px " required>
+                            <option value="">...</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br/>
+        <hr style="width: 50%; margin: 0 auto; border:1px solid #000"/><br/>
+        <br/>
         <h4 class="title">Informations générales</h4>
+        <div style="border: 1px solid red; padding: 10px;">
+            <p class="info">Conseils: <span class="text-gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit proin in aliquet. <br/>Vestibulum rutrum lacus placerat magna congue hendrerit.</span></p><br/>
+        </div>
         <ul class="form-list">
             <li>
-                <label for="poids" class="required label-forInput" style="display: inline-block !important;">Poids</label>
-                
-                <input name="measurements[poids]" value="" class="input-text required-entry" type="text">
-                
-            </li>
-            <li>
-                <label for="taille" class="required label-forInput" style="display: inline-block !important;">TAILLE</label>
-                
-                <input name="measurements[taille]" value="" class="input-text required-entry" type="text">
-                
-            </li>
-            <li>
-                
                 <ul class="secondLevel">
-                    <li>                        
+                    <li>
                         <label for="poids" class="required label-forInput label-forInput" style="display: inline-block !important;"> <span style="float:left;">Taille habituelle</span> HAUT</label>
-                        
-                        <input name="measurements[poids]" value="" class="input-text required-entry" type="text">
-                        
-                    </li>  
+
+                        <input name="measurements[poids]" value="" class="input-text required-entry" type="text"required/ >
+
+                    </li>
                     <li>
                         <label for="bas" class="required label-forInput label-forInput" style="display: inline-block !important;">BAS</label>
-                        
-                        <input name="measurements[bas]" value="" class="input-text required-entry" type="text">
-                    </li>   
-                    <li>
-                        <label for="soutientGorge" class="required label-forInput label-forInput-secondLevel" style="display: inline-block !important;">SOUTIENT GORGE</label>
-                        
-                        <input name="measurements[soutientGorge]" value="" class="input-text required-entry" type="text">
-                        
-                    </li>           
+
+                        <input name="measurements[bas]" value="" class="input-text required-entry" type="text" required/>
+                    </li>
                 </ul>
+            </li>
+            <li>
+                <label for="cou" class="required label-forInput" style="display: inline-block !important;">COU</label>
+
+                <input name="measurements[cou]" value="" class="input-text required-entry" type="text" required/>
+
             </li>
         </ul>
         <h4 class="title">Morphologie</h4>
@@ -82,31 +118,33 @@
                 </td>
             </tr>
         </table>
-        <p class="info">Conseils: <span class="text-gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit proin in aliquet. <br/>Vestibulum rutrum lacus placerat magna congue hendrerit.</span></p><br/>
+        <br/>
         <h4 class="title">Mensurations</h4>
+        <div style="border: 1px solid red; padding: 10px;">
+            <p class="info">Conseils: <span class="text-gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit proin in aliquet. <br/>Vestibulum rutrum lacus placerat magna congue hendrerit.</span></p><br/>
+        </div>
         <table>
             <tr>
                 <td>
                     <ul class="form-list" style="float:left;">
                         <li>
                             <label for="cou" class="required label-forInput" style="display: inline-block !important;">Cou</label>                            
-                            <input name="measurements[cou]" value="" class="input-text required-entry" type="text">
+                            <input name="measurements[cou]" value="" class="input-text required-entry" type="text" required/>
+                            <div style=" width: 65px; height: 36px; display: inline-block; background: #DDDFE2; padding: 0; margin-left: 32px; float: right;"></div>
                         </li>
                         <li>
                             <label for="poitrine" class="required label-forInput" style="display: inline-block !important;">Poitrine</label>
-                            <input name="measurements[poitrine]" value="" class="input-text required-entry" type="text">                            
+                            <input name="measurements[poitrine]" value="" class="input-text required-entry" type="text" required>
+                            <div style="width: 65px; height: 36px; display: inline-block; background: #DDDFE2; padding: 0; margin-left: 32px; float: right;"></div>
                         </li>
                     </ul>
                 </td>
-                <td>
-                    <div style="margin:-15px 0 0 60px">
-                        <h5 class="title">REGARDEZ NOTRE VIDEO EXPLICATIVE</h5><br/>
-                        <iframe src="//www.youtube.com/embed/qn0fz9a0UXU?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                </td>
-
             </tr>
-        </table>        
+        </table>
+        <div>
+            <hr style="width: 50%; margin: 0 auto; border:1px solid #000"/><br/>
+            <button type="submit" style="display:block;margin:0 auto; text-align: center; color: #fff;background: #000;padding: 10px 30px;width: 160px;border: 0;">COMMANDER &gt;&gt;</button>
+        </div>
     </fieldset>
     <!--<div class="button-set">
         <p class="required">* Required Fields</p>

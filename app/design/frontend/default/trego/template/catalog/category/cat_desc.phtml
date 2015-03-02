@@ -18,13 +18,13 @@
 ?>
 <div class="category-description-container">
     <div id="toggleCategoryDescription" style="float: left;background-color: #000;width: 14px;height: 21px;margin-left: -14px;color: #fff;margin-top: 50px;padding: 0;">
-        <a style="color:#fff;font-size: 9px;font-weight: bold;" href="javascript::void"> &lt;</a>
+        <a style="color:#fff;font-size: 9px;font-weight: bold;padding-left: 3px;" href="javascript::void"> &lt;</a>
     </div>
 
     <script type="text/javascript">
         jQuery( document ).ready(function() {
             jQuery('#toggleCategoryDescription').click(function(){
-                var shown = (jQuery(".category-description-container").css('right') == '-250px' )? false: true;
+                var shown = (jQuery(".category-description-container").css('right') == '-228px' )? false: true;
                 if(shown){
                     hideCategoryDescriptionBar();
                 }else{
@@ -33,21 +33,21 @@
             });
 
             function hideCategoryDescriptionBar(){
-                jQuery(".category-description-container").animate({right: '-=250'}, { duration: 200, queue: false });
-                jQuery(".category-products-container").animate({marginRight: '-=250'}, { duration: 200, queue: false });
+                jQuery(".category-description-container").animate({right: '-=228'}, { duration: 200, queue: false });
+                jQuery(".category-products-container").animate({marginRight: '-=228'}, { duration: 200, queue: false });
             }
 
             function showCategoryDescriptionBar(){
-                jQuery(".category-description-container").animate({right: '+=250'}, { duration: 200, queue: false });
-                jQuery(".category-products-container").animate({marginRight: '+=250'}, { duration: 200, queue: false });
+                jQuery(".category-description-container").animate({right: '+=228'}, { duration: 200, queue: false });
+                jQuery(".category-products-container").animate({marginRight: '+=228'}, { duration: 200, queue: false });
             }
 
         });
     </script>
 
     <div class="category-description-content">
-    <h2 class="name"><?php echo $_helper->categoryAttribute($_category, $_name, 'name') ?></h2>
-    <p><?php echo $_helper->categoryAttribute($_category, $_description, 'description'); ?></p>
+    <h5 class="name"><?php echo $_helper->categoryAttribute($_category, $_name, 'name') ?></h2>
+    <p style="text-align: justify; color:#2A2A2A"><?php echo $_helper->categoryAttribute($_category, $_description, 'description'); ?></p>
     <?php
         if( $_urlVideo1) {
             echo "<iframe width=\"100%\" height=\"100%\" src=\"//www.youtube.com/embed/$_urlVideo1\" frameborder=\"0\" allowfullscreen></iframe>";

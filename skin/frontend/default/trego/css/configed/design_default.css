@@ -23,7 +23,7 @@ button.button:active span { background: #2f3538; color: #ffffff; }
         }
 .block .block-title strong {
         }
-.page, .header, .header .header-topbar, .header h1.page-title { /*background-color: #fff;*/ }
+.page, .header, .header .header-topbar, .header h1.page-title { background-color: #fff; }
 .header .header-bground { background-color: #f1f1f1; }
 .header .form-search input.input-text { color: #74736a; border-color: #EDEDED; }
 .header .form-search input.input-text:hover { color: #74736a; border-color: #c5c5c5; }
@@ -38,5 +38,5 @@ button.button:active span { background: #2f3538; color: #ffffff; }
 .footer .col3-set a { color: #797872; }
 .footer .col3-set a:hover { color: #4e4d49; }
 .footer .footer-menu { color: #595959; }
-.footer .footer-menu a { color: #797872; }
-.footer .footer-menu a:hover { color: #4e4d49; }
+.footer .footer-menu a { color: #333;  text-shadow: 1px 1px rgba(157, 157, 157, 0.35); }
+.footer .footer-menu a:hover { color: #000; }

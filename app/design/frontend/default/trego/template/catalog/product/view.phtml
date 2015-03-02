@@ -1,6 +1,10 @@
 <?php $_helper = $this->helper('catalog/output'); ?>
 <?php 
-$_product = $this->getProduct(); 
+$_product = $this->getProduct();
+
+$quickviewUrl = $_product->getProductQuickViewUrl();
+if(Mage::app()->getFrontController()->getRequest()->isSecure())
+    $quickviewUrl = str_replace('http://', 'https://', $url );
 
 $categoryIds = $_product->getCategoryIds();
 $category = null;
@@ -13,28 +17,22 @@ foreach($categoryIds as $categoryId) {
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view">
+    <div class="links">
+        <a style="color: #fff;background: #000;padding: 8px 22px; width:120px; float:left" href="#">ENREGISTRER LA SELECTION &gt;&gt;</a>
+        <a style="color: #fff;background: #000;padding: 6px 16px; display:block;margin: 22px 0 0 36px;float: left;" href="#">f</a>
+
+        <a style="color: #888;padding: 0; display:block;margin: 34px 0 0 36px;float: left;" class="ajaxQuickview" href="<?= $quickviewUrl?>">Voir les photos du produits >></a>
+        <a style="color:#888;padding: 40px 0px;float:right" href="<?php echo $category->getUrl(); ?>">RETOUR <small>&gt;&gt;</small></a>
+    </div>
     <div class="product-essential">
         
-        <div class="product-img-box">            
-            <div>
-                <a style="color: #fff;background: #000;padding: 8px 22px; width:85px;" href="<?php echo $category->getUrl(); ?>">RETOUR &gt;&gt;</a>
-                <br/><br/>
-                <a style="color: #fff;background: #000;padding: 8px 22px; width:120px; float:left" href="#">ENREGISTRER LA SELECTION &gt;&gt;</a>
-                <a style="color: #fff;background: #000;padding: 8px 22px; width:195px; float:right" href="#"> PARTAGER SUR FACEBOOK &gt;&gt;</a>
-            </div>
+        <div class="product-img-box">
             <?php echo $this->getChildHtml('media') ?>
         </div>
 
         <div class="product-shscriptop">
             <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-            <table>
-             <tr>  
-              <td style="width: 50px">
-                <div class="tissu-types">
-                    <div class="option"><p>Popeline Coton</p></div>
-                    <div class="option selected"><p>Velour</p></div>
-                    <div class="option last"><p>Crêpe de soie</p></div>
-                </div>
+                <div>
                 <script type="text/javascript">
                     jQuery( document ).ready(function() {
                         // hide left sidebar
@@ -48,8 +46,7 @@ foreach($categoryIds as $categoryId) {
                         });
                     });
                 </script>
-              </td>
-              <td>
+
     			<div class="no-display">
     				<input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
     				<input type="hidden" name="related_product" id="related-products-field" value="" />
@@ -68,6 +65,13 @@ foreach($categoryIds as $categoryId) {
                     <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
                 </div>
                 <center><hr style="width:40%; margin: 25px 0"/></center>
+
+                <div class="tissu-types">
+                    <div class="option"><p>Popeline Coton</p></div>
+                    <div class="option selected"><p>Velour</p></div>
+                    <div class="option last"><p>Crêpe de soie</p></div>
+                </div>
+
                 <?php echo $this->getTierPriceHtml() ?>
                 <?php //echo $this->getChildHtml('alert_urls') ?>            
                 <?php if ($this->canEmailToFriend()): ?>
@@ -91,6 +95,10 @@ foreach($categoryIds as $categoryId) {
                         <div style="float:right"><?php echo $this->getChildHtml('product_type_data') ?></div>
                 </div>
                 <br/><br/>
+                <div>
+                    <a style="color:#888;float:right" href="<?php echo $category->getUrl(); ?>">Voir détail <small>&gt;&gt;</small></a>
+                </div>
+
                 <?php if (!$_product->isSaleable()): ?>
                     <div class="add-to-box">
                         <?php echo $this->getChildHtml('addto') ?>
@@ -104,16 +112,14 @@ foreach($categoryIds as $categoryId) {
                     </div>
                     <?php echo $this->getChildHtml('extra_buttons') ?>
                 <?php endif; ?>
-              </td>
-             </tr>
-            </table> 
+            </div>
             </form>
 
-            
 
-            <div class="product-collateral akordeon">
+
+            <!--<div class="product-collateral akordeon">
         <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
-                <!--<div class="box-collateral <?php echo "box-{$alias}"?> akordeon-item">
+                <div class="box-collateral <?php echo "box-{$alias}"?> akordeon-item">
                     <?php if ($title = $this->getChildData($alias, 'title')):?>
                     <div class="akordeon-item-head">
                         <div class="akordeon-item-head-container">
@@ -124,12 +130,12 @@ foreach($categoryIds as $categoryId) {
                     </div>
                     <?php endif;?>
                     <?php echo $html; ?>
-                </div>-->
+                </div>
         <?php endforeach;?>
                 <?php //echo $this->getChildHtml('reviews') ?>
                 <?php //echo $this->getChildHtml('product_additional_data') ?>
                 <?php //echo $this->getChildHtml('upsell_products') ?>                
-            </div>
+            </div>-->
     </div>
 
         <div class="clearer"></div>

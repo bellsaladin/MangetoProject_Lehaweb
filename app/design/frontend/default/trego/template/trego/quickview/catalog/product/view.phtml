@@ -3,7 +3,21 @@
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
-<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="messages_product_view">
+    <center><h6>IMPORTANT</h6></center>
+    <p>- Taille = 72 H
+    Email : jusqu’à 72 h pour remplir les
+    infos bulles.<br/>
+    - Coupe environ 1 semaine
+    email info quand le tissu est
+    acheminé chez le confectionneur.<br/>
+    - EXpedition environ 3 semaines
+    Email info quand le coli  est
+    expédié ( numéro de suivi )<br/>
+    - Vous aurez 72 h pour renseigner vos mesure
+        <p  style="text-align: right"><a href="#">Voir apreçu de la page</a></p>
+    </p>
+</div>
 <div class="product-view">
     <div class="product-essential">
 
@@ -23,7 +37,7 @@
             <?php //var_dump($_product->getMediaGalleryImages());?>
             <?php if (count($_product->getMediaGalleryImages()) > 0): ?>
             <ul id="etalage">
-            <?php foreach ($_product->getMediaGalleryImages() as $_image): ?>
+            <?php foreach ($_product->getMediaGalleryImages()->getItemsByColumnValue('label', 'popup') as $_image): ?>
                                 
                 <?php
                     $image_src = Mage::getModel('catalog/product_media_config')->getMediaUrl($_image->getFile());
@@ -33,11 +47,11 @@
                     if($productThumbnail_src == $image_src) continue;
 
                 ?>
-                <li>    
+                <li style="width:100%; height:70%">
                     <a class="fancy-images fancy-images_<?php echo $rnd_str; ?>" href="<?php echo $image_src; ?>"><span class="glyphicon glyphicon-search"></span></a>
                     
                     <div style="background: url('<?php echo $image_src; ?>'); background-size:cover; position: absolute; 
-                    top:0px; opacity: 1; width: 700px !important;height: 420px !important;"><a style="position: absolute; color: #fff;background: #000;padding: 8px 22px; width:85px; bottom:10px; right:20px;" href="<?php echo $_product->getProductUrl(); ?>">ACHETER >></a></div>
+                    top:0px; opacity: 1; width: 100% !important;height: 40% !important;"><a style="position: absolute; color: #fff;background: #000;padding: 8px 22px; width:85px; bottom:10px; right:20px;" href="<?php echo $_product->getProductUrl(); ?>">ACHETER >></a></div>
                     <img class="etalage_source_image" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(100, 100*$ratio)?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
                 </li>
 
@@ -89,7 +103,7 @@
                             autoplay: false
                         });
                         jQuery('.product-view .product-img-box .etalage-control a').css('bottom',((jQuery('.etalage_small_thumbs').height()-25)/2)+"px");
-                        jQuery('.etalage_small_thumbs').css('top', '392px');
+                        jQuery('.etalage_small_thumbs').css('top', '30%');
                         jQuery('.etalage_thumb_image').css('width', 'auto');
                         jQuery('.etalage_thumb_image').css('height', 'auto');
                     }
@@ -233,7 +247,7 @@
     </div>
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            jQuery('.akordeon.product-collateral').akordeon({ buttons: true, toggle: true });
+            //jQuery('.akordeon.product-collateral').akordeon({ buttons: true, toggle: true });
         });
     </script>
 </div>

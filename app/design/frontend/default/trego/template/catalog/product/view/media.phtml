@@ -12,7 +12,9 @@
 ?>
 <?php if (count($this->getGalleryImages()) > 0): ?>
 <ul id="etalage">
-<?php foreach ($this->getGalleryImages() as $_image): ?>
+<?php
+    foreach ($this->getGalleryImages()->getItemsByColumnValue('label', 'product-view') as $_image):
+?>
     <li>
         <?php
             $image_src = $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio);
@@ -21,7 +23,39 @@
         <img class="etalage_thumb_image" src="<?php echo $image_src; ?>">
         <img class="etalage_source_image" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(100, 100*$ratio)?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
     </li>
-<?php endforeach; ?>
+<?php
+    endforeach;
+?>
+
+    <?php
+    // ****** backside image script *******
+    $images= Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages();
+    $backsideImage = $images->getItemByColumnValue('label', 'backside');
+    // var_dump($_images);
+    if($backsideImage){
+    ?>
+        <div class="backsideImage" style="position: absolute;right: 0; bottom: 0; cursor:pointer;"><img width="80" height="110" src="<?= $backsideImage['url']; ?>"/></div>
+        <script type="text/javascript">
+        jQuery(document).ready(function($){
+            var originalImageSrc = null;
+            var sidebackImageSrc = '<?= $backsideImage['url']; ?>';
+            $('.backsideImage').hover(
+                function(){
+                    var shownImage = $('.etalage_thumb_active .etalage_thumb_image');
+                    originalImageSrc = shownImage.attr('src');
+                    shownImage.attr('src',sidebackImageSrc);
+                },
+                function(){
+                    var shownImage = $('.etalage_thumb_active .etalage_thumb_image');
+                    shownImage.attr('src',originalImageSrc);
+                }
+            );
+        });
+        </script>
+    <?php
+    }
+    ?>
+
 </ul>
 <?php else: ?>
 <ul id="etalage">

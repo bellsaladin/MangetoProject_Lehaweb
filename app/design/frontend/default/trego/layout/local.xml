@@ -23,7 +23,6 @@ Default layout, loads most of the pages
             <action method="addItem"><type>js_css</type><name>ajaxcart/fancybox/jquery.fancybox.css</name></action>
             <action method="addItem"><type>js_css</type><name>ajaxcart/ajaxaddto.css</name></action>
             <block type="core/template" name="ajaxcart_head" template="ajaxcart/head.phtml"/>
-
             <action method="addItem"><type>skin_js</type><name>js/mobile-custom.js</name><params/></action>
             <action method="addItem"><type>skin_js</type><name>js/css3-mediaqueries.js</name><params/><if>lt IE 9</if></action>
             <action method="addItem"><type>skin_js</type><name>js/jquery.selectbox.js</name><params/></action>
@@ -37,6 +36,9 @@ Default layout, loads most of the pages
             <action method="addCss"><stylesheet helper="trego/cssconfig/getSettingsFile" /></action>
             <action method="addCss" ifconfig="trego_settings/custom_settings/custom_css"><stylesheet>css/custom.css</stylesheet></action>
             <action method="addItem"><type>skin_css</type><name>css/styles-ie.css</name><params/><if>lt IE 9</if></action>
+
+            <action method="addItem"><type>skin_css</type><name>jquery_customscrollbar/jquery.mCustomScrollbar.min.css</name><params/></action>
+            <action method="addItem"><type>skin_js</type><name>jquery_customscrollbar/jquery.mCustomScrollbar.concat.min.js</name><params/></action>
         </reference>
         <reference name="header">
             <block type="directory/currency" name="custom_currency_selector" template="page/switch/currency.phtml"/>
@@ -56,7 +58,9 @@ Default layout, loads most of the pages
         </reference>
         <reference name="footer">
             <block type="core/template" name="twitterfeed" template="trego/twitterfeed/twitterfeed.phtml"/>
-            <block type="core/template" name="footer_socialIcons" template="trego/socialicons/socialicons.phtml"/>
+            <reference name="footer_links">
+                <block type="core/template" name="footer_socialIcons" template="trego/socialicons/socialicons.phtml"/>
+            </reference>
             <block type="core/template" name="footer_copyrights" template="trego/copyrights.phtml"/>
         </reference>
         <reference name="footer_links">

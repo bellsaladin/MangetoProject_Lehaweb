@@ -99,10 +99,12 @@ function showProducts($_category, $custom_html=''){
         if(Mage::app()->getFrontController()->getRequest()->isSecure())
             $url = str_replace('http://', 'https://', $url ); 
         $html .= '<a class="ajaxQuickview" href ="'.$url.'"><div style="border:0;">';
-        $html .= '<div style="width:190px; height:200px; background-position:center; background-size:cover; background-image:url(\''. Mage::helper('catalog/image')->init($product, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(350) .'\')"></div>';
-        $html .= '<div style="padding:5px; width: 180px; margin-top: 4px;background-color: #fff;">';
+        $html .= '<div class="product" style="width: 175px; height: 220px; margin:0;sbackground-position:center; background-size:cover; background-image:url(\''. Mage::helper('catalog/image')->init($product, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(350) .'\')">';
+        $html .= '<div class="overlay"><p style="position: absolute; left: 50%; margin-left: -62px; text-align: center; color: #fff;background: #000;padding: 8px 22px; width:80px; bottom:40px;">Voir &gt;&gt;</p></div>';
+        $html .= '</div>';
+        $html .= '<div style="padding:5px; width: 165px; margin-top: 4px;background-color: #fff;">';
         $html .= '<table><tr>';
-        $html .= '<td style="max-width: 120px;"><div class="name">'. $product->getName() .'</div></td>';
+        $html .= '<td style="max-width: 105px;"><div class="name">'. $product->getName() .'</div></td>';
         $html .= '<td style="vertical-align: middle;"><div style="text-align:right; width: 50px; vertical-align:middle;" class="price">'. showProductPrice($product) .'</div></td>';
         $html .= '</tr></table>';
         $html .= '</div>';
@@ -188,5 +190,8 @@ jQuery(document).ready(function(){
             }
         }
     });
+
+    //jQuery(".category-products").mCustomScrollbar();
+    //jQuery(".productsBar").mCustomScrollbar({theme:"inset-3-dark"});
 });
 </script>

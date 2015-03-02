@@ -17,19 +17,21 @@
                         });
 
                         function hideLeftSideBar(){
-                            jQuery(".header-sidebar").animate({left: '-=220'}, { duration: 200, queue: false });
-                            jQuery(".main-container").animate({marginLeft: '-=220'},{ duration: 200, queue: false });
-                            if(jQuery(".fullscreen-container").length > 0){
-                                jQuery(".fullscreen-container").animate({marginLeft: '-=220'},{ duration: 200, queue: false });
-                            }
+                            jQuery(".header-sidebar").animate({left: '-=220'}, { duration: 250, queue: false });
+                            jQuery(".main-container").animate({marginLeft: '-=220'},{ duration: 250, queue: false });
+                            if(jQuery(".fullscreen-container").length > 0)
+                                jQuery(".fullscreen-container").animate({marginLeft: '-=220'},{ duration: 250, queue: false });
+                            if(jQuery(".footer").length > 0)
+                                jQuery(".footer").animate({marginLeft: '-=220'},{ duration: 250, queue: false });
                         }
 
                         function showLeftSideBar(){
-                            jQuery(".header-sidebar").animate({left: '+=220'}, { duration: 200, queue: false });
-                            jQuery(".main-container").animate({marginLeft: '+=220'}, { duration: 200, queue: false });
-                            if(jQuery(".fullscreen-container").length > 0){
-                                jQuery(".fullscreen-container").animate({marginLeft: '+=220'},{ duration: 200, queue: false });
-                            }
+                            jQuery(".header-sidebar").animate({left: '+=220'}, { duration: 250, queue: false });
+                            jQuery(".main-container").animate({marginLeft: '+=220'}, { duration: 250, queue: false });
+                            if(jQuery(".fullscreen-container").length > 0)
+                                jQuery(".fullscreen-container").animate({marginLeft: '+=220'},{ duration: 250, queue: false });
+                            if(jQuery(".footer").length > 0)
+                                jQuery(".footer").animate({marginLeft: '+=220'},{ duration: 250, queue: false });
                         }
                     });
                 </script>
@@ -43,15 +45,14 @@
                     <?php echo $this->getChildHtml('topSearch'); ?>
                     <div class="clear"></div>
                     <?php // echo $this->getChildHtml('topSpecialMenu'); ?>
-                    <div style="text-align: right; margin: 40px 10px; line-height: 32px; font-size:11px">
-                        <a href="#">QUI SOMMES-NOUS ?</a><br/>
-                        <a href="#">COMMENT CA MARCHE ?</a><br/>
-                        <a href="#">CONSEILS MORPHOLOGIQUES</a><br/>
+                    <div class="menu_extraLinks">
+                        <a href="#"><?= $this->__('ABOUT US'); ?></a><br/>
+                        <a href="#"><?= $this->__('HOW IT WORKS'); ?></a><br/>
+                        <a href="#"><?= $this->__('MORPHOLOGICAL TIPS'); ?></a><br/>
                     </div>
                     <div class="clear"></div>
                 </div>
-                <?php echo $this->getChildHtml('socialIcons'); ?>
-                <div style="position: absolute; bottom:10px; padding: 0;margin: 0;width: 220px;">
+                <div class="language_currency">
                 <?php echo $this->getChildHtml('store_language') ?>
                 <div style="float:right"><?php echo $this->getChildHtml('custom_currency_selector') ?></div>
                 </div>
@@ -60,7 +61,7 @@
             <a href="javascript:void(0)" class="filterproducts-link">&nbsp;</a>
         </div>
         <div style="float:right;border-bottom: 2px solid #000; background:#f1f1f1;">
-            <div id="myspace"><a href="#">MON ESPACE</a></div>
+            <div id="myspace"><a href="<?php echo Mage::getBaseUrl('web') .'/customer/account/login';?>"><?php echo $this->__('MY SPACE'); ?></a></div>
             <?php echo $this->getChildHtml('cart_cartheader') ?>
         </div>
         <!--<div class="header-topbar">            

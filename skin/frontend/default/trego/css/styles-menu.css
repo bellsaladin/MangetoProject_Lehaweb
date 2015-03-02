@@ -72,21 +72,27 @@
     
     
     #nav.menutype2 {
-        padding: 0 0 0 14px;
+        padding: 0 0 0 8px;
         display: block;
     }
     #nav.menutype2 li {
         border-bottom: 0;
     }
+
+    #nav.menutype2 > li > a > span{
+        padding: 0 18px;
+    }
+
     #nav.menutype2 > li {
         padding-right: 0;
     }
-    #nav.menutype2 > li > a {        
-        margin-right: 30px;
+    #nav.menutype2 > li > a {
     }
     #nav.menutype2 li > a:hover, #nav.menutype2 li.over > a {
         color: #4e4d49;
+        text-align: center;
         background: none;
+        background: url(../images/top-menu-bg-2.png) no-repeat right center;
     }
     #nav.menutype2 ul.level1 li > a:hover, #nav.menutype2 ul.level1 li.over > a {
         border-right: 2px solid #a5a29d;
@@ -126,7 +132,7 @@
         /*padding-top: 245px;*/
         border-left: 8px solid #000;
         background: rgba(0,0,0,0.6);
-        width: 226px;
+        width: 210px;
         max-width: 226px;
         display: block !important;
     }

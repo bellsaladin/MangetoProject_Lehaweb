@@ -4424,7 +4424,7 @@
 				<displayName count="other">birrs éthiopiens</displayName>
 			</currency>
 			<currency type="EUR">
-				<displayName>euro</displayName>
+				<displayName>EURO</displayName>
 				<displayName count="one">euro</displayName>
 				<displayName count="other">euros</displayName>
 			</currency>
@@ -4624,7 +4624,7 @@
 				<symbol>DJ</symbol>
 			</currency>
 			<currency type="JPY">
-				<displayName>yen japonais</displayName>
+				<displayName>YEN</displayName>
 				<displayName count="one">yen japonais</displayName>
 				<displayName count="other">yens japonais</displayName>
 				<symbol>¥JP</symbol>
@@ -5201,7 +5201,7 @@
 				<displayName count="other">shillings ougandais</displayName>
 			</currency>
 			<currency type="USD">
-				<displayName>dollar des États-Unis</displayName>
+				<displayName>USD$</displayName>
 				<displayName count="one">dollar des États-Unis</displayName>
 				<displayName count="other">dollars des États-Unis</displayName>
 				<symbol>$US</symbol>
