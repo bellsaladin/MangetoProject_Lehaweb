@@ -6093,3 +6093,34 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 .tissu-types .last{
     border-bottom : none;
 }
+
+.videoPlay{
+    width:180px; height:100px;
+    margin: 15px 0;
+    background-size: cover !important;
+}
+.videoPlay:hover .videoPlayBtn{
+    display:block;
+}
+.videoPlayBtn{
+    display:none;
+    position: absolute!important;
+
+    margin-left:75px;
+    margin-top:40px;
+
+    width: 32px;
+    height: 32px;
+}
+.encartVideos{
+    position: absolute;
+    z-index:9999;
+    right: 0;
+    bottom: 120px;
+    width: 180px;
+    height:auto;
+    max-height: 240px;
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+
+}

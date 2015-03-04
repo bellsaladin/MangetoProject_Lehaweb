@@ -1,8 +1,51 @@
 <?php
+    $is_homepage = Mage::getBlockSingleton('page/html_header')->getIsHomePage();
+    if($is_homepage) : ?>
+<div class="encartVideos">
+    <div id="toggleEncartVideos" style="float: left;background-color: #000;width: 14px;height: 21px;margin-left: -24px;color: #fff;margin-top: 20px;padding: 0;">
+        <a style="color:#fff;font-size: 9px;font-weight: bold;padding-left: 3px;" href="javascript::void"> &lt;</a>
+    </div>
+    <div>
+    <?php
+    $videoUrls = array('yWewneWlJGU','T_8GGm8pKOc');
+    foreach($videoUrls as $videoUrl){
+    ?>
+    <a href="http://www.youtube.com/watch?v=<?= $videoUrl ?>?rel=0" rel="prettyPhoto">
+        <div class="videoPlay" style="background:url('http://img.youtube.com/vi/<?= $videoUrl ?>/mqdefault.jpg')">
+            <img class="videoPlayBtn" src="<?= $this->getSkinUrl('images/videoPlaybtn.png') ?>"/>
+        </div>
+    </a>
+    <?php
+    }
+    ?>
+    </div>
+    <script type="text/javascript">
+        jQuery( document ).ready(function() {
+            jQuery('#toggleEncartVideos').click(function(){
+                var shown = (jQuery(".encartVideos").css('right') == '-200px' )? false: true;
+                if(shown){
+                    hideEncartVideo();
+                }else{
+                    showEncartVideo();
+                }
+            });
+
+            function hideEncartVideo(){
+                jQuery(".encartVideos").animate({right: '-=200'}, { duration: 200, queue: false });
+            }
+
+            function showEncartVideo(){
+                jQuery(".encartVideos").animate({right: '+=200'}, { duration: 200, queue: false });
+            }
+
+        });
+    </script>
+</div>
+<?php endif; ?>
+<?php
     $store = Mage::app()->getStore();
     $code  = $store->getCode();
 
-    $is_homepage = Mage::getBlockSingleton('page/html_header')->getIsHomePage();
     if($is_homepage) {
 ?>
     <div class="footer-container">
@@ -14,32 +57,39 @@
                 <?php echo $this->getChildHtml('footer_leftNavBottom'); ?>
             </div>
         </div>
-        <!--<a href="#" id="scroll-to-top">&nbsp</a>-->
-        <script type="text/javascript">
-            var windowScroll_t;
-            jQuery(window).scroll(function () {
 
-                clearTimeout(windowScroll_t);
-                windowScroll_t = setTimeout(function () {
-
-                    if (jQuery(this).scrollTop() > 100) {
-                        jQuery('#scroll-to-top').fadeIn();
-                    }
-                    else {
-                        jQuery('#scroll-to-top').fadeOut();
-                    }
-
-                }, 500);
-
-            });
-
-            jQuery('#scroll-to-top').click(function () {
-                jQuery("html, body").animate({scrollTop: 0}, 600, "easeOutCubic");
-                return false;
-            });
-        </script>
     </div>
 
-<?php
+    <?php
     }
 ?>
+
+<!--<a href="#" id="scroll-to-top">&nbsp</a>-->
+<script type="text/javascript">
+    var windowScroll_t;
+    jQuery(window).scroll(function () {
+
+        clearTimeout(windowScroll_t);
+        windowScroll_t = setTimeout(function () {
+
+            if (jQuery(this).scrollTop() > 100) {
+                jQuery('#scroll-to-top').fadeIn();
+            }
+            else {
+                jQuery('#scroll-to-top').fadeOut();
+            }
+
+        }, 500);
+
+    });
+
+    /*jQuery('#scroll-to-top').click(function () {
+        jQuery("html, body").animate({scrollTop: 0}, 600, "easeOutCubic");
+        return false;
+    });*/
+
+    jQuery(document).ready(function($) {
+        $("a[rel^='prettyPhoto']").prettyPhoto({social_tools: ''});
+    });
+
+</script>
