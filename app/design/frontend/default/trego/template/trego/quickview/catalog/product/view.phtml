@@ -4,6 +4,7 @@
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div class="messages_product_view">
+    <div class="topArrow"></div>
     <center><h6>IMPORTANT</h6></center>
     <p>- Taille = 72 H
     Email : jusqu’à 72 h pour remplir les
@@ -15,7 +16,7 @@
     Email info quand le coli  est
     expédié ( numéro de suivi )<br/>
     - Vous aurez 72 h pour renseigner vos mesure
-        <p  style="text-align: right"><a href="#">Voir apreçu de la page</a></p>
+        <p  style="text-align: right"><a href="#" style="background-color: #ccc;border-radius: 2px;padding: 4px;color: #000;">Voir apreçu de la page</a></p>
     </p>
 </div>
 <div class="product-view">
@@ -51,7 +52,7 @@
                     <a class="fancy-images fancy-images_<?php echo $rnd_str; ?>" href="<?php echo $image_src; ?>"><span class="glyphicon glyphicon-search"></span></a>
                     
                     <div style="background: url('<?php echo $image_src; ?>'); background-size:cover; position: absolute; 
-                    top:0px; opacity: 1; width: 100% !important;height: 40% !important;"><a style="position: absolute; color: #fff;background: #000;padding: 8px 22px; width:85px; bottom:10px; right:20px;" href="<?php echo $_product->getProductUrl(); ?>">ACHETER >></a></div>
+                    top:0px; opacity: 1; width: 100% !important;height: 40% !important;"><a style="position: absolute; color: #fff;background: #000;padding: 8px 22px; width:auto; bottom:10px; right:20px;" href="<?php echo $_product->getProductUrl(); ?>">PERSONNALISER >></a></div>
                     <img class="etalage_source_image" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(100, 100*$ratio)?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
                 </li>
 

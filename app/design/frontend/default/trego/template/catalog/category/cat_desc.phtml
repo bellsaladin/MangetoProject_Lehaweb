@@ -21,6 +21,12 @@
         <a style="color:#fff;font-size: 9px;font-weight: bold;padding-left: 3px;" href="javascript::void"> &lt;</a>
     </div>
 
+
+
+    <div class="category-description-content">
+    <h5 class="name"><?php echo $_helper->categoryAttribute($_category, $_name, 'name') ?></h2>
+    <p class="description" style="text-align: justify; color:#2A2A2A"><?php echo $_helper->categoryAttribute($_category, $_description, 'description'); ?></p>
+
     <script type="text/javascript">
         jQuery( document ).ready(function() {
             jQuery('#toggleCategoryDescription').click(function(){
@@ -41,13 +47,8 @@
                 jQuery(".category-description-container").animate({right: '+=228'}, { duration: 200, queue: false });
                 jQuery(".category-products-container").animate({marginRight: '+=228'}, { duration: 200, queue: false });
             }
-
         });
     </script>
-
-    <div class="category-description-content">
-    <h5 class="name"><?php echo $_helper->categoryAttribute($_category, $_name, 'name') ?></h2>
-    <p style="text-align: justify; color:#2A2A2A"><?php echo $_helper->categoryAttribute($_category, $_description, 'description'); ?></p>
     <?php
         if( $_urlVideo1) {
             //echo "<iframe width=\"100%\" height=\"100%\" src=\"//www.youtube.com/embed/$_urlVideo1\" frameborder=\"0\" allowfullscreen></iframe>";

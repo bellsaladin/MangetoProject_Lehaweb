@@ -34,7 +34,7 @@ foreach($categoryIds as $categoryId) {
             <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
                 <div>
                 <script type="text/javascript">
-                    jQuery( document ).ready(function() {
+                    jQuery( document ).ready(function($) {
                         // hide left sidebar
                         jQuery(".header-sidebar").css('left', '-220px');
                         jQuery(".main-container").css('marginLeft', '0px');
@@ -43,6 +43,13 @@ foreach($categoryIds as $categoryId) {
                         jQuery('.tissu-types .option').click(function(){
                             jQuery('.tissu-types .option').removeClass('selected');
                             jQuery( this ).addClass('selected');
+                        });
+
+                        $('.product-description').readmore({
+                            collapsedHeight: 50,
+                            speed: 75,
+                            moreLink: '<a href="#">(Lire plus)</a>',
+                            lessLink: '<a href="#">(Reduire)</a>'
                         });
                     });
                 </script>
@@ -62,7 +69,7 @@ foreach($categoryIds as $categoryId) {
                 </div>
                 
                 <div class="product-description">
-                    <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
+                    <?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'short_description') ?>
                 </div>
                 <center><hr style="width:40%; margin: 25px 0"/></center>
 
