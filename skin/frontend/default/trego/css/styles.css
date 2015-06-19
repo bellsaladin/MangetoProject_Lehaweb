@@ -6135,15 +6135,21 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
     display: block;
     width:60px;
     height:60px;
-    border:1px solid silver;
+    border:1px solid #E7E7E7;
     text-align: center;
     margin-top: 10px;
     padding-top: 10px;
     color:gray;
+    border-radius: 4px;
+}
+
+#customizer .customizer-option:hover{
+    border: 1px solid #999999;
 }
 
 #customizer .selected{
-    border:1px solid black;
-    color:black;
+    border: 1px solid #ADC1D5;
+    color: #FFF;
     font-weight: bold;
+    background-color: #E2F7FF;
 }

@@ -1,0 +1,189 @@
+<?php
+    $_product = $this->getProduct();
+    if($_product->getTypeId() == "configurable"):
+        $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+        $simpleProducts_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+        $imagesTissus = array();
+        $i = 0;
+        foreach($simpleProducts_collection as $simple_product){
+            $images= Mage::getModel('catalog/product')->load($simple_product->getId())->getMediaGalleryImages();
+            //$imagesTissus[$simple_product->getId()] = $images;
+            $imagesTissus[$i] = $images;
+            $i++;
+        }
+    endif;
+    $_helper = $this->helper('catalog/output');
+    $store = Mage::app()->getStore();
+    $code  = $store->getCode();
+?>
+<?php
+    $ratio_width = Mage::getStoreConfig("trego_settings/product_view/ratio_width", $code);
+    $ratio_height = Mage::getStoreConfig("trego_settings/product_view/ratio_height", $code);
+    $ratio = $ratio_height / $ratio_width;
+    $rnd_str = rtrim(base64_encode(md5(microtime())),"=");
+
+    $baseImageUrl = '';
+    $imagesData = array();
+?>
+<?php if (count($this->getGalleryImages()) > 0): ?>
+    <ul id="customizer">
+    <?php
+
+        foreach ($this->getGalleryImages() as $_image):
+            if(!strrpos($_image->getLabel(), 'customizer||') != -1) continue;
+
+            $image_src = strval($this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio));
+            $explodedLabel = explode('||', $_image->getLabel());
+            //$baseImageUrl .= $_image->getLabel() . '*****';
+            if($_image->getLabel() == 'customizer||render||0||') {
+                $baseImageUrl = $image_src;
+            }elseif(strrpos($_image->getLabel(), 'customizer||render||') > -1){
+                $imagesData[] = array('zIndex'=>$explodedLabel[2], 'title'=> $explodedLabel[3], 'imgUrl' => $image_src, 'selected'=>false);
+            }elseif(strrpos($_image->getLabel(), 'customizer||thumbnail||') > -1){
+    ?>
+        <li>
+            <?php
+            ?>
+            <a rel="gallery" class="customizer-option" href="#"><img style="width:80%" src="<?php echo $image_src; ?>"/></a>
+        </li>
+    <?php
+            }
+        endforeach;
+    ?>
+    </ul>
+
+    <?php
+    $imagesDataList = array();
+    foreach($imagesTissus as $productId =>$imagesTissu){
+        $tissuImagesData = array();
+        foreach($imagesTissu as $_image){
+            //echo $_image->getLabel() .'<br>';
+            //echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(108,90) .'<br>';
+
+            if(!strrpos($_image->getLabel(), 'customizer||') != -1) continue;
+
+            $image_src = strval($this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio));
+            $explodedLabel = explode('||', $_image->getLabel());
+            //$baseImageUrl .= $_image->getLabel() . '*****';
+            if($_image->getLabel() == 'customizer||render||0||') {
+                $baseImageUrl = $image_src;
+            }elseif(strrpos($_image->getLabel(), 'customizer||render||') > -1){
+                $tissuImagesData[] = array('zIndex'=>$explodedLabel[2], 'title'=> $explodedLabel[3], 'imgUrl' => $image_src, 'selected'=>false);
+            }
+        }
+        $imagesDataList[$productId] = $tissuImagesData;
+    }
+    // var_dump($imagesDataList);
+    ?>
+
+    <?php //var_dump($imagesTissus[185]); ?>
+    <?php
+    /*echo '<div>';
+    foreach($simpleProducts_collection as $simple_product){
+        echo $simple_product->getId() . " - " . $simple_product->getName() . " - " . Mage::helper('core')->currency($simple_product->getPrice()) . "<br>";
+    }
+    echo '</div>';*/
+    ?>
+    <canvas id="customizer-canvas" width="400" height="570" style="float:right"></canvas>
+    <?php
+    // ****** backside image script *******
+    $images= Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages();
+    $backsideImage = $images->getItemByColumnValue('label', 'backside');
+    // var_dump($_images);
+    if($backsideImage){
+    ?>
+        <div class="backsideImage" style="position: absolute;right: 0; bottom: 0; cursor:pointer;"><img width="80" height="110" src="<?= $backsideImage['url']; ?>"/></div>
+        <script type="text/javascript">
+
+        jQuery(document).ready(function($){
+            var originalImageSrc = null;
+            var sidebackImageSrc = '<?= $backsideImage['url']; ?>';
+            $('.backsideImage').hover(
+                function(){
+                    var shownImage = $('.etalage_thumb_active .etalage_thumb_image');
+                    originalImageSrc = shownImage.attr('src');
+                    shownImage.attr('src',sidebackImageSrc);
+                },
+                function(){
+                    var shownImage = $('.etalage_thumb_active .etalage_thumb_image');
+                    shownImage.attr('src',originalImageSrc);
+                }
+            );
+        });
+        </script>
+    <?php
+    }
+    ?>
+<?php endif; ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+        var _jsonImagesDataTissus = <?php echo json_encode($imagesDataList) ?>;
+        var _jsonImagesData = <?php echo json_encode($imagesData); ?>;
+
+
+        var _canvas = document.getElementById('customizer-canvas');
+
+        /* Load base image */
+        function drawImage(imgUrl, canvas){
+            var img = new Image();
+            img.src = imgUrl;
+            img.addEventListener("load", function() {
+                canvas.getContext('2d').drawImage(img,0,0,canvas.width, canvas.height);
+            }, false);
+        }
+
+        /* On click draw image */
+
+        function updateRendredProduct(canvas){
+            canvas.getContext('2d').clearRect ( 0 , 0 , canvas.width, canvas.height );
+            var baseImageUrl = '<?= $baseImageUrl?>';
+            drawImage(_jsonImagesData[0].imgUrl, _canvas);
+            $.each( _jsonImagesData, function( key, option ) {
+                if(option.selected){
+                    //alert($(this).html());
+                    drawImage(option.imgUrl, canvas)
+                }
+            });
+        }
+
+        updateRendredProduct(_canvas);
+
+        $('.customizer-option').click( function(event) {
+            event.preventDefault();
+            var optionIndex = $(this).parent().index();
+            if(!_jsonImagesData[optionIndex + 1].selected) {
+                $.each( _jsonImagesData, function( index, option ) {
+                    var selectedItemZindex = _jsonImagesData[optionIndex + 1].zIndex;
+                    if (option.zIndex == selectedItemZindex) {
+                        _jsonImagesData[index].selected = false;
+                        var liElement = $('#customizer').children().eq(index - 1); // index - 1 because we start at index = 1 ( base image is not an option)
+                        var optionElement = liElement.children().first();
+                        optionElement.removeClass('selected');
+                    }
+                });
+                _jsonImagesData[optionIndex + 1].selected = true;
+                $(this).addClass('selected');
+            }else{
+                _jsonImagesData[optionIndex + 1].selected = false;
+                $(this).removeClass('selected');
+            }
+            var img_url = $(this).attr('href');
+
+            updateRendredProduct(_canvas);
+        });
+
+        $('.switcher-label').click( function(event) {
+            event.preventDefault();
+            var elementIndex = $(this).index();
+
+            var newJsonImagesData = _jsonImagesDataTissus[elementIndex];
+            $.each( _jsonImagesData, function( index, option ) {
+                newJsonImagesData[index].selected  = option.selected;
+            });
+            _jsonImagesData = newJsonImagesData;
+            updateRendredProduct(_canvas);
+        });
+    });
+</script>
+<div class="clear"></div>

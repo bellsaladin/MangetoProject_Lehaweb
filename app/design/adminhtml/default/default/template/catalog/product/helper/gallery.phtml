@@ -68,7 +68,11 @@ $_block = $this;
     <tbody id="<?php echo $_block->getHtmlId() ?>_list">
         <tr id="<?php echo $_block->getHtmlId() ?>_template" class="template no-display">
                 <td class="cell-image"><div class="place-holder" onmouseover="<?php echo $_block->getJsObjectName(); ?>.loadImage('__file__')"><span><?php echo Mage::helper('catalog')->__('Roll Over for preview') ?></span></div><img src="<?php echo $this->getSkinUrl('images/spacer.gif')?>" width="100" style="display:none;" alt="" /></td>
-                <td class="cell-label"><input type="text" <?php if($_block->getElement()->getReadonly()):?> disabled="disabled"<?php endif;?> class="input-text" onkeyup="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" onchange="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" /></td>
+                <td class="cell-label">
+                    <input type="text" <?php if($_block->getElement()->getReadonly()):?> disabled="disabled"<?php endif;?> class="input-text" onkeyup="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" onchange="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" />
+                    <br/>
+                    <button type="button" class="customizer" >Customizer</button>
+                </td>
                 <td class="cell-position"><input type="text" <?php if($_block->getElement()->getReadonly()):?> disabled="disabled"<?php endif;?> class="input-text validate-number" onkeyup="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" onchange="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" /></td>
                 <?php foreach ($_block->getImageTypes() as $typeId=>$type): ?>
                 <td class="cell-<?php echo $typeId ?> a-center"><input <?php if($_block->getElement()->getAttributeReadonly($typeId)) :?> disabled="disabled" <?php endif;?> type="radio" name="<?php echo $type['field'] ?>" onclick="<?php echo $_block->getJsObjectName(); ?>.setProductImages('__file__')" value="__file__" /></td>
@@ -122,4 +126,45 @@ $_block = $this;
 //<![CDATA[
 var <?php echo $_block->getJsObjectName(); ?> = new Product.Gallery('<?php echo $_block->getHtmlId() ?>', <?php if ($_block->getElement()->getReadonly()):?>null<?php else:?><?php echo $_block->getUploader()->getJsObjectName() ?><?php endif;?>, <?php echo $_block->getImageTypesJson() ?>);
 //]]>
+</script>
+
+
+<div id="customizerForm" style="display:none;">
+    <p><span id='login_error_msg' class="login_error" style="display:none">&nbsp;</span></p>
+    <p><span class="label">Affichage :</span> <span>Miniature <input type="radio" name="customizer_typeAffichage" value="thumbnail" checked/> &nbsp;&nbsp; Rendu <input type="radio" name="customizer_typeAffichage" value="render"/></span></p>
+    <p><span class="label">Niveau : </span> <span><select name="customizer_niveau"><?php for($i = 0; $i<=10; $i++) echo '<option value="'.$i.'">'.$i.'</option>'; ?></select></span></p>
+    <p><span class="label">Titre : </span><span><input name="customizer_titre" value=""/></span></p>
+    <div style="clear:both"></div>
+</div>
+
+<script type="text/javascript">
+    var controlledImage = null;
+
+    var function_customizer = function openCustomizerPopup(event) {
+        var element = event.element();
+        var inputElement = element.up(1).down(5);
+
+        Dialog.confirm($('customizerForm').innerHTML, {className:"dialog", width:400,
+            okLabel: "Save", cancelLabel: "Cancel",
+            onOk:function(win){
+                var value = 'customizer||';
+                value += $$('input:checked[type=radio][name=customizer_typeAffichage]')[0].value + '||';
+                value += $$('[name=customizer_niveau]')[0].value + '||';
+                value += $$('[name=customizer_titre]')[0].value + '||';
+                inputElement.setValue(value);
+                //$('login_error_msg').innerHTML='Login or password inccorect';
+                //$('login_error_msg').show();
+                //Windows.focusedWindow.updateHeight();
+                //new Effect.Shake(Windows.focusedWindow.getId());
+                return true;
+            }
+        });
+
+
+    }
+
+    $$('.customizer').each(function(element) {
+        element.observe('click', function_customizer);
+    })
+
 </script>
