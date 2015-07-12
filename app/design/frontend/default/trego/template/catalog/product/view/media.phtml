@@ -117,15 +117,15 @@
 <?php endif; ?>
 
 <script type="text/javascript">
+    var _canvas = document.getElementById('customizer-canvas');
+    var switcherTissu_biMatiere = null;
+    var selectedTissuIndex = null;
+    var selectedTissuBiMatiereIndex = null;
+    var _jsonImagesDataTissus = <?php echo json_encode($imagesDataList) ?>;
+    var _jsonImagesData = <?php echo json_encode($imagesData); ?>;
+    var optionsBiMatiereActivatedIndices = []; // stores indices of options with bi-matiere applied
+    
     jQuery(document).ready(function($){
-        var _canvas = document.getElementById('customizer-canvas');
-        var switcherTissu_biMatiere = null;
-        var selectedTissuIndex = null;
-        var selectedTissuBiMatiereIndex = null;
-        var _jsonImagesDataTissus = <?php echo json_encode($imagesDataList) ?>;
-        var _jsonImagesData = <?php echo json_encode($imagesData); ?>;
-        var optionsBiMatiereActivatedIndices = []; // stores indices of options with bi-matiere applied
-
 
         function _init(){
             var firstTissusOption = $('.switcher-tissu .switcher-label')[0];

@@ -27,6 +27,7 @@ foreach($categoryIds as $categoryId) {
             jQuery( document ).ready(function($) {
                 //jQuery.post("customercustomattributes/ajax/saveSelection", {someval: value}, function(data){...});
                 $('#saveSelection').click( function() {
+                    alert('selection :{ selectedTissuIndex : ' + selectedTissuIndex + ', selectedTissuBiMatiereIndex : ' + selectedTissuBiMatiereIndex + ', optionsBiMatiereActivatedIndices: ' + optionsBiMatiereActivatedIndices + '}');
                     var url = "<?= Mage::getBaseUrl()?>/ajax_product_customisation/ajax/save_selection";
                     jQuery.post(url, function( response ) {
                         var responseJson = $.parseJSON(response);
