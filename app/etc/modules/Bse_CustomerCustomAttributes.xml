@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Bse_CustomerCustomAttributes>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Bse_CustomerCustomAttributes>
+    </modules>    
+</config>

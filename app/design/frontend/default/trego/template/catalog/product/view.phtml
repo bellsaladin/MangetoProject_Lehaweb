@@ -18,11 +18,23 @@ foreach($categoryIds as $categoryId) {
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view">
     <div class="links">
-        <a style="color: #fff;background: #000;padding: 8px 22px; width:120px; float:left" href="#">ENREGISTRER LA SELECTION &gt;&gt;</a>
+        <a id="saveSelection" style="color: #fff;background: #000;padding: 8px 22px; width:120px; float:left" href="#">ENREGISTRER LA SELECTION &gt;&gt;</a>
         <a style="color: #fff;background: #000;padding: 6px 16px; display:block;margin: 22px 0 0 36px;float: left;" href="#">f</a>
 
         <a style="color: #888;padding: 0; display:block;margin: 34px 0 0 36px;float: left;" class="ajaxQuickview" href="<?= $quickviewUrl?>">Voir les photos du produits >></a>
         <a style="color:#888;padding: 40px 0px;float:right" href="<?php echo $category->getUrl(); ?>">RETOUR <small>&gt;&gt;</small></a>
+        <script type="text/javascript">
+            jQuery( document ).ready(function($) {
+                //jQuery.post("customercustomattributes/ajax/saveSelection", {someval: value}, function(data){...});
+                $('#saveSelection').click( function() {
+                    var url = "<?= Mage::getBaseUrl()?>/ajax_product_customisation/ajax/save_selection";
+                    jQuery.post(url, function( response ) {
+                        var responseJson = $.parseJSON(response);
+                        alert(responseJson.status + " : " + responseJson.msg);
+                    });
+                });
+            });
+        </script>
     </div>
     <div class="product-essential">
         
@@ -73,7 +85,7 @@ foreach($categoryIds as $categoryId) {
                 </div>
                 <center><hr style="width:40%; margin: 25px 0"/></center>
 
-                <div class="tissu-types">
+                <div class="tissu-types hidden">
                     <div class="option"><p>Popeline Coton</p></div>
                     <div class="option selected"><p>Velour</p></div>
                     <div class="option last"><p>Crêpe de soie</p></div>
@@ -96,7 +108,9 @@ foreach($categoryIds as $categoryId) {
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                 <?php endif;?>
-
+                <div id="switcherTissu_biMatiere" style="margin: 10px; display:none">
+                    <h2>Bi-Matière</h2>
+                </div>
                 <div>
                         <div style="float:left;margin-top:10px; font-size:14px"> Modèle + options + livraison en france :  </div>
                         <div style="float:right"><?php echo $this->getChildHtml('product_type_data') ?></div>

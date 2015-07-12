@@ -13,6 +13,13 @@
             <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
             <?php echo $this->getChildHtml('info') ?>
             <?php echo $this->getChildHtml('address') ?>
+            <h2>Selections</h2>
+            <?php
+            $selections = unserialize( $this->getCustomer()->getSelectionCustomizer());
+            foreach($selections as $selection){
+                echo '<p>' . $selection['productId']. '    ' . $selection['selectedOptions'] .'</p>';
+            }
+            ?>
         </div>
     </div>
     <?php echo $this->getChildHtml('info1') ?>

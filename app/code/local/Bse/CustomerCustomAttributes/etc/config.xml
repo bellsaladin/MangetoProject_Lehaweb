@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bse_CustomerCustomAttributes>
+            <version>0.0.1</version>
+        </Bse_CustomerCustomAttributes>
+    </modules>
+    <frontend>
+        <routers>
+            <customer_custom_attributes_route>
+                <use>standard</use>
+                <args>
+                    <module>Bse_CustomerCustomAttributes</module>
+                    <frontName>ajax_product_customisation</frontName>
+                </args>
+            </customer_custom_attributes_route>
+        </routers>
+    </frontend>
+
+    <global>
+        <resources>
+            <customercustomattributes_setup>
+                <setup>
+                    <module>Bse_CustomerCustomAttributes</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>default_setup</use>
+                </connection>
+            </customercustomattributes_setup>
+        </resources>
+    </global>
+</config>

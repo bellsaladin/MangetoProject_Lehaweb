@@ -44,7 +44,7 @@
         <li>
             <?php
             ?>
-            <a rel="gallery" class="customizer-option" href="#"><img style="width:80%" src="<?php echo $image_src; ?>"/></a>
+            <a rel="gallery" class="customizer-option"><img style="width:80%" src="<?php echo $image_src; ?>"/></a>
         </li>
     <?php
             }
@@ -118,11 +118,42 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
+        var _canvas = document.getElementById('customizer-canvas');
+        var switcherTissu_biMatiere = null;
+        var selectedTissuIndex = null;
+        var selectedTissuBiMatiereIndex = null;
         var _jsonImagesDataTissus = <?php echo json_encode($imagesDataList) ?>;
         var _jsonImagesData = <?php echo json_encode($imagesData); ?>;
+        var optionsBiMatiereActivatedIndices = []; // stores indices of options with bi-matiere applied
 
 
-        var _canvas = document.getElementById('customizer-canvas');
+        function _init(){
+            var firstTissusOption = $('.switcher-tissu').children('.attributeOption:first-child');
+            firstTissusOption.trigger( "click" );
+            switcherTissu_biMatiere = $('.switcher-tissu').clone();
+            switcherTissu_biMatiere.find('.chooseTissu').hide();
+
+            // set initial Tissu Rendered
+            selectedTissuIndex = 0;
+            selectedTissuBiMatiereIndex = -1;
+
+            // init bi-matiere  tissus selection labels and handle click on them
+            $('#switcherTissu_biMatiere').append(switcherTissu_biMatiere);
+            $('#switcherTissu_biMatiere .switcher-label').click( function(event) {
+                event.preventDefault();
+                selectedTissuBiMatiereIndex = $(this).index();
+                updateRendredProduct(_canvas);
+            });
+        }
+
+        function loadSelectedTissuResources(){
+            var newJsonImagesData = _jsonImagesDataTissus[selectedTissuIndex].slice(); // slice() : creates a copy
+            $.each( _jsonImagesData, function( index, option ) {
+                newJsonImagesData[index].selected  = option.selected;
+            });
+            _jsonImagesData = newJsonImagesData;
+            //updateRendredProduct(_canvas);
+        }
 
         /* Load base image */
         function drawImage(imgUrl, canvas){
@@ -137,17 +168,38 @@
 
         function updateRendredProduct(canvas){
             canvas.getContext('2d').clearRect ( 0 , 0 , canvas.width, canvas.height );
-            var baseImageUrl = '<?= $baseImageUrl?>';
+            loadSelectedTissuResources();
             drawImage(_jsonImagesData[0].imgUrl, _canvas);
+            // replace normal parts with these of selected bi matiere if selected
+            if(selectedTissuBiMatiereIndex >= 0){
+                var newJsonImagesData = _jsonImagesDataTissus[selectedTissuBiMatiereIndex].slice(); // slice() : creates a copy
+                $.each(optionsBiMatiereActivatedIndices, function( index, value ) {
+                    _jsonImagesData[value] = newJsonImagesData[value];
+                    _jsonImagesData[value].selected = true;
+                });
+            }
+            // draw all parts
             $.each( _jsonImagesData, function( key, option ) {
                 if(option.selected){
-                    //alert($(this).html());
                     drawImage(option.imgUrl, canvas)
                 }
             });
         }
 
-        updateRendredProduct(_canvas);
+        function applyBiMatiere(customizerOption){
+            var optionIndex = customizerOption.parent().index() + 1;
+            if ( jQuery.inArray(optionIndex, optionsBiMatiereActivatedIndices) == -1) {
+                optionsBiMatiereActivatedIndices.push(optionIndex);
+                $('.tissuPreview').hide();
+                $('.tissuDescription').hide();
+                $('#switcherTissu_biMatiere').show();
+
+            }else{
+                // remove item from being used on bi-matiere
+                optionsBiMatiereActivatedIndices.splice(optionsBiMatiereActivatedIndices.indexOf(optionIndex));
+            }
+            updateRendredProduct(_canvas);
+        }
 
         $('.customizer-option').click( function(event) {
             event.preventDefault();
@@ -160,30 +212,68 @@
                         var liElement = $('#customizer').children().eq(index - 1); // index - 1 because we start at index = 1 ( base image is not an option)
                         var optionElement = liElement.children().first();
                         optionElement.removeClass('selected');
+                        // fix : remove items from being used on bi-matiere
+                        var optionElementIndex  = optionElement.parent().index() + 1;
+                        optionsBiMatiereActivatedIndices.splice(optionsBiMatiereActivatedIndices.indexOf(optionElementIndex));
                     }
                 });
                 _jsonImagesData[optionIndex + 1].selected = true;
                 $(this).addClass('selected');
+                $(this).tooltipster('enable');
+                $(this).tooltipster('show');
             }else{
                 _jsonImagesData[optionIndex + 1].selected = false;
                 $(this).removeClass('selected');
+                // hide bi-matiere tooltip
+                $(this).tooltipster('disable');
+
             }
             var img_url = $(this).attr('href');
 
             updateRendredProduct(_canvas);
         });
 
+        $('.customizer-option').mouseover(function() {
+            $('.customizer-option').tooltipster('hide');
+            var optionIndex = $(this).parent().index();
+            if(_jsonImagesData[optionIndex + 1].selected) {
+                $(this).tooltipster('show');
+            }
+        });
+
+        $('.customizer-option').tooltipster({
+            contentAsHTML: true,
+            interactive:true,
+            trigger: 'click',
+            position: 'right',
+            content: 'Bi-matière : <input type="checkbox" class="tooltip_bimatiere_apply" value="Appliquer"/>',
+            functionReady: function(origin, content) {
+                var customizerOption = $(this);
+                var optionIndex = customizerOption.parent().index() + 1;
+                if ( jQuery.inArray(optionIndex,optionsBiMatiereActivatedIndices) == -1) {
+                    origin.tooltipster('content', 'Bi-matière : <input type="checkbox" class="tooltip_bimatiere_apply" />');
+                }
+                else {
+                    origin.tooltipster('content', 'Bi-matière : <input type="checkbox" class="tooltip_bimatiere_apply" checked/>');
+                }
+
+                $('.tooltip_bimatiere_apply').click( function(){
+                        applyBiMatiere(customizerOption);
+                        customizerOption.tooltipster('hide');
+                    }
+                );
+            }
+        });
+
         $('.switcher-label').click( function(event) {
             event.preventDefault();
-            var elementIndex = $(this).index();
-
-            var newJsonImagesData = _jsonImagesDataTissus[elementIndex];
-            $.each( _jsonImagesData, function( index, option ) {
-                newJsonImagesData[index].selected  = option.selected;
-            });
-            _jsonImagesData = newJsonImagesData;
+            selectedTissuIndex = $(this).index();
+            loadSelectedTissuResources();
             updateRendredProduct(_canvas);
         });
+
+        _init();
+        updateRendredProduct(_canvas);
     });
 </script>
 <div class="clear"></div>

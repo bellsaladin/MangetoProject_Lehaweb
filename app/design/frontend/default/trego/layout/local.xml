@@ -43,6 +43,9 @@ Default layout, loads most of the pages
             <action method="addItem"><type>skin_css</type><name>jquery_prettyphoto/prettyphoto.min.css</name><params/></action>
             <action method="addItem"><type>skin_js</type><name>jquery_prettyphoto/prettyphoto.min.js</name><params/></action>
             <action method="addItem"><type>skin_js</type><name>js/readmore.min.js</name><params/></action>
+
+            <action method="addItem"><type>skin_css</type><name>jquery_tooltipster/jquery.tooltipster.css</name><params/></action>
+            <action method="addItem"><type>skin_js</type><name>jquery_tooltipster/jquery.tooltipster.min.js</name><params/></action>
         </reference>
         <reference name="header">
             <block type="directory/currency" name="custom_currency_selector" template="page/switch/currency.phtml"/>

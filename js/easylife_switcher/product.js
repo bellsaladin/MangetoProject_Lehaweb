@@ -142,14 +142,13 @@ Easylife.Switcher = Class.create(Product.Config, {
                 var attributeImagePreviewElement = jQuery(('#' + $(selectid).id +'imgPreview'));
                 if(attributeImagePreviewElement.length > 0){
                     attributeImagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
-                    jQuery(('#' + $(selectid).id +'description')).html(description + '<br/><br/><a class="getSample" href="#">Recevoir un echantillon > </a>');
-
+                    jQuery(('#' + $(selectid).id +'description')).html(description);
                 }else{
                     var attributeElement = jQuery(('#' + $(selectid).id + '_switchers'));
                     var imagePreviewElement = jQuery('<div id="' + $(selectid).id +'imgPreview" class="tissuPreview"></div>');
                     imagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
                     attributeElement.after(imagePreviewElement);  
-                    jQuery(('#' + $(selectid).id +'imgPreview')).after('<p id="' + $(selectid).id +'description" class="tissuDescription">' + description+ '<br/><br/><a class="getSample" href="#">Recevoir un echantillon > </a></p>');
+                    jQuery(('#' + $(selectid).id +'imgPreview')).after('<p id="' + $(selectid).id +'description" class="tissuDescription">' + description+ '<br/>');
                 }
                                 
             });
