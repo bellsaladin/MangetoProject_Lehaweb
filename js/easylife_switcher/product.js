@@ -134,7 +134,7 @@ Easylife.Switcher = Class.create(Product.Config, {
                 }
                 // show the current image of the selected option
                 var optionElement = jQuery(('#' + $(selectid).id + '_' + optVal));
-                jQuery('.attributeOption').removeClass('attributeOption_selected');
+                jQuery(('#' + $(selectid).id + '_switchers .attributeOption')).removeClass('attributeOption_selected');
                 optionElement.find('.attributeOption').addClass('attributeOption_selected');
                 var imgUrl = optionElement.find('.imgUrl').html();
                 var description = optionElement.find('.description').html();
@@ -143,6 +143,7 @@ Easylife.Switcher = Class.create(Product.Config, {
                 if(attributeImagePreviewElement.length > 0){
                     attributeImagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
                     jQuery(('#' + $(selectid).id +'description')).html(description);
+
                 }else{
                     var attributeElement = jQuery(('#' + $(selectid).id + '_switchers'));
                     var imagePreviewElement = jQuery('<div id="' + $(selectid).id +'imgPreview" class="tissuPreview"></div>');

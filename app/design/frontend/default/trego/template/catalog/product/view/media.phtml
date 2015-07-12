@@ -128,10 +128,19 @@
 
 
         function _init(){
-            var firstTissusOption = $('.switcher-tissu').children('.attributeOption:first-child');
-            firstTissusOption.trigger( "click" );
+            var firstTissusOption = $('.switcher-tissu .switcher-label')[0];
+            //alert(firstTissusOption.html());
+            firstTissusOption.click();
             switcherTissu_biMatiere = $('.switcher-tissu').clone();
+            switcherTissu_biMatiere.attr('id',''); // fix: erase the id, so that it stops being affected of a selector applied on the original element
             switcherTissu_biMatiere.find('.chooseTissu').hide();
+            // remove price from cloned tissus
+            $.each(switcherTissu_biMatiere.find('.attributeOption'), function( index, element ) {
+                var html = element.innerHTML;
+                if(html.indexOf('+') > -1){ // to check if contains price
+                    element.innerHTML = html.substring(0, html.indexOf('+'));
+                }
+            });
 
             // set initial Tissu Rendered
             selectedTissuIndex = 0;
@@ -143,6 +152,10 @@
                 event.preventDefault();
                 selectedTissuBiMatiereIndex = $(this).index();
                 updateRendredProduct(_canvas);
+
+                // change style to selected
+                $('#switcherTissu_biMatiere .switcher-label .attributeOption').removeClass('attributeOption_selected');
+                $(this).find('.attributeOption').addClass('attributeOption_selected');
             });
         }
 
