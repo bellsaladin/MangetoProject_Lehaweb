@@ -3,7 +3,7 @@
     if($_product->getTypeId() == "configurable"):
         $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
         $simpleProducts_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
-        $imagesTissus = array();
+        $imagesTissus = array(); // loads images tissus from all simple products
         $i = 0;
         foreach($simpleProducts_collection as $simple_product){
             $images= Mage::getModel('catalog/product')->load($simple_product->getId())->getMediaGalleryImages();
@@ -23,57 +23,22 @@
     $rnd_str = rtrim(base64_encode(md5(microtime())),"=");
 
     $baseImageUrl = '';
-    $imagesData = array();
 ?>
-<?php if (count($this->getGalleryImages()) > 0): ?>
-    <ul id="customizer">
+<?php if ($_product->getTypeId() == "simple" && count($this->getGalleryImages()) > 0): ?>
+    <ul id="etalage">
     <?php
-
-        foreach ($this->getGalleryImages() as $_image):
-            if(!strrpos($_image->getLabel(), 'customizer||') != -1) continue;
-
-            $image_src = strval($this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio));
-            $explodedLabel = explode('||', $_image->getLabel());
-            //$baseImageUrl .= $_image->getLabel() . '*****';
-            if($_image->getLabel() == 'customizer||render||0||') {
-                $baseImageUrl = $image_src;
-            }elseif(strrpos($_image->getLabel(), 'customizer||render||') > -1){
-                $imagesData[] = array('zIndex'=>$explodedLabel[2], 'title'=> $explodedLabel[3], 'imgUrl' => $image_src, 'selected'=>false);
-            }elseif(strrpos($_image->getLabel(), 'customizer||thumbnail||') > -1){
-    ?>
+    foreach ($this->getGalleryImages()->getItemsByColumnValue('label', 'product-view') as $_image):
+        ?>
         <li>
             <?php
+            $image_src = $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio);
             ?>
-            <a rel="gallery" class="customizer-option"><img style="width:80%" src="<?php echo $image_src; ?>"/></a>
+            <a rel="gallery" class="fancy-images fancy-images_<?php echo $rnd_str; ?>" href="<?php echo $image_src; ?>"><span class="glyphicon glyphicon-search"></span></a>
+            <img class="etalage_thumb_image" src="<?php echo $image_src; ?>">
+            <img class="etalage_source_image" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(100, 100*$ratio)?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
         </li>
     <?php
-            }
-        endforeach;
-    ?>
-    </ul>
-
-    <?php
-    $imagesDataList = array();
-    foreach($imagesTissus as $productId =>$imagesTissu){
-        $tissuImagesData = array();
-        foreach($imagesTissu as $_image){
-            //echo $_image->getLabel() .'<br>';
-            //echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(108,90) .'<br>';
-
-            if(!strrpos($_image->getLabel(), 'customizer||') != -1) continue;
-
-            $image_src = strval($this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio));
-            $explodedLabel = explode('||', $_image->getLabel());
-            //$baseImageUrl .= $_image->getLabel() . '*****';
-            if($_image->getLabel() == 'customizer||render||0||') {
-                $baseImageUrl = $image_src;
-            }elseif(strrpos($_image->getLabel(), 'customizer||render||') > -1){
-                $tissuImagesData[] = array('zIndex'=>$explodedLabel[2], 'title'=> $explodedLabel[3], 'imgUrl' => $image_src, 'selected'=>false);
-            }
-        }
-        $imagesDataList[$productId] = $tissuImagesData;
-    }
-    // var_dump($imagesDataList);
+    endforeach;
     ?>
 
     <?php //var_dump($imagesTissus[185]); ?>
@@ -84,7 +49,52 @@
     }
     echo '</div>';*/
     ?>
-    <canvas id="customizer-canvas" width="400" height="570" style="float:right"></canvas>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            reloadEtalage();
+            jQuery(".product-img-box .etalage li.etalage_thumb").zoom();
+            setTimeout(function(){reloadEtalage();}, 500);
+            jQuery(window).resize(function(e){
+                reloadEtalage();
+            });
+            /*jQuery('.etalage-prev').on('click', function(){
+             etalage_previous();
+             });
+
+             jQuery('.etalage-next').on('click', function(){
+             etalage_next();
+             }); */
+            jQuery("a.fancy-images_<?php echo $rnd_str; ?>").fancybox();
+            function reloadEtalage(){
+                var width = jQuery('.product-view .product-img-box').width() - 100;
+                var src_img_width = 600;
+                var src_img_height = 400;
+                var ratio_width = <?php echo $ratio_width; ?>;
+                var ratio_height = <?php echo $ratio_height; ?>;
+
+                src_img_width = 700 * ratio_width / ratio_height;
+                src_img_height = 700;
+                var height = width * ratio_height / ratio_width;
+                zoom_enabled = false;
+                jQuery('#etalage').etalage({
+                    /*thumb_image_width: width,
+                     thumb_image_height: height,
+                     source_image_width: src_img_width,
+                     source_image_height: src_img_height,
+                     zoom_area_width: width,
+                     zoom_area_height: height,*/
+                    zoom_enable: zoom_enabled,
+                    smallthumb_hide_single: false,
+                    smallthumbs_position: 'left',
+                    show_icon: false,
+                    autoplay: false
+                });
+                jQuery('.product-view .product-img-box .etalage-control a').css('bottom',((jQuery('.etalage_small_thumbs').height()-25)/2)+"px");
+            }
+        });
+    </script>
+
     <?php
     // ****** backside image script *******
     $images= Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages();
@@ -114,17 +124,56 @@
     <?php
     }
     ?>
-<?php endif; ?>
+<?php else: // apply customizer for configurable products?>
+    <ul id="customizer">
+    <?php foreach ($this->getGalleryImages() as $_image):
+        if(!strrpos($_image->getLabel(), 'customizer||') != -1) continue;
+        $image_src = strval($this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio));
+        $explodedLabel = explode('||', $_image->getLabel());
+        if(strrpos($_image->getLabel(), 'customizer||thumbnail||') > -1){
+        ?>
+        <li>
+            <a rel="gallery" class="customizer-option"><img style="width:80%" src="<?php echo $image_src; ?>"/></a>
+        </li>
+    <?php
+        }
+        endforeach;
+    ?>
+    </ul>
+    <canvas id="customizer-canvas" width="400" height="570" style="float:right"></canvas>
+        <?php
+        $imagesDataList = array(); // contains the data of tissus. This variable is used by the customizer
+        foreach($imagesTissus as $productId =>$imagesTissu){
+            $tissuImagesData = array();
+            foreach($imagesTissu as $_image){
+                //echo $_image->getLabel() .'<br>';
+                //echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(108,90) .'<br>';
+
+                if(!strrpos($_image->getLabel(), 'customizer||') != -1) continue;
+
+                $image_src = strval($this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(700, 700*$ratio));
+                $explodedLabel = explode('||', $_image->getLabel());
+                //$baseImageUrl .= $_image->getLabel() . '*****';
+                if($_image->getLabel() == 'customizer||render||0||') {
+                    $baseImageUrl = $image_src;
+                }elseif(strrpos($_image->getLabel(), 'customizer||render||') > -1){
+                    $tissuImagesData[] = array('zIndex'=>$explodedLabel[2], 'title'=> $explodedLabel[3], 'frontImgUrl' => $image_src, 'selected'=>false);
+                }
+            }
+            $imagesDataList[$productId] = $tissuImagesData;
+        }
+        // var_dump($imagesDataList);
+        ?>
 
 <script type="text/javascript">
     var _canvas = document.getElementById('customizer-canvas');
     var switcherTissu_biMatiere = null;
     var selectedTissuIndex = null;
     var selectedTissuBiMatiereIndex = null;
-    var _jsonImagesDataTissus = <?php echo json_encode($imagesDataList) ?>;
-    var _jsonImagesData = <?php echo json_encode($imagesData); ?>;
+    var _jsonImagesDataAllTissus = <?php echo json_encode($imagesDataList) ?>;
+    var _jsonImagesDataOfSelectedTissus = null;
     var optionsBiMatiereActivatedIndices = []; // stores indices of options with bi-matiere applied
-    
+
     jQuery(document).ready(function($){
 
         function _init(){
@@ -144,7 +193,9 @@
 
             // set initial Tissu Rendered
             selectedTissuIndex = 0;
-            selectedTissuBiMatiereIndex = -1;
+            selectedTissuBiMatiereIndex = 0;
+
+            _jsonImagesDataOfSelectedTissus = _jsonImagesDataAllTissus[selectedTissuIndex];
 
             // init bi-matiere  tissus selection labels and handle click on them
             $('#switcherTissu_biMatiere').append(switcherTissu_biMatiere);
@@ -152,7 +203,6 @@
                 event.preventDefault();
                 selectedTissuBiMatiereIndex = $(this).index();
                 updateRendredProduct(_canvas);
-
                 // change style to selected
                 $('#switcherTissu_biMatiere .switcher-label .attributeOption').removeClass('attributeOption_selected');
                 $(this).find('.attributeOption').addClass('attributeOption_selected');
@@ -160,11 +210,11 @@
         }
 
         function loadSelectedTissuResources(){
-            var newJsonImagesData = _jsonImagesDataTissus[selectedTissuIndex].slice(); // slice() : creates a copy
-            $.each( _jsonImagesData, function( index, option ) {
+            var newJsonImagesData = _jsonImagesDataAllTissus[selectedTissuIndex].slice(); // slice() : creates a copy
+            $.each( _jsonImagesDataOfSelectedTissus, function( index, option ) {
                 newJsonImagesData[index].selected  = option.selected;
             });
-            _jsonImagesData = newJsonImagesData;
+            _jsonImagesDataOfSelectedTissus = newJsonImagesData;
             //updateRendredProduct(_canvas);
         }
 
@@ -182,19 +232,19 @@
         function updateRendredProduct(canvas){
             canvas.getContext('2d').clearRect ( 0 , 0 , canvas.width, canvas.height );
             loadSelectedTissuResources();
-            drawImage(_jsonImagesData[0].imgUrl, _canvas);
+            drawImage(_jsonImagesDataOfSelectedTissus[0].frontImgUrl, _canvas);
             // replace normal parts with these of selected bi matiere if selected
             if(selectedTissuBiMatiereIndex >= 0){
-                var newJsonImagesData = _jsonImagesDataTissus[selectedTissuBiMatiereIndex].slice(); // slice() : creates a copy
+                var newJsonImagesData = _jsonImagesDataAllTissus[selectedTissuBiMatiereIndex].slice(); // slice() : creates a copy
                 $.each(optionsBiMatiereActivatedIndices, function( index, value ) {
-                    _jsonImagesData[value] = newJsonImagesData[value];
-                    _jsonImagesData[value].selected = true;
+                    _jsonImagesDataOfSelectedTissus[value] = newJsonImagesData[value];
+                    _jsonImagesDataOfSelectedTissus[value].selected = true;
                 });
             }
             // draw all parts
-            $.each( _jsonImagesData, function( key, option ) {
+            $.each( _jsonImagesDataOfSelectedTissus, function( key, option ) {
                 if(option.selected){
-                    drawImage(option.imgUrl, canvas)
+                    drawImage(option.frontImgUrl, canvas)
                 }
             });
         }
@@ -211,17 +261,22 @@
                 // remove item from being used on bi-matiere
                 optionsBiMatiereActivatedIndices.splice(optionsBiMatiereActivatedIndices.indexOf(optionIndex));
             }
+            if(optionsBiMatiereActivatedIndices.length == 0){ // bimatiere disacctivated for all options
+                $('.tissuPreview').show();
+                $('.tissuDescription').show();
+                $('#switcherTissu_biMatiere').hide();
+            }
             updateRendredProduct(_canvas);
         }
 
         $('.customizer-option').click( function(event) {
             event.preventDefault();
             var optionIndex = $(this).parent().index();
-            if(!_jsonImagesData[optionIndex + 1].selected) {
-                $.each( _jsonImagesData, function( index, option ) {
-                    var selectedItemZindex = _jsonImagesData[optionIndex + 1].zIndex;
+            if(!_jsonImagesDataOfSelectedTissus[optionIndex + 1].selected) {
+                $.each( _jsonImagesDataOfSelectedTissus, function( index, option ) {
+                    var selectedItemZindex = _jsonImagesDataOfSelectedTissus[optionIndex + 1].zIndex;
                     if (option.zIndex == selectedItemZindex) {
-                        _jsonImagesData[index].selected = false;
+                        _jsonImagesDataOfSelectedTissus[index].selected = false;
                         var liElement = $('#customizer').children().eq(index - 1); // index - 1 because we start at index = 1 ( base image is not an option)
                         var optionElement = liElement.children().first();
                         optionElement.removeClass('selected');
@@ -230,12 +285,12 @@
                         optionsBiMatiereActivatedIndices.splice(optionsBiMatiereActivatedIndices.indexOf(optionElementIndex));
                     }
                 });
-                _jsonImagesData[optionIndex + 1].selected = true;
+                _jsonImagesDataOfSelectedTissus[optionIndex + 1].selected = true;
                 $(this).addClass('selected');
                 $(this).tooltipster('enable');
                 $(this).tooltipster('show');
             }else{
-                _jsonImagesData[optionIndex + 1].selected = false;
+                _jsonImagesDataOfSelectedTissus[optionIndex + 1].selected = false;
                 $(this).removeClass('selected');
                 // hide bi-matiere tooltip
                 $(this).tooltipster('disable');
@@ -249,7 +304,7 @@
         $('.customizer-option').mouseover(function() {
             $('.customizer-option').tooltipster('hide');
             var optionIndex = $(this).parent().index();
-            if(_jsonImagesData[optionIndex + 1].selected) {
+            if(_jsonImagesDataOfSelectedTissus[optionIndex + 1].selected) {
                 $(this).tooltipster('show');
             }
         });
@@ -289,4 +344,7 @@
         updateRendredProduct(_canvas);
     });
 </script>
+
+<?php endif; ?>
+
 <div class="clear"></div>
