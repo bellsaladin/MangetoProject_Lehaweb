@@ -131,6 +131,8 @@ var <?php echo $_block->getJsObjectName(); ?> = new Product.Gallery('<?php echo 
 
 <div id="customizerForm" style="display:none;">
     <p><span id='login_error_msg' class="login_error" style="display:none">&nbsp;</span></p>
+    <p><span class="label">Id : </span> <span><select name="customizer_id"><?php for($i = 0; $i<=10; $i++) echo '<option value="'.$i.'">'.$i.'</option>'; ?></select> <small>Identifiant unique : lien entre les vues dos / devant et chargement de la séléction </small></span></p>
+    <p><span class="label">Affichage :</span> <span>face <input type="radio" name="customizer_typeAffichage_position" value="front" checked/> &nbsp;&nbsp; Rendu <input type="radio" name="customizer_typeAffichage_position" value="back"/></span></p>
     <p><span class="label">Affichage :</span> <span>Miniature <input type="radio" name="customizer_typeAffichage" value="thumbnail" checked/> &nbsp;&nbsp; Rendu <input type="radio" name="customizer_typeAffichage" value="render"/></span></p>
     <p><span class="label">Niveau : </span> <span><select name="customizer_niveau"><?php for($i = 0; $i<=10; $i++) echo '<option value="'.$i.'">'.$i.'</option>'; ?></select></span></p>
     <p><span class="label">Titre : </span><span><input name="customizer_titre" value=""/></span></p>
