@@ -191,7 +191,7 @@
 <script type="text/javascript">
     var _canvas_frontView = document.getElementById('customizer-canvas-frontView');
     var _canvas_backView = document.getElementById('customizer-canvas-backView');
-    var switcherTissu_biMatiere = null;
+    var switcherTissu_biMatiereComponent = null;
     var selectedTissuIndex = null;
     var selectedTissuBiMatiereIndex = null;
     var _jsonImagesDataAllTissus = <?php echo json_encode($imagesDataList) ?>;
@@ -205,11 +205,11 @@
             var firstTissusOption = $('.switcher-tissu .switcher-label')[0];
             //alert(firstTissusOption.html());
             firstTissusOption.click();
-            switcherTissu_biMatiere = $('.switcher-tissu').clone();
-            switcherTissu_biMatiere.attr('id',''); // fix: erase the id, so that it stops being affected of a selector applied on the original element
-            switcherTissu_biMatiere.find('.chooseTissu').slideUp("slow");
+            switcherTissu_biMatiereComponent = $('.switcher-tissu').clone();
+            switcherTissu_biMatiereComponent.attr('id',''); // fix: erase the id, so that it stops being affected of a selector applied on the original element
+            switcherTissu_biMatiereComponent.find('.chooseTissu').slideUp("slow");
             // remove price from cloned tissus
-            $.each(switcherTissu_biMatiere.find('.attributeOption'), function( index, element ) {
+            $.each(switcherTissu_biMatiereComponent.find('.attributeOption'), function( index, element ) {
                 var html = element.innerHTML;
                 if(html.indexOf('+') > -1){ // to check if contains price
                     element.innerHTML = html.substring(0, html.indexOf('+'));
@@ -223,7 +223,7 @@
             _jsonImagesDataOfSelectedTissus = _jsonImagesDataAllTissus[selectedTissuIndex];
 
             // init bi-matiere  tissus selection labels and handle click on them
-            $('#switcherTissu_biMatiere').append(switcherTissu_biMatiere);
+            $('#switcherTissu_biMatiere').append(switcherTissu_biMatiereComponent);
             $('#switcherTissu_biMatiere .switcher-label').click( function(event) {
                 event.preventDefault();
                 selectedTissuBiMatiereIndex = $(this).index();
@@ -286,9 +286,9 @@
             var optionIndex = customizerOption.parent().index() + 1;
             if ( jQuery.inArray(optionIndex, optionsBiMatiereActivatedIndices) == -1) {
                 optionsBiMatiereActivatedIndices.push(optionIndex);
-                $('.tissuPreview').slideUp("slow");
-                $('.tissuDescription').slideUp("slow");
-                $('.product-description').slideUp("slow");
+                $('.tissuPreview').slideUp('slow');
+                $('.tissuDescription').slideUp('slow');
+                $('.product-description').slideUp('slow');
                 $('#switcherTissu_biMatiere').show();
 
             }else{
@@ -296,8 +296,10 @@
                 optionsBiMatiereActivatedIndices.remove(optionIndex);
             }
             if(optionsBiMatiereActivatedIndices.length == 0){ // bimatiere disacctivated for all options
-                $('.tissuPreview').show();
-                $('.tissuDescription').show();
+                $('.tissuPreview').slideDown('slow');
+                $('.tissuDescription').slideDown('slow');
+                $('.tissuPreview').slideDown('slow');
+                $('.tissuDescription').slideDown('slow');
                 $('#switcherTissu_biMatiere').hide();
             }
             updateRendredProduct();

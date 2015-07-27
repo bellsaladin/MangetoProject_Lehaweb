@@ -5971,14 +5971,14 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 }
 
 .attributeOption{
-    cursor: pointer; background-color:#fff; width:75px; height:45px; font-size:14px; text-align:center; float: left; margin: 0px 10px 10px 0;
+    cursor: pointer; background-color:#fff; width:75px; height:40px; font-size:14px; text-align:center; float: left; margin: 0px 10px 10px 0;
     border: 1px solid #eee;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
     color:#000;
     font-size:11px;
-    padding-top: 20px;
+    padding-top: 8px;
 }
 
 .attributeOption_selected{
@@ -5986,10 +5986,11 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 }
 
 .tissuPreview{
-    width:150px;
-    height:120px;
-    background-size: cover;
     float:left;
+    width:160px;
+    height:95px;
+    background-size: cover;
+    margin-top: 20px;
 }
 
 .chooseTissu{
