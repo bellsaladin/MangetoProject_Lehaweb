@@ -207,7 +207,7 @@
             firstTissusOption.click();
             switcherTissu_biMatiere = $('.switcher-tissu').clone();
             switcherTissu_biMatiere.attr('id',''); // fix: erase the id, so that it stops being affected of a selector applied on the original element
-            switcherTissu_biMatiere.find('.chooseTissu').hide();
+            switcherTissu_biMatiere.find('.chooseTissu').slideUp("slow");
             // remove price from cloned tissus
             $.each(switcherTissu_biMatiere.find('.attributeOption'), function( index, element ) {
                 var html = element.innerHTML;
@@ -268,12 +268,13 @@
                     _jsonImagesDataOfSelectedTissus[value].selected = true;
                 });
             }
+            //alert(optionsActivatedIndices.length);
             // draw all parts
-            $.each( _jsonImagesDataOfSelectedTissus, function( key, option ) {
-                if(option.selected){
-                    drawImage(option.frontViewImgUrl, _canvas_frontView);
-                    drawImage(option.backViewImgUrl, _canvas_backView);
-                }
+            $.each( optionsActivatedIndices, function( key, value ) {
+                //alert("drawn :" + value);
+                var option = _jsonImagesDataOfSelectedTissus[value];
+                drawImage(option.frontViewImgUrl, _canvas_frontView);
+                drawImage(option.backViewImgUrl, _canvas_backView);
             });
         }
 
@@ -285,13 +286,14 @@
             var optionIndex = customizerOption.parent().index() + 1;
             if ( jQuery.inArray(optionIndex, optionsBiMatiereActivatedIndices) == -1) {
                 optionsBiMatiereActivatedIndices.push(optionIndex);
-                $('.tissuPreview').hide();
-                $('.tissuDescription').hide();
+                $('.tissuPreview').slideUp("slow");
+                $('.tissuDescription').slideUp("slow");
+                $('.product-description').slideUp("slow");
                 $('#switcherTissu_biMatiere').show();
 
             }else{
                 // remove item from being used on bi-matiere
-                optionsBiMatiereActivatedIndices.splice(optionsBiMatiereActivatedIndices.indexOf(optionIndex));
+                optionsBiMatiereActivatedIndices.remove(optionIndex);
             }
             if(optionsBiMatiereActivatedIndices.length == 0){ // bimatiere disacctivated for all options
                 $('.tissuPreview').show();
@@ -304,25 +306,32 @@
         $('.customizer-option').click( function(event) {
             event.preventDefault();
             var optionIndex = $(this).parent().index();
-            if(!_jsonImagesDataOfSelectedTissus[optionIndex + 1].selected) {
+            //alert("optionSelected :" + (optionIndex + 1));
+            if(optionsActivatedIndices.indexOf(optionIndex + 1) == -1) {
+                var selectedItemZindex = _jsonImagesDataOfSelectedTissus[optionIndex + 1].zIndex;
                 $.each( _jsonImagesDataOfSelectedTissus, function( index, option ) {
-                    var selectedItemZindex = _jsonImagesDataOfSelectedTissus[optionIndex + 1].zIndex;
+                    //alert("selectedItemZindex" + selectedItemZindex);
                     if (option.zIndex == selectedItemZindex) {
-                        _jsonImagesDataOfSelectedTissus[index].selected = false;
+                        //alert("disable :" + index);
+                        //alert(selectedItemZindex + ',' + option.zIndex);
+                        optionsActivatedIndices.remove(index);
+                        //_jsonImagesDataOfSelectedTissus[index].selected = false;
                         var liElement = $('#customizer').children().eq(index - 1); // index - 1 because we start at index = 1 ( base image is not an option)
                         var optionElement = liElement.children().first();
                         optionElement.removeClass('selected');
                         // fix : remove items from being used on bi-matiere
                         var optionElementIndex  = optionElement.parent().index() + 1;
-                        optionsBiMatiereActivatedIndices.splice(optionsBiMatiereActivatedIndices.indexOf(optionElementIndex));
+                        optionsBiMatiereActivatedIndices.remove(optionElementIndex);
                     }
                 });
-                _jsonImagesDataOfSelectedTissus[optionIndex + 1].selected = true;
+                optionsActivatedIndices.push(optionIndex + 1);
+                //_jsonImagesDataOfSelectedTissus[optionIndex + 1].selected = true;
                 $(this).addClass('selected');
                 $(this).tooltipster('enable');
                 $(this).tooltipster('show');
             }else{
-                _jsonImagesDataOfSelectedTissus[optionIndex + 1].selected = false;
+                optionsActivatedIndices.remove((optionIndex + 1));
+                //_jsonImagesDataOfSelectedTissus[optionIndex + 1].selected = false;
                 $(this).removeClass('selected');
                 // hide bi-matiere tooltip
                 $(this).tooltipster('disable');
@@ -336,12 +345,13 @@
         $('.customizer-option').mouseover(function() {
             $('.customizer-option').tooltipster('hide');
             var optionIndex = $(this).parent().index();
-            if(_jsonImagesDataOfSelectedTissus[optionIndex + 1].selected) {
+            if(optionsActivatedIndices.indexOf(optionIndex + 1) != -1) {
                 $(this).tooltipster('show');
             }
         });
 
         $('.customizer-option').tooltipster({
+            delay: 0,
             contentAsHTML: true,
             interactive:true,
             trigger: 'click',
@@ -375,6 +385,20 @@
         _init();
         updateRendredProduct();
     });
+</script>
+
+<script>
+    // util function used in the
+    Array.prototype.remove = function() {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
 </script>
 
 <?php endif; ?>

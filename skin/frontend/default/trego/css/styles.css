@@ -5971,7 +5971,7 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 }
 
 .attributeOption{
-    cursor: pointer; background-color:#fff; width:90px; height:55px; font-size:14px; text-align:center; float: left; margin: 0px 5px;
+    cursor: pointer; background-color:#fff; width:75px; height:45px; font-size:14px; text-align:center; float: left; margin: 0px 10px 10px 0;
     border: 1px solid #eee;
     background-size: cover;
     background-repeat: no-repeat;
@@ -5982,7 +5982,7 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 }
 
 .attributeOption_selected{
-    border-top: 2px solid #000;
+    border-top: 2px solid #27C7FF;
 }
 
 .tissuPreview{
@@ -5997,9 +5997,19 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 }
 
 .tissuDescription{
-    margin: 35px 0 0 170px;
+    padding: 46px 0 0 191px;
+    margin-bottom: 50px;
+    height:55px;
 }
 
+.switcher-tissu{
+    clear:both;
+    text-align: center;
+}
+
+.product-options dt{
+    display: none;
+}
 .getSample{
     padding: 4px 8px;
     margin: 10px;
@@ -6075,32 +6085,50 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
   border: 2px solid #56dee7;
 }
 
+.tissu-types{
+    text-align:center;
+}
+
+.switcher-tissu label{
+    display: inline-block;
+}
+
 .tissu-types .option{
     display: inline-block;
     cursor: pointer;
     background: #000;
-    height: 75px;
+    height: 45px;
     width: 100px;
     /* border-bottom: 2px solid #000; */
     text-align: center;
     font-size: 11px;
     color: #fff;
     text-transform: uppercase;
-    padding:5px 15px;
+    padding:0px 8px;
 }
 
 .tissu-types .selected{
-    color:#007ED1;
+    color:#00BAFF;
     /*background: url('../images/icon_selected.png') no-repeat #FBFBFB;
     background-position: center 80%;*/
 }
 
 .tissu-types .option p{    
-    padding-top: 30px;
+    padding-top: 15px;
 }
 
 .tissu-types .last{
     border-bottom : none;
+}
+
+.label-biMatiere{
+    width: 40%;
+    margin: auto;
+    text-align: center;
+    background-color: #000;
+    padding: 2px 5px;
+    margin-bottom: 14px;
+    color: #fff;
 }
 
 .videoPlay{
@@ -6153,3 +6181,8 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
     font-weight: bold;
     background-color: #E2F7FF;
 }
+
+
+#loading-mask { display: none; font-size: 1.1em; font-weight: bold; opacity: 0.8; position: fixed; text-align: center; z-index: 9999; width: 100%; height: 100%; }
+.popup-dialog { display:none;  font-size: 1.1em; position: fixed; text-align: center; z-index: 9999; width: 100%;height: 100%;}
+#success-message-container { border:2px solid #CCCCCC; font-weight:bold;  padding:15px 30px 30px; position:relative; text-align:center; top:35%; width:303px; z-index:9999; background:#FFFFFF none repeat scroll 0 0; margin: auto; }

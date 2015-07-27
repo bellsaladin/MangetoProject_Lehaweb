@@ -25,17 +25,91 @@ foreach($categoryIds as $categoryId) {
         <a style="color:#888;padding: 40px 0px;float:right" href="<?php echo $category->getUrl(); ?>">RETOUR <small>&gt;&gt;</small></a>
         <script type="text/javascript">
             jQuery( document ).ready(function($) {
-                //jQuery.post("customercustomattributes/ajax/saveSelection", {someval: value}, function(data){...});
                 $('#saveSelection').click( function() {
-                    alert('selection :{ selectedTissuIndex : ' + selectedTissuIndex + ', selectedTissuBiMatiereIndex : ' + selectedTissuBiMatiereIndex + ', optionsBiMatiereActivatedIndices: ' + optionsBiMatiereActivatedIndices + '}');
+                    jQuery('#loading-mask').show();
+                    jQuery('#save-selection-dialog-form').show();
+                });
+
+
+                $('#saveSelectionConfirm').click( function() {
+                    jQuery('#save-selection-dialog-form').hide();
+                    var nomSelection = $('#txt_nom_seletion').val();
+                    var selectionData = {'nomSelection':nomSelection,
+                                         'productId':<?= $_product->getId()?>,
+                                         'selectedTissuIndex': selectedTissuIndex,
+                                         'selectedTissuBiMatiereIndex': selectedTissuBiMatiereIndex,
+                                         'optionsActivatedIndices':optionsActivatedIndices,
+                                         'optionsBiMatiereActivatedIndices' : optionsBiMatiereActivatedIndices};
+
                     var url = "<?= Mage::getBaseUrl()?>/ajax_product_customisation/ajax/save_selection";
-                    jQuery.post(url, function( response ) {
+                    jQuery.post(url, {selectionData: JSON.stringify(selectionData)}, function( response ) {
                         var responseJson = $.parseJSON(response);
-                        alert(responseJson.status + " : " + responseJson.msg);
+                        jQuery('#save-selection-dialog-done').show();
+                        jQuery('#save-selection-dialog-done .msg').html(responseJson.msg);
+                        //alert(responseJson.status + " : " +  responseJson.msg);
                     });
+                });
+                $('#save-selection-dialog-form-cancel , #save-selection-dialog-done-cancel').click( function() {
+                    jQuery('#loading-mask').hide();
+                    jQuery('#save-selection-dialog-form, #save-selection-dialog-done').hide();
                 });
             });
         </script>
+
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var productAddToCartForm = new VarienForm('product_addtocart_form');
+            productAddToCartForm.submit = function(button, url) {
+                if (this.validator.validate()) {
+                    var form = this.form;
+                    var oldUrl = form.action;
+
+                    if (url) {
+                        form.action = url;
+                    }
+                    var e = null;
+                    if (!url) {
+                        url = jQuery('#product_addtocart_form').attr('action');
+                    }
+                    url = url.replace("checkout/cart","ajaxcart/index"); // New Code
+                    var data = jQuery('#product_addtocart_form').serialize();
+                    data += '&isAjax=1';
+                    jQuery('#loading-mask').show();
+                    try {
+                        jQuery.ajax({
+                            url : url,
+                            dataType : 'json',
+                            type : 'post',
+                            data : data,
+                            success : function(data) {
+                                jQuery('#loading-mask').hide();
+                                if(data.status == 'ERROR'){
+                                    alert(data.message);
+                                }else{
+                                    if(jQuery('.footer-menu .links')){
+                                        jQuery('.footer-menu .links').replaceWith(data.toplink);
+                                    }
+                                    if(jQuery('.mini-cart-layer')){
+                                        jQuery('.mini-cart-layer').replaceWith(data.minicart);
+                                    }
+                                    jQuery('#after-loading-success-message').show();
+                                }
+                            }
+                        });
+                    } catch (e) {
+                    }
+                    this.form.action = oldUrl;
+                    if (e) {
+                        throw e;
+                    }
+                }
+            }.bind(productAddToCartForm);
+            //]]>
+        </script>
+
+
+
     </div>
     <div class="product-essential">
         
@@ -75,7 +149,7 @@ foreach($categoryIds as $categoryId) {
                     <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                     <?php //echo $this->getReviewsSummaryHtml($_product, false, true)?>
                     <?php if ($_product->isAvailable()): ?>
-                    <p class="availability in-stock"><span><?php echo $this->__('In Stock') ?></span></p>
+                    <p class="availability in-stock hidden"><span><?php echo $this->__('In Stock') ?></span></p>
                     <?php else: ?>
                     <p class="availability out-of-stock"><span><?php echo $this->__('Out of Stock') ?></span></p>
                     <?php endif; ?>
@@ -83,10 +157,9 @@ foreach($categoryIds as $categoryId) {
                 
                 <div class="product-description">
                     <?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'short_description') ?>
+                    <center><hr style="width:40%; margin: 25px 0"/></center>
                 </div>
-                <center><hr style="width:40%; margin: 25px 0"/></center>
-
-                <div class="tissu-types hidden">
+                <div class="tissu-types">
                     <div class="option"><p>Popeline Coton</p></div>
                     <div class="option selected"><p>Velour</p></div>
                     <div class="option last"><p>Crêpe de soie</p></div>
@@ -109,8 +182,8 @@ foreach($categoryIds as $categoryId) {
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                 <?php endif;?>
-                <div id="switcherTissu_biMatiere" style="margin: 10px; display:none">
-                    <h2>Bi-Matière</h2>
+                <div id="switcherTissu_biMatiere" style="display:none">
+                    <div class="label-biMatiere"><h2>Bi-Matière</h2></div>
                 </div>
                 <div>
                         <div style="float:left;margin-top:10px; font-size:14px"> Modèle + options + livraison en france :  </div>

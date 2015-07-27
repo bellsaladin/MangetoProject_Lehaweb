@@ -13,13 +13,13 @@ if (file_exists($loaderSrc)) {
 }
 ?>
 <div id="loading-mask">
-<div class ="background-overlay"></div>
+	<div class ="background-overlay"></div>
 	<p id="loading_mask_loader" class="loader">
 		<img alt="Loading.." src='<?php echo $loaderSrc; ?>'/>
         <br/><?php echo $this->__("Processing... Please wait..."); ?>
 	</p>
 </div>
-<div id="after-loading-success-message">
+<div id="after-loading-success-message" class="popup-dialog">
 	<div class ="background-overlay"></div>
 	<p id="success-message-container" class="loader" ><?php echo $this->__("Product was successfully added to your shopping cart.") ?>
 	<br/><br/>
@@ -41,8 +41,38 @@ if (file_exists($loaderSrc)) {
 		<?php echo $this->__("Continue shopping") ?>
 	<?php endif;?>
 	</span></span></button>
-</div>	
+</div>
+
+<div id="save-selection-dialog-form" class="popup-dialog">
+	<div class ="background-overlay"></div>
+	<p id="success-message-container" style="width:500px;">
+		<?php echo $this->__("Enregister la séléction avec sous le nom :") ?>
+		<br/>
+		<input type="text" id="txt_nom_seletion" />
+		<br/><br/>
+		<button type="button"id="saveSelectionConfirm" class="button btn-cart" >
+			<span><span><?php echo $this->__("Enregistrer") ?></span></span>
+		</button>
+		<button type="button" id="save-selection-dialog-form-cancel" class="button btn-cart" >
+			<span><span><?php echo $this->__("Annuler") ?></span></span>
+		</button>
+	</p>
+</div>
+
+<div id="save-selection-dialog-done" class="popup-dialog">
+	<div class ="background-overlay"></div>
+	<p id="success-message-container" class="loader" >
+		<span class="msg"><?php echo $this->__("Product was successfully added to your shopping cart.") ?></span>
+		<br/><br/>
+
+		<br/><br/>
+		<button type="button" id="save-selection-dialog-done-cancel" class="button btn-cart">
+			<span><span><?php echo $this->__("Fermer") ?></span></span>
+		</button>
+</div>
+
 <script type='text/javascript'>
-		jQuery('#finish_and_checkout').click(function(){location.href = '<?php echo $this->getUrl('checkout/cart') ?>'});
-		jQuery('#continue_shopping').click(function(){jQuery('#after-loading-success-message').fadeOut();}); 
+	jQuery('#finish_and_checkout').click(function(){location.href = '<?php echo $this->getUrl('checkout/cart') ?>'});
+	jQuery('#continue_shopping').click(function(){jQuery('#after-loading-success-message').fadeOut();});
 </script>
+<?php echo $continueshoppingtext; ?>

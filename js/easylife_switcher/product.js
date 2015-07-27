@@ -148,7 +148,7 @@ Easylife.Switcher = Class.create(Product.Config, {
                     var attributeElement = jQuery(('#' + $(selectid).id + '_switchers'));
                     var imagePreviewElement = jQuery('<div id="' + $(selectid).id +'imgPreview" class="tissuPreview"></div>');
                     imagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
-                    attributeElement.after(imagePreviewElement);  
+                    attributeElement.before(imagePreviewElement);
                     jQuery(('#' + $(selectid).id +'imgPreview')).after('<p id="' + $(selectid).id +'description" class="tissuDescription">' + description+ '<br/>');
                 }
                                 
