@@ -10,13 +10,14 @@ class Bse_CustomerCustomAttributes_AjaxController extends Mage_Core_Controller_F
             // Load the customer's data
             $customer = Mage::getSingleton('customer/session')->getCustomer();
 
-            $selections = json_decode($customer->getSelectionCustomizer());
-            $selectionData = json_decode(stripslashes($selectionData)); // decode stringified json structure to PHP array
+            $customerSelectionsData = $customer->getSelectionCustomizer();
+            $selections = json_decode($customerSelectionsData);
+            //$selectionData = json_decode(stripslashes($selectionData)); // decode stringified json structure to PHP array
             $selections[] = array('selectionData' => $selectionData, 'date'=>date("Y-m-d H:i:s"));
             $customer->setSelectionCustomizer(json_encode($selections));
             $customer->save();
 
-            $msg = 'Selection ajoutée avec succès !';
+            $msg = 'Selection enregistrée avec succès !<br/> <a href="'. Mage::getBaseUrl().'/customer/account/index/">Consultez vos séléctions</a>';
             $response = array('status' => 'success', 'msg' => $msg);
             echo json_encode($response);
         }else{

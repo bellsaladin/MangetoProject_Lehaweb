@@ -25,6 +25,7 @@ foreach($categoryIds as $categoryId) {
         <a style="color:#888;padding: 35px 0 10px 0;float:right" href="<?php echo $category->getUrl(); ?>">RETOUR <small>&gt;&gt;</small></a>
         <script type="text/javascript">
             jQuery( document ).ready(function($) {
+                $('#txt_nom_seletion').val('<?= $_product->getName()?> - Selection');
                 $('#saveSelection').click( function() {
                     jQuery('#loading-mask').show();
                     jQuery('#save-selection-dialog-form').show();
@@ -42,7 +43,7 @@ foreach($categoryIds as $categoryId) {
                                          'optionsBiMatiereActivatedIndices' : optionsBiMatiereActivatedIndices};
 
                     var url = "<?= Mage::getBaseUrl()?>/ajax_product_customisation/ajax/save_selection";
-                    jQuery.post(url, {selectionData: JSON.stringify(selectionData)}, function( response ) {
+                    jQuery.post(url, {selectionData: selectionData}, function( response ) {
                         var responseJson = $.parseJSON(response);
                         jQuery('#save-selection-dialog-done').show();
                         jQuery('#save-selection-dialog-done .msg').html(responseJson.msg);
