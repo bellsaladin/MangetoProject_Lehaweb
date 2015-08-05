@@ -140,12 +140,6 @@ foreach($categoryIds as $categoryId) {
                     <?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'short_description') ?>
                     <center><hr style="width:40%; margin: 25px 0"/></center>
                 </div>
-                <div class="tissu-types">
-                    <div class="option"><p>Popeline Coton</p></div>
-                    <div class="option selected"><p>Velour</p></div>
-                    <div class="option last"><p>Crêpe de soie</p></div>
-                </div>
-
                 <?php echo $this->getTierPriceHtml() ?>
                 <?php //echo $this->getChildHtml('alert_urls') ?>            
                 <?php if ($this->canEmailToFriend()): ?>
@@ -360,12 +354,6 @@ foreach($categoryIds as $categoryId) {
         // hide left sidebar
         jQuery(".header-sidebar").css('left', '-220px');
         jQuery(".main-container").css('marginLeft', '0px');
-
-        // click event on tissuTypes
-        jQuery('.tissu-types .option').click(function(){
-            jQuery('.tissu-types .option').removeClass('selected');
-            jQuery( this ).addClass('selected');
-        });
 
         $('.product-description').readmore({
             collapsedHeight: 50,

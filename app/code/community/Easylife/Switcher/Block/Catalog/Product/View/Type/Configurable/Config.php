@@ -206,6 +206,27 @@ class Easylife_Switcher_Block_Catalog_Product_View_Type_Configurable_Config exte
                             $attributeSwitchConfig['product_images'] = $imageAttribute;
                         }
                         break;
+                    case 'customizer_tissu':
+                        $attributeSwitchConfig['type'] = 'customizer_tissu';
+                        $imageAttribute = isset($switcherConfig['options'][$productAttribute->getId()]['product_image'])
+                            ? $switcherConfig['options'][$productAttribute->getId()]['product_image']
+                            : false;
+                        if ($imageAttribute) {
+                            $collectImages[$imageAttribute] = 1;
+                            $attributeSwitchConfig['product_images'] = $imageAttribute;
+                        }
+                        break;
+
+                    case 'customizer_category_tissu':
+                        $attributeSwitchConfig['type'] = 'customizer_category_tissu';
+                        $imageAttribute = isset($switcherConfig['options'][$productAttribute->getId()]['product_image'])
+                            ? $switcherConfig['options'][$productAttribute->getId()]['product_image']
+                            : false;
+                        if ($imageAttribute) {
+                            $collectImages[$imageAttribute] = 1;
+                            $attributeSwitchConfig['product_images'] = $imageAttribute;
+                        }
+                        break;
                     case 'colors':
                         $attributeSwitchConfig['type'] = 'colors';
                         //get the used colors

@@ -42,7 +42,7 @@ function showCategories($_category, $custom_html=''){
         }
         $_children = $_category->getChildren();
         $children_ids = explode(",", $_children);
-        $categoryChildren = array();   
+        $categoryChildren = array();
         if ($children_ids) {
             foreach ($children_ids as $categoryId){
                 $category = Mage::getModel('catalog/category')->load($categoryId);
@@ -57,7 +57,7 @@ function showCategories($_category, $custom_html=''){
                 $html .= '<li class="level'.$level.'">';
                 $url = $_child->getUrl();
                 if(Mage::app()->getFrontController()->getRequest()->isSecure())
-                    $url = str_replace('http://', 'https://', $url ); 
+                    $url = str_replace('http://', 'https://', $url );
                 $html .= '<a href ="'.$url.'"><span>';
                 $html .= $_child->getName();
                 $html .= '</span>';
@@ -74,7 +74,7 @@ function showCategories($_category, $custom_html=''){
                     if($level == 0 || $level == 1){
                         $html .= '<span class="plus"></span>';
                     }
-                    
+
                 }*/
                 $html .= showProducts($_child);
                 $html .= '</li>';
@@ -93,11 +93,11 @@ function showProducts($_category, $custom_html=''){
     Mage::getModel('catalog/layer')->prepareProductCollection($collection);
     $html .= '<ul class="level productsBar">';
     foreach ($collection as $product) {
-        //var_dump( $product );        
+        //var_dump( $product );
         $html .= '<li class="level">';
         $url = $product->getProductQuickViewUrl();
         if(Mage::app()->getFrontController()->getRequest()->isSecure())
-            $url = str_replace('http://', 'https://', $url ); 
+            $url = str_replace('http://', 'https://', $url );
         $html .= '<a class="ajaxQuickview" href ="'.$url.'"><div style="border:0;">';
         $html .= '<div class="product" style="width: 175px; height: 220px; margin:0;sbackground-position:center; background-size:cover; background-image:url(\''. Mage::helper('catalog/image')->init($product, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(350) .'\')">';
         $html .= '<div class="overlay"><p style="position: absolute; left: 50%; margin-left: -62px; text-align: center; color: #fff;background: #000;padding: 8px 22px; width:80px; bottom:40px;">Voir &gt;&gt;</p></div>';
@@ -117,10 +117,10 @@ function showProducts($_category, $custom_html=''){
 }
 
 function showProductPrice($product){
- 
+
   $html = Mage::helper('core')->currency($product->getFinalPrice(),true,false);
 
- 
+
   return $html;
 }
 

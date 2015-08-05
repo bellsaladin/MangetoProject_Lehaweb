@@ -92,31 +92,62 @@ Easylife.Switcher = Class.create(Product.Config, {
                 left:"-10000px",
                 position: "absolute"
             });
-            $(selectid).insert({after: '<div class="switcher-field switcher-'+that.config.attributes[attributeId]['code']+'" id="' + newId + '"></div>'});
-            $(selectid).childElements().each(function(elem, index){
-                //skip first element "Choose..."
-                if (index == 0){
-                    return;
-                }
-                var optVal = $(elem).value;
-                var title =  $(elem).innerHTML;
-                var optText = that.getOptionText(elem, optVal, switchConfig);
-                var inStock = that.isInStock(attributeId, optVal);
-                var labelClass = that.getLabelClass(elem, attributeId, optVal, inStock);
+            switch (switchConfig.type) {
+                case 'customizer_tissu':
+                    $(selectid).insert({after: '<div class="switcher-field switcher-' + that.config.attributes[attributeId]['code'] + '" id="' + newId + '"></div>'});
+                    $(selectid).childElements().each(function (elem, index) {
+                        //skip first element "Choose..."
+                        if (index == 0) {
+                            return;
+                        }
+                        var optVal = $(elem).value;
+                        var title = $(elem).innerHTML;
+                        var optText = that.getOptionText(elem, optVal, switchConfig);
+                        var inStock = that.isInStock(attributeId, optVal);
+                        var labelClass = that.getLabelClass(elem, attributeId, optVal, inStock);
 
-                $(newId).insert('<label class="switcher-label' + labelClass + '" id="' + $(selectid).id + '_' + optVal + '" value="' + optVal + '" title="' + title + '">'+optText+'</label>');
-                //change the select value on click
-                that.bindClickEvent(selectid, optVal, inStock);
+                        $(newId).insert('<label class="switcher-label' + labelClass + '" id="' + $(selectid).id + '_' + optVal + '" value="' + optVal + '" title="' + title + '">' + optText + '</label>');
+                        //change the select value on click
+                        that.bindClickEvent(selectid, optVal, inStock);
+                    });
+                    break;
+                case 'customizer_category_tissu':
+                    $(selectid).insert({after: '<div class="tissu-types switcher-' + that.config.attributes[attributeId]['code'] + '" id="' + newId + '"></div>'});
+                    $(selectid).childElements().each(function (elem, index) {
+                        //skip first element "Choose..."
+                        if (index == 0) {
+                            return;
+                        }
+                        var optVal = $(elem).value;
+                        var title = $(elem).innerHTML;
+                        var optText = that.getOptionText(elem, optVal, switchConfig);
+                        var inStock = that.isInStock(attributeId, optVal);
+                        var labelClass = that.getLabelClass(elem, attributeId, optVal, inStock);
 
-                // Make IE 7 & 8 behave like real browsers - damn you IE
-                if (index == $(selectid).childElements().length - 1){
-                    $(newId).insert('<div style="clear:both"></div>');
-                }
-            })
+                        $(newId).insert('<label class="option" id="' + $(selectid).id + '_' + optVal + '" value="' + optVal + '" title="' + title + '"><p>' + optText + '</p></label>');
+                        //change the select value on click
+                        that.bindClickEvent(selectid, optVal, inStock);
+                    });
+                    break;
+                default:
+                    $(selectid).insert({after: '<div class="switcher-field switcher-' + that.config.attributes[attributeId]['code'] + '" id="' + newId + '"></div>'});
+                    $(selectid).childElements().each(function (elem, index) {
+                        //skip first element "Choose..."
+                        if (index == 0) {
+                            return;
+                        }
+                        var optVal = $(elem).value;
+                        var title = $(elem).innerHTML;
+                        var optText = that.getOptionText(elem, optVal, switchConfig);
+                        var inStock = that.isInStock(attributeId, optVal);
+                        var labelClass = that.getLabelClass(elem, attributeId, optVal, inStock);
 
-            
+                        $(newId).insert('<label class="switcher-label' + labelClass + '" id="' + $(selectid).id + '_' + optVal + '" value="' + optVal + '" title="' + title + '">' + optText + '</label>');
+                        //change the select value on click
+                        that.bindClickEvent(selectid, optVal, inStock);
+                    });
+            }
         }
-        jQuery(('#' + newId )).append('<div class="chooseTissu" id="chooseTissu_'+ $(selectid).id + '">Veuillez choisir un tissu...</div>')
         return transformed;
     },
     /**
@@ -124,34 +155,42 @@ Easylife.Switcher = Class.create(Product.Config, {
      */
     bindClickEvent: function(selectid, optVal, inStock) {
         var that = this;
+        var attributeId = $(selectid).id.replace(/[a-z]*/, '');
+        var switchConfig = this.getConfigValue(this.config, 'switch/' + attributeId, false);
+
         if (inStock || this.getConfigValue(this.config, 'allow_no_stock_select', false)){
             Event.observe($($(selectid).id + '_' + optVal), 'click', function() {
                 that.selectValue(this, $(this).readAttribute('value'), selectid);
 
-                var chooseTissuElement = jQuery('#chooseTissu_' + $(selectid).id);
-                if(chooseTissuElement.length > 0){
-                    chooseTissuElement.addClass('hidden');
-                }
-                // show the current image of the selected option
-                var optionElement = jQuery(('#' + $(selectid).id + '_' + optVal));
-                jQuery(('#' + $(selectid).id + '_switchers .attributeOption')).removeClass('attributeOption_selected');
-                optionElement.find('.attributeOption').addClass('attributeOption_selected');
-                var imgUrl = optionElement.find('.imgUrl').html();
-                var description = optionElement.find('.description').html();
-                
-                var attributeImagePreviewElement = jQuery(('#' + $(selectid).id +'imgPreview'));
-                if(attributeImagePreviewElement.length > 0){
-                    attributeImagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
-                    jQuery(('#' + $(selectid).id +'description')).html(description);
+                //alert(switchConfig.type);
+                if(switchConfig.type == "customizer_tissu" || switchConfig.type == "product_images" ){
+                    var chooseTissuElement = jQuery('#chooseTissu_' + $(selectid).id);
+                    if(chooseTissuElement.length > 0){
+                        chooseTissuElement.addClass('hidden');
+                    }
+                    // show the current image of the selected option
+                    var optionElement = jQuery(('#' + $(selectid).id + '_' + optVal));
+                    var imgUrl = optionElement.find('.imgUrl').html();
+                    var description = optionElement.find('.description').html();
 
-                }else{
-                    var attributeElement = jQuery(('#' + $(selectid).id + '_switchers'));
-                    var imagePreviewElement = jQuery('<div id="' + $(selectid).id +'imgPreview" class="tissuPreview"></div>');
-                    imagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
-                    attributeElement.before(imagePreviewElement);
-                    jQuery(('#' + $(selectid).id +'imgPreview')).after('<p id="' + $(selectid).id +'description" class="tissuDescription">' + description+ '<br/>');
+                    var attributeImagePreviewElement = jQuery(('#' + $(selectid).id +'imgPreview'));
+                    if(attributeImagePreviewElement.length > 0){
+                        attributeImagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
+                        jQuery(('#' + $(selectid).id +'description')).html(description);
+
+                    }else{
+                        var attributeElement = jQuery(('#' + $(selectid).id + '_switchers'));
+                        var imagePreviewElement = jQuery('<div id="' + $(selectid).id +'imgPreview" class="tissuPreview"></div>');
+                        imagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
+                        attributeElement.before(imagePreviewElement);
+                        jQuery(('#' + $(selectid).id +'imgPreview')).after('<p id="' + $(selectid).id +'description" class="tissuDescription">' + description+ '<br/>');
+                    }
+
+                    var imgPreviewElement = jQuery(('#' + $(selectid).id +'imgPreview'));
+                    var descriptionElement = jQuery(('#' + $(selectid).id +'description'));
+                    descriptionElement.parent().prepend(descriptionElement);
+                    imgPreviewElement.parent().prepend(imgPreviewElement);
                 }
-                                
             });
         }
     },
@@ -191,7 +230,6 @@ Easylife.Switcher = Class.create(Product.Config, {
                 var imageAttribute = this.getConfigValue(config, 'product_images', '');
                 var images = this.getConfigValue(this.config.images, imageAttribute, []);
                 var descriptions = this.getConfigValue(this.config.descriptions, imageAttribute, []);
-                console.log(descriptions);
                 //get first allowed product
                 var attrId = $(elem).parentNode.id.replace(/[a-z]*/, '');
                 var options = this.getConfigValue(this.config.attributes, attrId + '/options', false);

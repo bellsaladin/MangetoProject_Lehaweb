@@ -205,6 +205,13 @@
                     <label>Custom images</label>
                     <after_block>easylife_switcher/adminhtml_system_attribute_after_image</after_block>
                 </custom_images>
+                <customizer_tissu translate="label" module="easylife_switcher">
+                    <label>Customizer - Tissu </label>
+                    <after_block>easylife_switcher/adminhtml_system_attribute_after_product_image</after_block>
+                </customizer_tissu>
+                <customizer_category_tissu translate="label" module="easylife_switcher">
+                    <label>Customizer - Categorie Tissu</label>
+                </customizer_category_tissu>
             </transform>
         </system>
     </easylife_switcher>
