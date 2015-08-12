@@ -6190,3 +6190,5 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
 #success-message-container { border:2px solid #CCCCCC; font-weight:bold;  padding:15px 30px 30px; position:relative; text-align:center; top:35%; width:303px; z-index:9999; background:#FFFFFF none repeat scroll 0 0; margin: auto; }
 
 .product-view dd{padding:0; margin:0}
+
+.switcher-category_tissu{margin:25px 0}

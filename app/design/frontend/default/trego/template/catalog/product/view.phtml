@@ -35,8 +35,10 @@ foreach($categoryIds as $categoryId) {
                 $('#saveSelectionConfirm').click( function() {
                     jQuery('#save-selection-dialog-form').hide();
                     var nomSelection = $('#txt_nom_seletion').val();
+                    //alert(selectedTypeTissuIndex +' ' + selectedTissuIndex + ' ' + selectedTissuBiMatiereIndex);
                     var selectionData = {'nomSelection':nomSelection,
                                          'productId':<?= $_product->getId()?>,
+                                         'selectedTypeTissuIndex': selectedTypeTissuIndex,
                                          'selectedTissuIndex': selectedTissuIndex,
                                          'selectedTissuBiMatiereIndex': selectedTissuBiMatiereIndex,
                                          'optionsActivatedIndices':optionsActivatedIndices,
@@ -138,8 +140,10 @@ foreach($categoryIds as $categoryId) {
                 
                 <div class="product-description">
                     <?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'short_description') ?>
-                    <center><hr style="width:40%; margin: 25px 0"/></center>
                 </div>
+                <center><hr style="width:40%; margin: 25px 0"/></center>
+                <div id="tissuDetails"></div>
+                <center><hr style="width:40%; margin: 25px 0"/></center>
                 <?php echo $this->getTierPriceHtml() ?>
                 <?php //echo $this->getChildHtml('alert_urls') ?>            
                 <?php if ($this->canEmailToFriend()): ?>

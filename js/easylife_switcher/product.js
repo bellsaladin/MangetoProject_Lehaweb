@@ -147,6 +147,7 @@ Easylife.Switcher = Class.create(Product.Config, {
                         that.bindClickEvent(selectid, optVal, inStock);
                     });
             }
+            //alert(selectid);
         }
         return transformed;
     },
@@ -182,14 +183,14 @@ Easylife.Switcher = Class.create(Product.Config, {
                         var attributeElement = jQuery(('#' + $(selectid).id + '_switchers'));
                         var imagePreviewElement = jQuery('<div id="' + $(selectid).id +'imgPreview" class="tissuPreview"></div>');
                         imagePreviewElement.css("background-image", "url('"+ imgUrl +"')");
-                        attributeElement.before(imagePreviewElement);
+                        jQuery('#tissuDetails').html(imagePreviewElement);
                         jQuery(('#' + $(selectid).id +'imgPreview')).after('<p id="' + $(selectid).id +'description" class="tissuDescription">' + description+ '<br/>');
                     }
 
                     var imgPreviewElement = jQuery(('#' + $(selectid).id +'imgPreview'));
                     var descriptionElement = jQuery(('#' + $(selectid).id +'description'));
-                    descriptionElement.parent().prepend(descriptionElement);
-                    imgPreviewElement.parent().prepend(imgPreviewElement);
+                    /*descriptionElement.parent().prepend(descriptionElement);
+                    imgPreviewElement.parent().prepend(imgPreviewElement);*/
                 }
             });
         }

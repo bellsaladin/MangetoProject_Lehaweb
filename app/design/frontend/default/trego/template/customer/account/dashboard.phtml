@@ -20,14 +20,18 @@
                     $selections = json_decode($this->getCustomer()->getSelectionCustomizer(),true);
                     $selections = array_reverse($selections);
                     //echo $this->getCustomer()->getSelectionCustomizer();
-                    foreach($selections as $idx => $row){
+                    $selectionId = count($selections) - 1;
+                    foreach($selections as $row){
                         $selectionData = $row['selectionData'];
                         //var_dump($selectionData);
                         $date = strtotime( $row['date']);
                         $date = 'le ' . date('d-m-Y', $date). ' à ' . date('H:i',$date);
                         $nomSelection  = $selectionData['nomSelection'];
-                        $selectionUrl = Mage::getBaseUrl() .'/veste2.html?selectionId='.$idx;
+                        $productId  = $selectionData['productId'];
+                        $product = Mage::getModel('catalog/product')->load($productId);
+                        $selectionUrl = Mage::getBaseUrl().$product->getUrlPath().'?selectionId='.$selectionId;
                         echo '<a class="selectionText" style="color:#000;padding:4px 8px;font-size:15px;background-color:#F3F3F3;width:98%%;height: 25px;display: block;" href="'.$selectionUrl.'">'.$nomSelection .' <span style="font-size:10px;color:silver; float:right; margin-right:10px">' . $date .'</span></a><br/>';
+                        $selectionId--;
                     }
                     //echo $this->getCustomer()->getSelectionCustomizer();
                     ?>
