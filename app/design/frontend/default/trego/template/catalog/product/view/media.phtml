@@ -197,7 +197,6 @@
             }
         }
     ?>
-
     var _canvas_frontView = document.getElementById('customizer-canvas-frontView');
     var _canvas_backView = document.getElementById('customizer-canvas-backView');
     var switcherTissu_biMatiereComponent = null;
@@ -239,6 +238,7 @@
             $('#switcherTissu_biMatiere .switcher-label').click( function(event) {
                 event.preventDefault();
                 selectedTissuBiMatiereIndex = $(this).attr('value');
+                console.log('update switcherTissu_biMatiere');
                 updateRendredProduct();
                 // change style to selected
                 $('#switcherTissu_biMatiere .switcher-label .attributeOption').removeClass('attributeOption_selected');
@@ -271,7 +271,7 @@
             $('#attribute963_switchers .switcher-label').each(function (index) {
                 //alert(selectedTissuIndex + "," + $(this).attr('value'));
                 if ($(this).attr('value') == selectedTissuIndex) {
-                    $(this).click();
+                    $('#attribute963_switchers .switcher-label')[index].click();
                 }
             });
 
@@ -279,10 +279,11 @@
             $('#switcherTissu_biMatiere .switcher-label').each(function (index) {
                 //alert(selectedTissuIndex + "," + $(this).attr('value'));
                 if ($(this).attr('value') == selectedTissuBiMatiereIndex) {
-                    $(this).click();
+                    $('#switcherTissu_biMatiere .switcher-label')[index].click();
                 }
             });
-
+            console.log('updateRendred selection load');
+            updateRendredProduct()
             //$(('#switcherTissu_biMatiere .switcher-label:eq('+selectedTissuBiMatiereIndex+')')).click();
         }
 
@@ -295,14 +296,6 @@
             //updateRendredProduct();
         }
 
-        /* Load base image */
-        function drawImage(imgUrl, canvas){
-            var img = new Image();
-            img.src = imgUrl;
-            img.addEventListener("load", function() {
-                canvas.getContext('2d').drawImage(img,0,0,canvas.width, canvas.height);
-            }, false);
-        }
 
         /* On click draw image */
 
@@ -310,8 +303,12 @@
             clearCanvas(_canvas_frontView);
             clearCanvas(_canvas_backView);
             loadSelectedTissuResources();
-            drawImage(_jsonImagesDataOfSelectedTissus[0].frontViewImgUrl, _canvas_frontView);
-            drawImage(_jsonImagesDataOfSelectedTissus[0].backViewImgUrl, _canvas_backView);
+            /*drawImage(_jsonImagesDataOfSelectedTissus[0].frontViewImgUrl, _canvas_frontView);
+            drawImage(_jsonImagesDataOfSelectedTissus[0].backViewImgUrl, _canvas_backView);*/
+            var frontViewBaseImageUrl = _jsonImagesDataOfSelectedTissus[0].frontViewImgUrl;
+            var backViewBaseImageUrl = _jsonImagesDataOfSelectedTissus[0].backViewImgUrl;
+            drawBaseImageFollowedByOptionsImagesInChainMode('front', frontViewBaseImageUrl);
+            drawBaseImageFollowedByOptionsImagesInChainMode('back', backViewBaseImageUrl);
             // replace normal parts with these of selected bi matiere if selected
             if(selectedTissuBiMatiereIndex != null && selectedTissuBiMatiereIndex >= 0){
                 var newJsonImagesData = _jsonImagesDataAllTissus[selectedTissuBiMatiereIndex].slice(); // slice() : creates a copy
@@ -322,13 +319,68 @@
             }
             //alert(optionsActivatedIndices.length);
             // draw all parts
-            $.each( optionsActivatedIndices, function( key, value ) {
-                //alert("drawn :" + value);
+            // @FIXME drawImage funciton should work as a chain so that the images won't images that should be drawn first wont be drawn at least if the img resource is not ready
+            /*$.each( optionsActivatedIndices, function( key, value ) {
+                console.log("drawn :" + value);
                 var option = _jsonImagesDataOfSelectedTissus[value];
+                drawImage(firstOption, )
                 drawImage(option.frontViewImgUrl, _canvas_frontView);
                 drawImage(option.backViewImgUrl, _canvas_backView);
-            });
+            });*/
+            // Draw images in chain mode to correct render order bug, that was done based on firstImageLoaded
+            if(optionsActivatedIndices.length > 0){
+                drawImagesInChainMode('front',0);
+                drawImagesInChainMode('back', 0);
+            }
         }
+
+        /* Load base image */
+        function drawImage(imgUrl, canvas){
+            var img = new Image();
+            img.src = imgUrl;
+            img.addEventListener("load", function() {
+                canvas.getContext('2d').drawImage(img,0,0,canvas.width, canvas.height);
+                console.log("draw of : " + img.src);
+            }, false);
+        }
+
+        /* Load base image */
+        function drawBaseImageFollowedByOptionsImagesInChainMode(view, imgUrl){
+            var canvas = (view=='front')?_canvas_frontView:_canvas_backView;
+            var img = new Image();
+            img.src = imgUrl;
+            img.addEventListener("load", function() {
+                canvas.getContext('2d').drawImage(img,0,0,canvas.width, canvas.height);
+                if(optionsActivatedIndices.length > 0)
+                    drawImagesInChainMode(view,0);
+            }, false);
+        }
+
+
+        /* Load base image */
+        function drawImagesInChainMode(view, currentIndex ){
+            var option = _jsonImagesDataOfSelectedTissus[optionsActivatedIndices[currentIndex]];
+
+            var canvas = null;
+            var img = new Image();
+            if(view == 'front'){
+                canvas =  _canvas_frontView;
+                img.src = option.frontViewImgUrl;
+            }else{
+               canvas =  _canvas_backView;
+                img.src = option.backViewImgUrl;
+            }
+
+            img.addEventListener("load", function() {
+                canvas.getContext('2d').drawImage(img,0,0,canvas.width, canvas.height);
+                console.log("draw of : " + img.src);
+
+                if(currentIndex < optionsActivatedIndices.length - 1){
+                    drawImagesInChainMode(view, currentIndex + 1);
+                }
+            }, false);
+        }
+
 
         function clearCanvas(canvas){
             canvas.getContext('2d').clearRect ( 0 , 0 , canvas.width, canvas.height );
@@ -354,7 +406,8 @@
                 $('.product-description').slideDown('slow');
                 $('#switcherTissu_biMatiere').slideUp('slow');
             }
-            updateRendredProduct();
+            //alert('update apply bi matiere');
+            //updateRendredProduct();
         }
 
         function bindNavigationArrowsToBlocks(){
@@ -419,7 +472,7 @@
             if(optionsData[optionIndex]['bi-matiere'] == true){
                 applyBiMatiere($(this));
             }
-
+            console.log('update product option click');
             updateRendredProduct();
 
         });
@@ -470,6 +523,7 @@
                 $(this).find('.attributeOption').addClass('attributeOption_selected');
 
                 loadSelectedTissuResources();
+                console.log('update tissu selected');
                 updateRendredProduct();
             });
 
@@ -490,11 +544,13 @@
             function(){
                 _canvas_frontView = document.getElementById('customizer-canvas-backView');
                 _canvas_backView  = document.getElementById('customizer-canvas-frontView');
+                console.log('update customizer-canvas-backView');
                 updateRendredProduct();
             },
             function(){
                 _canvas_frontView = document.getElementById('customizer-canvas-frontView');
                 _canvas_backView = document.getElementById('customizer-canvas-backView');
+                console.log('update customizer-canvas-backView');
                 updateRendredProduct();
             }
         );
