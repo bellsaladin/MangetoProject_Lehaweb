@@ -2,6 +2,9 @@
 <?php $buttonTitle = $this->__('Acheter ce modèle'); ?>
 <?php if($_product->isSaleable()): ?>
     <div class="add-to-cart">
+        <input type="hidden" name="choosed-options" id="choosed-options" />
+        <input type="hidden" name="rendered-image" id="rendered-image" />
+
         <?php if(!$_product->isGrouped()): ?>
         <div class="qty-holder">
             <input type="hidden" name="qty" id="qty" maxlength="12" value="1" title="<?php echo $this->__('Qty') ?>"/>

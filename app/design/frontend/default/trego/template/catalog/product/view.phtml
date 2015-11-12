@@ -31,10 +31,10 @@ foreach($categoryIds as $categoryId) {
                     jQuery('#save-selection-dialog-form').show();
                 });
 
-
                 $('#saveSelectionConfirm').click( function() {
                     jQuery('#save-selection-dialog-form').hide();
                     var nomSelection = $('#txt_nom_seletion').val();
+                    var imgBase64 = _canvas_frontView.toDataURL("image/png");
                     //alert(selectedTypeTissuIndex +' ' + selectedTissuIndex + ' ' + selectedTissuBiMatiereIndex);
                     var selectionData = {'nomSelection':nomSelection,
                                          'productId':<?= $_product->getId()?>,
@@ -42,8 +42,8 @@ foreach($categoryIds as $categoryId) {
                                          'selectedTissuIndex': selectedTissuIndex,
                                          'selectedTissuBiMatiereIndex': selectedTissuBiMatiereIndex,
                                          'optionsActivatedIndices':optionsActivatedIndices,
-                                         'optionsBiMatiereActivatedIndices' : optionsBiMatiereActivatedIndices};
-
+                                         'optionsBiMatiereActivatedIndices' : optionsBiMatiereActivatedIndices,
+                                         'imgBase64':imgBase64};
                     var url = "<?= Mage::getBaseUrl()?>/ajax_product_customisation/ajax/save_selection";
                     jQuery.post(url, {selectionData: selectionData}, function( response ) {
                         var responseJson = $.parseJSON(response);
@@ -218,6 +218,20 @@ foreach($categoryIds as $categoryId) {
         //<![CDATA[
             var productAddToCartForm = new VarienForm('product_addtocart_form');
             productAddToCartForm.submit = function(button, url) {
+                alert("ajouter plusieurs configurable attributes qui doivent être cachés et qui prendront le role du tissu-2 et options, voir  s'il est possible d'utiliser un seul attributer en mode text ça serait mieux")
+                // save rendered image in base64 in will be used in selection preview and in cart, order ...
+                var imgBase64 = _canvas_frontView.toDataURL("image/png");
+
+                // save selection data in will be used in cart / order
+                var selectionData = {'selectedTypeTissuIndex': selectedTypeTissuIndex,
+                                     'selectedTissuIndex': selectedTissuIndex,
+                                     'selectedTissuBiMatiereIndex': selectedTissuBiMatiereIndex,
+                                     'optionsActivatedIndices':optionsActivatedIndices,
+                                     'optionsBiMatiereActivatedIndices' : optionsBiMatiereActivatedIndices};
+                // bind value to form's fields before submit
+                jQuery('#rendered-image').val(imgBase64);
+                jQuery('#choosed-options').val(JSON.stringify(selectionData));
+
                 if (this.validator.validate()) {
                     var form = this.form;
                     var oldUrl = form.action;

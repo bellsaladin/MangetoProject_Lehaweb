@@ -249,11 +249,14 @@
 
         function loadSelectionData() {
             if (loadedSelectionData == null) return;
+            console.log(loadedSelectionData['optionsActivatedIndices']);
 
             // apply data to visual
             if (("optionsActivatedIndices" in loadedSelectionData)) {
-                optionsActivatedIndices = loadedSelectionData['optionsActivatedIndices'];
-                $.each(optionsActivatedIndices, function (index, value) {
+                // no need to set the opitonsActivatedIndices = they will be set automaticly at click event below, at line :  $(('.customizer-option:eq(' + optionIndex + ')')).click();
+                // NOT NEEDED /* optionsActivatedIndices = loadedSelectionData['optionsActivatedIndices'];*/
+
+                $.each(loadedSelectionData['optionsActivatedIndices'], function (index, value) {
                     var optionIndex = value - 1;
                     $(('.customizer-option:eq(' + optionIndex + ')')).click();
                 });
@@ -282,7 +285,11 @@
                     $('#switcherTissu_biMatiere .switcher-label')[index].click();
                 }
             });
-            console.log('updateRendred selection load');
+            console.log('selectedTypeTissuIndex : '  + selectedTypeTissuIndex);
+            console.log('selectedTissuIndex : '  + selectedTissuIndex);
+            console.log('selectedTissuBiMatiereIndex : '  + selectedTissuBiMatiereIndex);
+            console.log('optionsActivatedIndices : '  + optionsActivatedIndices);
+
             updateRendredProduct()
             //$(('#switcherTissu_biMatiere .switcher-label:eq('+selectedTissuBiMatiereIndex+')')).click();
         }

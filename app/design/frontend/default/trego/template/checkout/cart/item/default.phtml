@@ -2,8 +2,14 @@
 $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
+$customizerImage = $_item->getData('custom_attribute_column');
 ?>
 <tr>
+    <td>
+        <?php //var_dump($_item); ?>
+
+        <img src="<?php echo $customizerImage;?>"/>
+    </td>
     <td class="no-border-right pr-img-td"><div class="pos-area"><a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2 for-mobile"><?php echo $this->__('Remove item')?></a><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->helper('catalog/image')->init($_item->getProduct(), 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(140); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></div></td>
     <td class="a-right product-name-td">
         <h2 class="product-name">

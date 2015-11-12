@@ -15,7 +15,7 @@
             <?php echo $this->getChildHtml('address') ?>
             <div class="box">
                 <div class="box-title"><h3>Selections</h3></div>
-                <div class="box-content">
+                <div id="selections" class="box-content">
                     <?php
                     $selections = json_decode($this->getCustomer()->getSelectionCustomizer(),true);
                     $selections = array_reverse($selections);
@@ -30,7 +30,12 @@
                         $productId  = $selectionData['productId'];
                         $product = Mage::getModel('catalog/product')->load($productId);
                         $selectionUrl = Mage::getBaseUrl().$product->getUrlPath().'?selectionId='.$selectionId;
+                        $imgBase64 = $selectionData['imgBase64'];
+                        echo '<div class="selection">';
+                        echo $imgBase64;
+                        echo '<img src="'. $imgBase64 .'"/>';
                         echo '<a class="selectionText" style="color:#000;padding:4px 8px;font-size:15px;background-color:#F3F3F3;width:98%%;height: 25px;display: block;" href="'.$selectionUrl.'">'.$nomSelection .' <span style="font-size:10px;color:silver; float:right; margin-right:10px">' . $date .'</span></a><br/>';
+                        echo '</div>';
                         $selectionId--;
                     }
                     //echo $this->getCustomer()->getSelectionCustomizer();

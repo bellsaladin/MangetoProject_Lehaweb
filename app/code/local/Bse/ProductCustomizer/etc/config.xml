@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Bse_ProductCustomizer>
+            <version>1.0.0</version>
+        </Bse_ProductCustomizer>
+    </modules>
+
+    <global>
+        <!-- Defining models -->
+        <models>
+            <!--
+                Unique identifier in the model's node.
+                By convention, we put the module's name in lowercase.
+            -->
+            <bse_productcustomizer>
+                <!--
+                    The path to our models directory, with directory
+                    separators replaced by underscores
+                -->
+                <class>Bse_ProductCustomizer_Model</class>
+            </bse_productcustomizer>
+        </models>
+        <!-- Defining an event observer -->
+        <events>
+            <!-- The code of the event we want to observe -->
+            <checkout_cart_product_add_after>
+                <!-- Defining an observer for this event -->
+                <observers>
+                    <!--
+                        Unique identifier within the
+                        catalog_product_save_after node.
+                        By convention, we write the module's
+                        name in lowercase.
+                    -->
+                    <bse_productcustomizer>
+                        <!-- The model to be instantiated -->
+                        <class>bse_productcustomizer/observer</class>
+                        <!-- The method of the class to be called -->
+                        <method>updateProductPrice</method>
+                        <!-- The type of class to instantiate -->
+                        <type>singleton</type>
+                    </bse_productcustomizer>
+                </observers>
+            </checkout_cart_product_add_after>
+        </events>
+    </global>
+</config>
