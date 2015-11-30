@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Bse_ProductCustomizer>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Bse_ProductCustomizer>
     </modules>
 

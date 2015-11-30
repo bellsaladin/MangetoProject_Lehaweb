@@ -407,12 +407,6 @@
                 // remove item from being used on bi-matiere
                 optionsBiMatiereActivatedIndices.remove(optionIndex);
             }
-            if(optionsBiMatiereActivatedIndices.length == 0){ // bimatiere disactivated for all options
-                /*$('.tissuPreview').slideDown('slow');
-                $('.tissuDescription').slideDown('slow');*/
-                $('.product-description').slideDown('slow');
-                $('#switcherTissu_biMatiere').slideUp('slow');
-            }
             //alert('update apply bi matiere');
             //updateRendredProduct();
         }
@@ -478,6 +472,12 @@
             }
             if(optionsData[optionIndex]['bi-matiere'] == true){
                 applyBiMatiere($(this));
+            }
+            if(optionsBiMatiereActivatedIndices.length == 0){ // bimatiere disactivated for all options
+                /*$('.tissuPreview').slideDown('slow');
+                 $('.tissuDescription').slideDown('slow');*/
+                $('.product-description').slideDown('slow');
+                $('#switcherTissu_biMatiere').slideUp('slow');
             }
             console.log('update product option click');
             updateRendredProduct();

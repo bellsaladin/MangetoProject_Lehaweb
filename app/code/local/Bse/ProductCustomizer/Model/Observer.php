@@ -1,11 +1,5 @@
 <?php
-/**
- * Our class name should follow the directory structure of
- * our Observer.php model, starting from the namespace,
- * replacing directory separators with underscores.
- * i.e. app/code/local/SmashingMagazine/
- *                     LogProductUpdate/Model/Observer.php
- */
+
 class Bse_ProductCustomizer_Model_Observer
 {
     /**
@@ -41,11 +35,9 @@ class Bse_ProductCustomizer_Model_Observer
         /********************************************** By BSE *********************************************************************/
         /***************************************************************************************************************************/
 
-
-
-        //$quote_item->getParentItem()->setData('custom_attribute_column', 'xssxx');
-        $quote_item->getParentItem()->setData('custom_attribute_column', $imageUrl);
-
+        //$quote_item->getParentItem()->setData('custom_attribute_column', $imageUrl);
+        $quote_item->getParentItem()->setData('customizer_generated_image', $imageUrl);
+        $quote_item->getParentItem()->setData('customizer_chosen_options', $chosenOptions);
         $quote_item->save();
 
     }

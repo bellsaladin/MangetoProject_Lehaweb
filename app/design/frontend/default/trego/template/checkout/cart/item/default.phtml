@@ -2,15 +2,21 @@
 $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
-$customizerImage = $_item->getData('custom_attribute_column');
+// Note : 'customizer_generated_image' & 'customizer_chosen_options' are columns of table 'sales_flat_quote_item'
+$customizerImage = $_item->getData('customizer_generated_image');
+$customizerChosenOptions = json_decode($_item->getData('customizer_chosen_options'));
+//var_dump($customizerChosenOptions);
 ?>
 <tr>
-    <td>
-        <?php //var_dump($_item); ?>
-
-        <img src="<?php echo $customizerImage;?>"/>
+    <td class="no-border-right pr-img-td">
+        <div class="pos-area">
+            <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2 for-mobile"><?php echo $this->__('Remove item')?></a>
+            <?php if ($this->hasProductUrl()):?>
+            <a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getProductName()) ?>" class="product-image"><?php endif;?>
+                <img src="<?= $customizerImage;?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" />
+            <?php if ($this->hasProductUrl()):?></a><?php endif;?>
+        </div>
     </td>
-    <td class="no-border-right pr-img-td"><div class="pos-area"><a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2 for-mobile"><?php echo $this->__('Remove item')?></a><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->helper('catalog/image')->init($_item->getProduct(), 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(140); ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></div></td>
     <td class="a-right product-name-td">
         <h2 class="product-name">
         <?php if ($this->hasProductUrl()):?>
@@ -35,6 +41,14 @@ $customizerImage = $_item->getData('custom_attribute_column');
             <?php endforeach; ?>
         </div>
         <?php endif;?>
+        <div style="font-size:10px">
+            <p><b>selectedTypeTissuIndex :</b> <?php echo $customizerChosenOptions->selectedTypeTissuIndex;?></p>
+            <p><b>selectedTissuIndex :</b> <?php echo $customizerChosenOptions->selectedTissuIndex;?></p>
+            <p><b>selectedTissuBiMatiereIndex :</b> <?php echo $customizerChosenOptions->selectedTissuBiMatiereIndex;?></p>
+            <p><b>selectedTissuBiMatiereIndex :</b> <?php echo $customizerChosenOptions->selectedTissuBiMatiereIndex;?></p>
+            <p><b>Options choisies :</b> <?php foreach($customizerChosenOptions->optionsActivatedIndices as $optionVal) echo $optionVal .','?></p>
+            <p><b>Options bi-matieres choisies :</b> <?php foreach($customizerChosenOptions->optionsBiMatiereActivatedIndices as $optionVal) echo $optionVal .',' ?></p>
+        </div>
         <?php if ($messages = $this->getMessages()): ?>
         <?php foreach ($messages as $message): ?>
             <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $this->escapeHtml($message['text']) ?></p>
