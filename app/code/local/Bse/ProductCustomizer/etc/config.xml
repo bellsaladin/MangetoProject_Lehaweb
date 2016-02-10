@@ -44,6 +44,16 @@
                     </bse_productcustomizer>
                 </observers>
             </checkout_cart_product_add_after>
+
+            <sales_order_save_before>
+                <observers>
+                    <bse_productcustomizer>
+                        <class>bse_productcustomizer/observer</class>
+                        <method>updateProductBeforeOrderSave</method>
+                        <type>singleton</type>
+                    </bse_productcustomizer>
+                </observers>
+            </sales_order_save_before>
         </events>
     </global>
 </config>

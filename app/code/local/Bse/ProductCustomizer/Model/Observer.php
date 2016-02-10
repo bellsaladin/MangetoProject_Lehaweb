@@ -34,11 +34,31 @@ class Bse_ProductCustomizer_Model_Observer
         /***************************************************************************************************************************/
         /********************************************** By BSE *********************************************************************/
         /***************************************************************************************************************************/
-
         //$quote_item->getParentItem()->setData('custom_attribute_column', $imageUrl);
-        $quote_item->getParentItem()->setData('customizer_generated_image', $imageUrl);
-        $quote_item->getParentItem()->setData('customizer_chosen_options', $chosenOptions);
-        $quote_item->save();
+        if($quote_item->getParentItem()){
+            $quote_item->getParentItem()->setData('customizer_generated_image', $imageUrl);
+            $quote_item->getParentItem()->setData('customizer_chosen_options', $chosenOptions);
+            //$quote_item->save(); // BEWARE : CAUSES PROBLEM : NO NEED TO SAVE ACTUALY, BECAUSE IT'S STORED IN THE SESSION
+        }
+    }
+
+
+    public function updateProductBeforeOrderSave(Varien_Event_Observer $observer)
+    {
+        $event = $observer->getEvent();
+        $order = $event->getOrder();
+        $orderedItems = $order->getAllVisibleItems();
+        $quote = Mage::getSingleton('checkout/session')->getQuote();
+        $cartItems = $quote->getAllVisibleItems();
+
+        foreach ($orderedItems as $orderedItem){
+            foreach ($cartItems as $cartItem){
+                if($cartItem->getProductId() == $orderedItem->getProductId()){
+                    $orderedItem->setData('customizer_generated_image', $cartItem->getData('customizer_generated_image'));
+                    $orderedItem->setData('customizer_chosen_options', $cartItem->getData('customizer_chosen_options'));
+                }
+            }
+        }
 
     }
 }

@@ -54,6 +54,9 @@
             <?php endif; ?>
             </dd>
         <?php endforeach; ?>
+            <div><?php echo $_item->getData('customizer_chosen_options') ?></div>
+
+            <div><img width="50" src="<?php echo $_item->getData('customizer_generated_image') ?>"/></div>
         </dl>
     <?php endif; ?>
     <?php echo $this->escapeHtml($_item->getDescription()) ?>
