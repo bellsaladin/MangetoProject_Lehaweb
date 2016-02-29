@@ -39,16 +39,21 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
                 <?php endif; ?>
             </div>
             <?php endforeach; ?>
+            <?php if(COUNT($customizerChosenOptions->selectedOptionsTitles) > 0): ?>
+            <div>
+                <div><span style="float:left">Options : </span>
+                    <b>
+                        <ul style="width:auto; float:right; font-size:10px"><?php
+                            foreach($customizerChosenOptions->selectedOptionsTitles as $optionVal){
+                                echo '<li style="list-style: square;">'. $optionVal .'</li>';
+                            } ?>
+                        </ul>
+                    </b>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
         <?php endif;?>
-        <div style="font-size:10px">
-            <p><b>selectedTypeTissuIndex :</b> <?php echo $customizerChosenOptions->selectedTypeTissuIndex;?></p>
-            <p><b>selectedTissuIndex :</b> <?php echo $customizerChosenOptions->selectedTissuIndex;?></p>
-            <p><b>selectedTissuBiMatiereIndex :</b> <?php echo $customizerChosenOptions->selectedTissuBiMatiereIndex;?></p>
-            <p><b>selectedTissuBiMatiereIndex :</b> <?php echo $customizerChosenOptions->selectedTissuBiMatiereIndex;?></p>
-            <p><b>Options choisies :</b> <?php foreach($customizerChosenOptions->optionsActivatedIndices as $optionVal) echo $optionVal .','?></p>
-            <p><b>Options bi-matieres choisies :</b> <?php foreach($customizerChosenOptions->optionsBiMatiereActivatedIndices as $optionVal) echo $optionVal .',' ?></p>
-        </div>
         <?php if ($messages = $this->getMessages()): ?>
         <?php foreach ($messages as $message): ?>
             <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $this->escapeHtml($message['text']) ?></p>

@@ -51,9 +51,9 @@ class Bse_ProductCustomizer_Model_Observer
         $quote = Mage::getSingleton('checkout/session')->getQuote();
         $cartItems = $quote->getAllVisibleItems();
 
-        foreach ($orderedItems as $orderedItem){
-            foreach ($cartItems as $cartItem){
-                if($cartItem->getProductId() == $orderedItem->getProductId()){
+        foreach ($orderedItems as $orderedItemKey =>  $orderedItem){
+            foreach ($cartItems as $cartItemKey => $cartItem){
+                if($orderedItemKey == $cartItemKey){
                     $orderedItem->setData('customizer_generated_image', $cartItem->getData('customizer_generated_image'));
                     $orderedItem->setData('customizer_chosen_options', $cartItem->getData('customizer_chosen_options'));
                 }

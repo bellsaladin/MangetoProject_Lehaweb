@@ -1173,11 +1173,11 @@ class Mage_Sales_Model_Quote extends Mage_Core_Model_Abstract
      */
     public function getItemByProduct($product)
     {
-        foreach ($this->getAllItems() as $item) {
+        /*foreach ($this->getAllItems() as $item) {
             if ($item->representProduct($product)) {
                 return $item;
             }
-        }
+        }*/
         return false;
     }
 
