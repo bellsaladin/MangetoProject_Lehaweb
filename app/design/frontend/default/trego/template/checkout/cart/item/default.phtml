@@ -16,44 +16,43 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
                 <img src="<?= $customizerImage;?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" />
             <?php if ($this->hasProductUrl()):?></a><?php endif;?>
         </div>
-    </td>
-    <td class="a-right product-name-td">
         <h2 class="product-name">
-        <?php if ($this->hasProductUrl()):?>
-            <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->htmlEscape($this->getProductName()) ?></a>
-        <?php else: ?>
-            <?php echo $this->htmlEscape($this->getProductName()) ?>
-        <?php endif; ?>
+            <?php if ($this->hasProductUrl()):?>
+                <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->htmlEscape($this->getProductName()) ?></a>
+            <?php else: ?>
+                <?php echo $this->htmlEscape($this->getProductName()) ?>
+            <?php endif; ?>
         </h2>
         <?php if ($_options = $this->getOptionList()):?>
-        <div class="item-options">
-            <?php foreach ($_options as $_option) : ?>
-            <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-            <div><?php echo $this->htmlEscape($_option['label']) ?>:&nbsp;<b><?php echo $_formatedOptionValue['value'] ?></b>
-                <?php if (isset($_formatedOptionValue['full_view'])): ?>
-                <div class="truncated_full_value">
-                    <div class="item-options">
-                        <div><?php echo $this->htmlEscape($_option['label']) ?>:&nbsp;<b><?php echo $_formatedOptionValue['full_view'] ?></b></div>
+            <div class="item-options">
+                <?php foreach ($_options as $_option) : ?>
+                    <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                    <div><?php echo $this->htmlEscape($_option['label']) ?>:&nbsp;<span><?php echo $_formatedOptionValue['value'] ?></span>
+                        <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                            <div class="truncated_full_value">
+                                <div class="item-options">
+                                    <div><?php echo $this->htmlEscape($_option['label']) ?>:&nbsp;<span><?php echo $_formatedOptionValue['full_view'] ?></span></div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                </div>
+                <?php endforeach; ?>
+                <?php if(COUNT($customizerChosenOptions->selectedOptionsTitles) > 0): ?>
+                    <div>
+                        <div>
+                            <span style="float:left">Options : </span>
+                            <ul style="width:auto; font-size:10px; margin-left:140px"><?php
+                                foreach($customizerChosenOptions->selectedOptionsTitles as $optionVal){
+                                    echo '<li style="list-style: square;">'. $optionVal .'</li>';
+                                } ?>
+                            </ul>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
-            <?php endforeach; ?>
-            <?php if(COUNT($customizerChosenOptions->selectedOptionsTitles) > 0): ?>
-            <div>
-                <div><span style="float:left">Options : </span>
-                    <b>
-                        <ul style="width:auto; float:right; font-size:10px"><?php
-                            foreach($customizerChosenOptions->selectedOptionsTitles as $optionVal){
-                                echo '<li style="list-style: square;">'. $optionVal .'</li>';
-                            } ?>
-                        </ul>
-                    </b>
-                </div>
-            </div>
-            <?php endif; ?>
-        </div>
         <?php endif;?>
+    </td>
+    <td class="a-right product-name-td">
         <?php if ($messages = $this->getMessages()): ?>
         <?php foreach ($messages as $message): ?>
             <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $this->escapeHtml($message['text']) ?></p>
@@ -64,7 +63,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
             <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
         <?php endif;?>
     </td>
-    <td class="a-right product-sku">
+    <td class="a-right product-sku hidden">
         <?php
             echo "<p class='mobile-show'>".$this->__('Pr. code:')."</p>".$_item->getProduct()->getSku();
         ?>
@@ -78,7 +77,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
     <?php endif ?>
 
     <?php if ($canApplyMsrp): ?>
-        <td class="a-right unit-price"<?php if ($this->helper('tax')->displayCartBothPrices()): ?> colspan="2"<?php endif; ?>>
+        <td class="a-right unit-price hidden" <?php if ($this->helper('tax')->displayCartBothPrices()): ?> colspan="2"<?php endif; ?>>
             <?php echo "<span class='mobile-show'>".$this->__('Unit price:')."</span>" ?>
             <span class="cart-price">
                 <span class="cart-msrp-unit"><?php echo $this->__('See price before order confirmation.'); ?></span>
@@ -92,7 +91,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
     <?php else: ?>
 
         <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-        <td class="a-right unit-price">
+        <td class="a-right unit-price hidden">
             <?php echo "<span class='mobile-show'>".$this->__('Unit price:')."</span>" ?>
             <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
                 <span class="cart-tax-total" onclick="taxToggle('eunit-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
@@ -135,7 +134,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
         </td>
         <?php endif; ?>
         <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-        <td class="a-right unit-price">
+        <td class="a-right unit-price hidden">
             <?php $_incl = $this->helper('checkout')->getPriceInclTax($_item); ?>
             <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
                 <span class="cart-tax-total" onclick="taxToggle('unit-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
@@ -177,7 +176,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
         </td>
         <?php endif; ?>
     <?php endif; ?>
-    <td class="a-right qty-td">
+    <td class="a-right qty-td hidden">
         <div class="qty-holder">
             <input type="text" name="cart[<?php echo $_item->getId() ?>][qty]" maxlength="12" value="<?php echo $this->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
             <div class="qty-changer">
@@ -187,7 +186,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
         </div>
     </td>
     <?php if (($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
-    <td class="a-right sub-total">
+    <td class="a-right sub-total ">
         <?php echo "<span class='mobile-show'>".$this->__('Subtotal:')."</span>" ?>
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
             <span class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">

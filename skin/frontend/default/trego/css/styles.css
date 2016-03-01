@@ -770,7 +770,7 @@ p.required { font-size:11px; text-align:right; color:#EB340A; }
 .data-table td.last,
 .data-table th.last { border-right:0; }
 .data-table tr.last th,
-.data-table tr.last td { border-bottom:0 !important; }
+.data-table tr.last td { }
 .data-table th { padding:3px 8px; font-weight:bold; }
 .data-table td { padding:3px 8px; }
 
@@ -799,8 +799,8 @@ p.required { font-size:11px; text-align:right; color:#EB340A; }
 
 .data-table tbody th,
 .data-table tbody td { 
-    border-bottom: 1px solid #d5d5d5;
-    border-right: 1px solid #d5d5d5;
+    border-bottom: 1px solid #f2f2f2;
+    border-right: 1px solid #e4e4e4;
 }
 /* Bundle products tables */
 .data-table tbody.odd tr { background:#f8f7f5 !important; }
@@ -2007,6 +2007,7 @@ td.for-desktop {
     font-family: 'Lato_Regular';
     padding: 20px 10px;
     font-size: 16px;
+    border-bottom: 1px solid #efefef;
 }
 .cart-table td.product-sku {
     font-family: Verdana;
@@ -2021,7 +2022,6 @@ td.for-desktop {
 }
 .cart-table .item-options {
     font-family: Verdana;
-    float: right;
     line-height: 15px;
 }
 .cart-table .item-options dt {
@@ -2050,8 +2050,10 @@ td.for-desktop {
     font-size: 13px;
     text-transform: none;
 }
-.cart-table .product-name { font-weight:bold; margin:0 0 5px; color:#2f2f2f; }
-.cart-table a.product-image { width: 140px; display:block; }
+.cart-table a.product-image { width: 80px; display:block; float: left; width: 110px; border: 2px solid #f3f3f3;}
+.cart-table a.product-image img {width: 70px;padding-left: 20px;}
+.cart-table h2.product-name { font-weight:bold; margin:0 0 5px; color:#2f2f2f; margin-top: 10px; font-weight: bold; padding-left: 140px; width: auto;}
+.cart-table .item-options{padding-left: 140px;}
 .cart-table .item-msg { margin:5px 0; font-size:11px; font-weight:bold; color:#df280a; }
 .cart-table tfoot td { padding:5px 10px; }
 .cart-table .btn-continue { float:left; }
@@ -2104,20 +2106,18 @@ td.for-desktop {
 .cart .totals table { 
     width:100%; 
     margin: 0;
-    border: 1px solid #d5d5d5;
+    border: 1px solid #fff;
     border-bottom: 0;
     border-right: 0;
 }
 .cart .totals td { 
-    border-right: 1px solid #d5d5d5;
-    border-bottom: 1px solid #d5d5d5;
-    font-family: 'Raleway_Regular';
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
     font-size: 14px;
     padding: 15px;
     text-transform: uppercase;
 }
 .cart .totals td .price { 
-    font-family: 'Lato_Regular';
     font-size: 18px;
     line-height: 14px;
 }
@@ -2125,20 +2125,24 @@ td.for-desktop {
 .cart .totals tfoot th { padding:5px 15px 5px 7px; }
 .cart .totals tfoot td {
     padding: 15px;
-    font-family: 'Raleway_Medium';
     font-weight: normal;
     font-size: 18px;
 }
 .cart .totals tfoot td .price {
-    font-family: 'Lato_bold';
-    font-size: 20px;
+    font-size: 16px;
     color: #d64c35;
 }
 .cart .totals tfoot th strong,
-.cart .totals tfoot td strong { font-size:15px; }
+.cart .totals tfoot td strong { font-size:13px; }
 .cart .totals .checkout-types { font-size:13px; padding:8px 0; text-align:right; float: right; }
 .cart .totals .checkout-types li { float: left; margin:10px 0 10px 11px; }
 .cart .totals .checkout-types li.first { margin-left: 0; }
+
+.cart .data-table{border:none;}
+.cart .data-table td{border-right:none;}
+.cart .data-table tfoot tr.first td{background: #fff;}
+
+.cart .data-table td.sub-total, .cart .data-table td.rm-td{padding-top:35px;}
 
 /* Options Tool Tip */
 .item-options dt { font-weight:bold; font-style:italic; }
@@ -3966,7 +3970,7 @@ ul.cart-button-set li.first{
 }
 .cart-extra .discount {
     margin: 0;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
     background: none;
     padding: 12px 15px;
     font-family: 'Lato_Regular';
@@ -4037,10 +4041,8 @@ ul.cart-button-set li.first{
 }
 .cart .totals .checkout-types li button span {
     display: block;
-    height: 40px;
     border: 0;
     padding: 0 21px;
-    font: 14px/40px Verdana, Arial, Helvetica, sans-serif;
     text-align: center;
     text-transform: uppercase;
     white-space: nowrap;
@@ -5225,7 +5227,6 @@ filter: alpha(opacity = 30);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha
         font-size: 12px;
         line-height: 36px;
     }
-    .cart-table a.product-image { width: 80px; }
     .cart-table td.qty-td { padding: 5px 10px; }
     .cart .qty-holder .qty { width: 25px !important; }
     .cart-extra .shipping-form .sbHolder {
