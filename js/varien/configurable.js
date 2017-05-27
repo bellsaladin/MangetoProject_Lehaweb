@@ -139,7 +139,7 @@ Product.Config.prototype = {
 
     reloadOptionLabels: function(element){
         var selectedPrice;
-        if(element.options[element.selectedIndex].config && !this.config.stablePrices){
+        if(element.options[element.selectedIndex] != null && element.options[element.selectedIndex].config && !this.config.stablePrices){
             selectedPrice = parseFloat(element.options[element.selectedIndex].config.price)
         }
         else{
@@ -277,7 +277,7 @@ Product.Config.prototype = {
         var oldPrice = 0;
         for(var i=this.settings.length-1;i>=0;i--){
             var selected = this.settings[i].options[this.settings[i].selectedIndex];
-            if(selected.config){
+            if(selected != null && selected.config){
                 price    += parseFloat(selected.config.price);
                 oldPrice += parseFloat(selected.config.oldPrice);
             }
@@ -303,7 +303,7 @@ Product.Config.prototype = {
             var price = parseFloat(this.config.oldPrice);
             for(var i=this.settings.length-1;i>=0;i--){
                 var selected = this.settings[i].options[this.settings[i].selectedIndex];
-                if(selected.config){
+                if(selected != null && selected.config){
                     price+= parseFloat(selected.config.price);
                 }
             }

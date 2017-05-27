@@ -20,7 +20,6 @@ foreach($categoryIds as $categoryId) {
     <div class="links">
         <a id="saveSelection" style="color: #fff;background: #000;padding: 8px 22px; width:120px; float:left" href="#">ENREGISTRER LA SELECTION &gt;&gt;</a>
         <a style="color: #fff;background: #000;padding: 6px 16px; display:block;margin: 22px 0 0 36px;float: left;" href="#">f</a>
-
         <a style="color: #888;padding: 0; display:block;margin: 34px 0 0 36px;float: left;" class="ajaxQuickview" href="<?= $quickviewUrl?>">Voir les photos du produits >></a>
         <a style="color:#888;padding: 35px 0 10px 0;float:right" href="<?php echo $category->getUrl(); ?>">RETOUR <small>&gt;&gt;</small></a>
         <script type="text/javascript">
@@ -214,6 +213,9 @@ foreach($categoryIds as $categoryId) {
 
         <div class="clearer"></div>
         <?php if(Mage::getStoreConfig('ajaxcart/addtocart/enableproduct')): ?>
+
+        <?php if($_product->getTypeId() == 'configurable'): ?>
+
         <script type="text/javascript">
         //<![CDATA[
             var productAddToCartForm = new VarienForm('product_addtocart_form');
@@ -221,7 +223,6 @@ foreach($categoryIds as $categoryId) {
                 // save rendered image in base64 in will be used in selection preview and in cart, order ...
                 var imgBase64 = _canvas_frontView.toDataURL("image/jpeg", 0.5);
                 jQuery('#rendered-image').val(imgBase64);
-                //alert(imgBase64);
                 var selectedOptionsTitles = [];
                 jQuery.each(optionsActivatedIndices, function( index, value ) {
                     selectedOptionsTitles.push(optionsData[value - 1]['titre']);
@@ -284,6 +285,63 @@ foreach($categoryIds as $categoryId) {
             }.bind(productAddToCartForm);
         //]]>
         </script>
+        <?php else : ?>
+
+        <script type="text/javascript">
+        //<![CDATA[
+            var productAddToCartForm = new VarienForm('product_addtocart_form');
+            productAddToCartForm.submit = function(button, url) {
+
+                if (this.validator.validate()) {
+
+                    var form = this.form;
+                    var oldUrl = form.action;
+
+                    if (url) {
+                       form.action = url;
+                    }
+                    var e = null;
+                    if (!url) {
+                        url = jQuery('#product_addtocart_form').attr('action');
+                    }
+                    url = url.replace("checkout/cart","ajaxcart/index"); // New Code
+                    var data = jQuery('#product_addtocart_form').serialize();
+                    data += '&isAjax=1';
+                    jQuery('#loading-mask').show();
+                    try {
+                        jQuery.ajax({
+                            url : url,
+                            dataType : 'json',
+                            type : 'post',
+                            data : data,
+                            success : function(data) {
+                                jQuery('#loading-mask').hide();
+                                if(data.status == 'ERROR'){
+                                    alert(data.message);
+                                }else{
+                                    if(jQuery('.footer-menu .links')){
+                                        jQuery('.footer-menu .links').replaceWith(data.toplink);
+                                    }
+                                    if(jQuery('.mini-cart-layer')){
+                                        jQuery('.mini-cart-layer').replaceWith(data.minicart);
+                                    }
+                                    jQuery('#after-loading-success-message').show();
+                                }
+                            }
+                        });
+                    } catch (e) {
+                    }
+                    this.form.action = oldUrl;
+                    if (e) {
+                        throw e;
+                    }
+                }
+            }.bind(productAddToCartForm);
+        //]]>
+        </script>
+
+        <?php endif; ?>
+
         <?php else : ?>
         <script type="text/javascript">
         //<![CDATA[
