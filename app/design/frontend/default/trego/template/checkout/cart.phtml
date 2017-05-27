@@ -5,9 +5,9 @@
  * @see Mage_Checkout_Block_Cart
  */
 ?>
-<div class="cart" style="margin-right: 220px;">
-    <div class="page-title title-buttons">
-        <h1><?php echo $this->__('Shopping Cart') ?></h1>
+<div class="cart" style="margin: 30px 220px 0 0;">
+    <div style="margin-bottom: 30px;">
+        <h4 style="text-transform: uppercase; font-weight:normal; margin-left:10px"><?php echo $this->__('Shopping Cart') ?></h4>
     </div>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <?php echo $this->getChildHtml('form_before') ?>

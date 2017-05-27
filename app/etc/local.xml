@@ -41,9 +41,10 @@
             <default_setup>
                 <connection>
                     <host><![CDATA[localhost]]></host>
+                    <port><![CDATA[3306]]></port>
                     <username><![CDATA[root]]></username>
                     <password><![CDATA[root]]></password>
-                    <dbname><![CDATA[magento_lehaweb_2]]></dbname>
+                    <dbname><![CDATA[magento_lehaweb]]></dbname>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
                     <type><![CDATA[pdo_mysql]]></type>

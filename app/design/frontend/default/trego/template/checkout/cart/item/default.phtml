@@ -69,7 +69,7 @@ $customizerChosenOptions = json_decode($_item->getData('customizer_chosen_option
         ?>
     </td>
     <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
-    <td class="a-right">
+    <td class="a-right hidden">
         <?php if ($isVisibleProduct): ?>
             <a href="<?php echo $this->helper('wishlist')->getMoveFromCartUrl($_item->getId()); ?>" class="link-wishlist use-ajax"><?php echo $this->__('Move'); ?></a>
         <?php endif ?>

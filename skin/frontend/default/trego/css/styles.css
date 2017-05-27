@@ -2303,7 +2303,7 @@ td.for-desktop {
     top: 35px !important;
     height: 110px;
 }
-.opc { position:relative; }
+.opc { position:relative; margin-right: 230px;}
 .opc li.section { margin-bottom: 3px; }
 
 .opc .step-title { 
