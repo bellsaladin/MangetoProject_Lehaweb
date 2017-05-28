@@ -1,14 +1,23 @@
 <?php
     $_product = $this->getProduct();
+    $_selectedTypeTissuIndex = 0;
+    $_selectedTissuIndex = 0;
+    $defaultSimpleProductId = $_product->getData(Easylife_Switcher_Helper_Data::DEFAULT_CONFIGURATION_ATTRIBUTE_CODE);
     if($_product->getTypeId() == "configurable"):
         $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
         $simpleProducts_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
         $imagesTissus = array(); // loads images tissus from all simple products
         foreach($simpleProducts_collection as $simple_product){
-            $tissuId = $simple_product->getData('tissu');
+            $tissuId          = $simple_product->getData('tissu');
+            $category_tissuId = $simple_product->getData('category_tissu');
             $images= Mage::getModel('catalog/product')->load($simple_product->getId())->getMediaGalleryImages();
             //$imagesTissus[$simple_product->getId()] = $images;
             $imagesTissus[$tissuId] = $images;
+
+            if($defaultSimpleProductId == $simple_product->getId()){
+                $_selectedTypeTissuIndex = $category_tissuId;
+                $_selectedTissuIndex = $tissuId;
+            }
         }
     endif;
     $_helper = $this->helper('catalog/output');
@@ -181,7 +190,7 @@
         // var_dump($imagesDataList);
         ?>
 
-<script type="text/javascript">
+    <script type="text/javascript">
     var loadedSelectionData = null; // should contain the selection data when a customer saved selection is loaded
 
     <?php
@@ -200,8 +209,8 @@
     var _canvas_frontView = document.getElementById('customizer-canvas-frontView');
     var _canvas_backView = document.getElementById('customizer-canvas-backView');
     var switcherTissu_biMatiereComponent = null;
-    var selectedTypeTissuIndex = 135; //@FIXME SHould be dynamic, something like $('.tissuTypes .option')[0].attr('value');
-    var selectedTissuIndex = 127; //@FIXME SHould get first key of first _jsonImagesDataAllTissus
+    var selectedTypeTissuIndex = <?php echo $_selectedTypeTissuIndex ?>; //@FIXME SHould be dynamic, something like $('.tissuTypes .option')[0].attr('value');
+    var selectedTissuIndex = <?php echo $_selectedTissuIndex ?>; //@FIXME SHould get first key of first _jsonImagesDataAllTissus
     var selectedTissuBiMatiereIndex = null; //@FIXME SHould get first key of first _jsonImagesDataAllTissus
     var optionsData =  <?php echo json_encode($optionsDataList) ?>;
     var _jsonImagesDataAllTissus = <?php echo json_encode($imagesDataList) ?>;
@@ -212,10 +221,9 @@
     jQuery(document).ready(function($){
 
         function _init(){
-            var firstTissusOption = $('.switcher-tissu .switcher-label')[0];
+            //var firstTissusOption = $('.switcher-tissu .switcher-label')[0];
             //alert(firstTissusOption.html());
-            firstTissusOption.click();
-
+            //firstTissusOption.click();
 
             switcherTissu_biMatiereComponent = $('.switcher-tissu').clone();
             switcherTissu_biMatiereComponent.attr('id',''); // fix: erase the id, so that it stops being affected of a selector applied on the original element
@@ -244,7 +252,21 @@
                 $('#switcherTissu_biMatiere .switcher-label .attributeOption').removeClass('attributeOption_selected');
                 $(this).find('.attributeOption').addClass('attributeOption_selected');
             });
-            $('#switcherTissu_biMatiere .switcher-label')[0].click();//selected the first tissu
+
+            $('.tissu-types .option').each(function (index) {
+                if ($(this).attr('value') == selectedTypeTissuIndex)
+                    $('.tissu-types .option')[index].click();
+
+            });
+
+            $('#attribute963_switchers .switcher-label').each(function (index) {
+                //alert(selectedTissuIndex + "," + $(this).attr('value'));
+                if ($(this).attr('value') == selectedTissuIndex) {
+                    $('#attribute963_switchers .switcher-label')[index].click();
+                }
+            });
+
+            updateRendredProduct();
         }
 
         function loadSelectionData() {
@@ -565,7 +587,7 @@
         );
 
         _init();
-        jQuery('.tissu-types .option')[0].click();
+        //jQuery('.tissu-types .option')[0].click();
         bindNavigationArrowsToBlocks();
         loadSelectionData(); // load of a saved selection data
         //updateRendredProduct();
