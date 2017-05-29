@@ -224,8 +224,16 @@ foreach($categoryIds as $categoryId) {
                 var imgBase64 = _canvas_frontView.toDataURL("image/jpeg", 0.5);
                 jQuery('#rendered-image').val(imgBase64);
                 var selectedOptionsTitles = [];
+                var selectedOptionsTissus = [];
                 jQuery.each(optionsActivatedIndices, function( index, value ) {
                     selectedOptionsTitles.push(optionsData[value - 1]['titre']);
+                });
+                jQuery.each(optionsActivatedIndices, function( index, value ) {
+                    jQuery.each(optionsBiMatiereActivatedIndices, function( index2, value2 ) {
+                        if(value == value2){
+                            selectedOptionsTissus.push(selectedTissuBiMatiereLabel);
+                        }
+                    });
                 });
                 // save selection data in will be used in cart / order
                 var selectionData = {'selectedTypeTissuIndex': selectedTypeTissuIndex,
@@ -233,8 +241,11 @@ foreach($categoryIds as $categoryId) {
                                      'selectedTissuBiMatiereIndex': selectedTissuBiMatiereIndex,
                                      'optionsActivatedIndices':optionsActivatedIndices,
                                      'optionsBiMatiereActivatedIndices' : optionsBiMatiereActivatedIndices,
-                                     'selectedOptionsTitles' : selectedOptionsTitles };
-                console.log(selectionData);
+                                     'selectedOptionsTitles' : selectedOptionsTitles,
+                                     'selectedOptionsTissus' : selectedOptionsTissus};
+
+                //alert(selectedTissuBiMatiereLabel)
+                //console.log(selectionData);
                 // bind value to form's fields before submit
                 jQuery('#choosed-options').val(JSON.stringify(selectionData));
 

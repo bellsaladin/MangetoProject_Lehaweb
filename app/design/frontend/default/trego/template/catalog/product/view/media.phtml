@@ -212,6 +212,7 @@
     var selectedTypeTissuIndex = <?php echo $_selectedTypeTissuIndex ?>; //@FIXME SHould be dynamic, something like $('.tissuTypes .option')[0].attr('value');
     var selectedTissuIndex = <?php echo $_selectedTissuIndex ?>; //@FIXME SHould get first key of first _jsonImagesDataAllTissus
     var selectedTissuBiMatiereIndex = null; //@FIXME SHould get first key of first _jsonImagesDataAllTissus
+    var selectedTissuBiMatiereLabel = '';
     var optionsData =  <?php echo json_encode($optionsDataList) ?>;
     var _jsonImagesDataAllTissus = <?php echo json_encode($imagesDataList) ?>;
     var _jsonImagesDataOfSelectedTissus = [];
@@ -246,6 +247,7 @@
             $('#switcherTissu_biMatiere .switcher-label').click( function(event) {
                 event.preventDefault();
                 selectedTissuBiMatiereIndex = $(this).attr('value');
+                selectedTissuBiMatiereLabel = $(this).attr('title');
                 console.log('update switcherTissu_biMatiere');
                 updateRendredProduct();
                 // change style to selected
