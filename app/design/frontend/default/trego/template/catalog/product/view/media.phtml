@@ -208,6 +208,7 @@
     ?>
     var _canvas_frontView = document.getElementById('customizer-canvas-frontView');
     var _canvas_backView = document.getElementById('customizer-canvas-backView');
+    var system_initialising = true;
     var switcherTissu_biMatiereComponent = null;
     var selectedTypeTissuIndex = <?php echo $_selectedTypeTissuIndex ?>; //@FIXME SHould be dynamic, something like $('.tissuTypes .option')[0].attr('value');
     var selectedTissuIndex = <?php echo $_selectedTissuIndex ?>; //@FIXME SHould get first key of first _jsonImagesDataAllTissus
@@ -220,6 +221,8 @@
     var optionsBiMatiereActivatedIndices = []; // stores indices of options with bi-matiere applied
 
     jQuery(document).ready(function($){
+
+
 
         function _init(){
             //var firstTissusOption = $('.switcher-tissu .switcher-label')[0];
@@ -244,17 +247,51 @@
             $('#switcherTissu_biMatiere .switcher-label').each(function (index) {
                 $(this).attr('id',null); // @IMPORTANT : erase all ids on cloned elements so that they are not affected by other actions
             });
+
             $('#switcherTissu_biMatiere .switcher-label').click( function(event) {
                 event.preventDefault();
                 selectedTissuBiMatiereIndex = $(this).attr('value');
                 selectedTissuBiMatiereLabel = $(this).attr('title');
-                console.log('update switcherTissu_biMatiere');
                 updateRendredProduct();
                 // change style to selected
                 $('#switcherTissu_biMatiere .switcher-label .attributeOption').removeClass('attributeOption_selected');
                 $(this).find('.attributeOption').addClass('attributeOption_selected');
             });
 
+            $('.tissu-types .option').click(function(event){
+                //event.preventDefault();
+                selectedTypeTissuIndex = $(this).attr('value');
+                // bind click behaviour to new loaded switcher-labels (which are tissues)
+                // click event on tissuTypes
+                $('#attribute963_switchers .switcher-label').click( function(event) {
+                    selectedTissuIndex = $(this).attr('value');
+                    //alert(selectedTissuIndex);
+
+                    $(this).parent().find('.attributeOption').removeClass('attributeOption_selected');
+                    $(this).find('.attributeOption').addClass('attributeOption_selected');
+
+                    loadSelectedTissuResources();
+                    updateRendredProduct();
+                });
+
+                // bind for each new created label element
+                $('.switcher-field label').click(function(){
+                    $(this).parent().find('label').removeClass('selected');
+                    $(this).addClass('selected');
+                });
+
+                // recreate navigationElements for switcherFields
+                bindNavigationArrowsToBlocks();
+
+                if(!system_initialising)
+                // automaticly load first tissu of the tissu-category
+                    $('#attribute963_switchers .switcher-label')[0].click();
+            });
+
+            updateRendredProduct();
+        }
+
+        function applyDefaultSimpleProduct(){
             $('.tissu-types .option').each(function (index) {
                 if ($(this).attr('value') == selectedTypeTissuIndex)
                     $('.tissu-types .option')[index].click();
@@ -262,13 +299,10 @@
             });
 
             $('#attribute963_switchers .switcher-label').each(function (index) {
-                //alert(selectedTissuIndex + "," + $(this).attr('value'));
                 if ($(this).attr('value') == selectedTissuIndex) {
                     $('#attribute963_switchers .switcher-label')[index].click();
                 }
             });
-
-            updateRendredProduct();
         }
 
         function loadSelectionData() {
@@ -309,10 +343,10 @@
                     $('#switcherTissu_biMatiere .switcher-label')[index].click();
                 }
             });
-            console.log('selectedTypeTissuIndex : '  + selectedTypeTissuIndex);
-            console.log('selectedTissuIndex : '  + selectedTissuIndex);
-            console.log('selectedTissuBiMatiereIndex : '  + selectedTissuBiMatiereIndex);
-            console.log('optionsActivatedIndices : '  + optionsActivatedIndices);
+            //console.log('selectedTypeTissuIndex : '  + selectedTypeTissuIndex);
+            //console.log('selectedTissuIndex : '  + selectedTissuIndex);
+            //console.log('selectedTissuBiMatiereIndex : '  + selectedTissuBiMatiereIndex);
+            //console.log('optionsActivatedIndices : '  + optionsActivatedIndices);
 
             updateRendredProduct()
             //$(('#switcherTissu_biMatiere .switcher-label:eq('+selectedTissuBiMatiereIndex+')')).click();
@@ -391,7 +425,6 @@
         /* Load base image */
         function drawImagesInChainMode(view, currentIndex ){
             var option = _jsonImagesDataOfSelectedTissus[optionsActivatedIndices[currentIndex]];
-
             var canvas = null;
             var img = new Image();
             if(view == 'front'){
@@ -543,36 +576,6 @@
             }
         });*/
 
-        // click event on tissuTypes
-        jQuery('.tissu-types .option').click(function(event){
-            //event.preventDefault();
-            selectedTypeTissuIndex = $(this).attr('value');
-            // bind click behaviour to new loaded switcher-labels (which are tissues)
-            $('#attribute963_switchers .switcher-label').click( function(event) {
-                selectedTissuIndex = $(this).attr('value');
-                //alert(selectedTissuIndex);
-
-                $(this).parent().find('.attributeOption').removeClass('attributeOption_selected');
-                $(this).find('.attributeOption').addClass('attributeOption_selected');
-
-                loadSelectedTissuResources();
-                console.log('update tissu selected');
-                updateRendredProduct();
-            });
-
-            // bind for each new created label element
-            $('.switcher-field label').click(function(){
-                $(this).parent().find('label').removeClass('selected');
-                $(this).addClass('selected');
-            });
-
-            // recreate navigationElements for switcherFields
-            bindNavigationArrowsToBlocks();
-
-            // automaticly load first tissu of the tissu-category
-            $('#attribute963_switchers .switcher-label')[0].click();
-        });
-
         $('#customizer-canvas-backView').hover(
             function(){
                 _canvas_frontView = document.getElementById('customizer-canvas-backView');
@@ -589,10 +592,13 @@
         );
 
         _init();
+        applyDefaultSimpleProduct();
         //jQuery('.tissu-types .option')[0].click();
         bindNavigationArrowsToBlocks();
         loadSelectionData(); // load of a saved selection data
-        //updateRendredProduct();
+        system_initialising = false;
+
+
 
     });
 </script>
